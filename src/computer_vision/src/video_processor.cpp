@@ -10,9 +10,6 @@
 
 #include <sstream>
 
-ros::NodeHandle n;
-ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
-
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -52,6 +49,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         cv::circle(drawing, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
     
         // Decide whether the robot should turn left or right or go straight
+        ros::NodeHandle n;
+        ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
         std_msgs::String  msg;
         std::stringstream ss;
         if (x < drawing.cols / 2) {
@@ -74,8 +73,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 }
 
 int main(int argc, char **argv) {
-    
     ros::init(argc, argv, "video_processor");
+    ros::NodeHandle n;
     ros::Subscriber video_sub = n.subscribe("video_feed",30, videoCallback); 
     ROS_INFO("ROS INITLIAZED");
     ros::spin();
