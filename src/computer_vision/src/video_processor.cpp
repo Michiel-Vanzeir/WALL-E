@@ -10,6 +10,10 @@
 
 #include <sstream>
 
+ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
+std_msgs::String  msg;
+msg.data = "";
+
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -49,24 +53,18 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         cv::circle(drawing, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
     
         // Decide whether the robot should turn left or right or go straight
-        ros::NodeHandle n;
-        ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
-        std_msgs::String  msg;
         std::stringstream ss;
         if (x < drawing.cols / 2) {
-            ss << "-0.5 | 0.5";
+            ss << "left";
             msg.data =  ss.str();
         } else if (x > drawing.cols / 2) {
-            ss << "0.5 | -0.5";
+            ss << "right";
             msg.data = ss.str();
         } else {
-            ss << "0.5 | 0.5";
+            ss << "straight";
             msg.data = ss.str();
         }   
         ROS_INFO("%s", msg.data.c_str());
-        command_pub.publish(msg);
-        ROS_INFO("Published msg");
-        ros::spinOnce();
     } catch (int exc) {
         ROS_INFO("Error in videoprocessor.cpp");
 }
@@ -76,7 +74,8 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle n;
     ros::Subscriber video_sub = n.subscribe("video_feed",30, videoCallback); 
-    ROS_INFO("ROS INITLIAZED");
+    command_pub.publish(msg);
+    ROS_INFO("Published msg");
     ros::spin();
     return 0;
 }
