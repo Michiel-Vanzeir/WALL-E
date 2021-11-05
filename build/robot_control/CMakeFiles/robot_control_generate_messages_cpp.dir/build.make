@@ -58,7 +58,6 @@ robot_control/CMakeFiles/robot_control_generate_messages_cpp: /home/ubuntu/catki
 
 /home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-/home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /opt/ros/noetic/share/std_msgs/msg/Int8.msg
 /home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /opt/ros/noetic/share/gencpp/msg.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from robot_control/motor_cmd.msg"
 	cd /home/ubuntu/catkin_ws/src/robot_control && /home/ubuntu/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/include/robot_control -e /opt/ros/noetic/share/gencpp/cmake/..

@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 include robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/progress.make
 
 robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd:
-	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py robot_control /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg std_msgs/Int8
+	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py robot_control /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg 
 
 _robot_control_generate_messages_check_deps_motor_cmd: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd
 _robot_control_generate_messages_check_deps_motor_cmd: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/build.make

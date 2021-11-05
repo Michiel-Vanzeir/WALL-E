@@ -27,6 +27,8 @@ ros/ros.h
 /home/ubuntu/catkin_ws/src/robot_control/src/ros/ros.h
 robot_control/motor_cmd.h
 /home/ubuntu/catkin_ws/src/robot_control/src/robot_control/motor_cmd.h
+std_msgs/String.h
+/home/ubuntu/catkin_ws/src/robot_control/src/std_msgs/String.h
 
 /opt/ros/noetic/include/ros/advertise_options.h
 ros/forwards.h
@@ -675,6 +677,22 @@ ros/forwards.h
 /opt/ros/noetic/include/ros/ros/forwards.h
 
 /opt/ros/noetic/include/rosconsole/macros_generated.h
+
+/opt/ros/noetic/include/std_msgs/String.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
 
 /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
 ros/macros.h

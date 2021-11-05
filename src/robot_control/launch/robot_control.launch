@@ -1,0 +1,3 @@
+<launch>
+  <node name="motor_controller" pkg="robot_control" type="motor_controller" output="screen"/>
+</launch>

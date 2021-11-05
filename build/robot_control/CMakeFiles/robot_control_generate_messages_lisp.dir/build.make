@@ -58,7 +58,6 @@ robot_control/CMakeFiles/robot_control_generate_messages_lisp: /home/ubuntu/catk
 
 /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/robot_control/msg/motor_cmd.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
 /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/robot_control/msg/motor_cmd.lisp: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/robot_control/msg/motor_cmd.lisp: /opt/ros/noetic/share/std_msgs/msg/Int8.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from robot_control/motor_cmd.msg"
 	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/robot_control/msg
 

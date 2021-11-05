@@ -59,7 +59,6 @@ robot_control/CMakeFiles/robot_control_generate_messages_py: /home/ubuntu/catkin
 
 /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py: /opt/ros/noetic/share/std_msgs/msg/Int8.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG robot_control/motor_cmd"
 	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg
 

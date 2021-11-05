@@ -19,7 +19,7 @@ add_custom_target(robot_control_generate_messages ALL)
 
 get_filename_component(_filename "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg" NAME_WE)
 add_custom_target(_robot_control_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "robot_control" "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg" "std_msgs/Int8"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "robot_control" "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg" ""
 )
 
 #
@@ -31,7 +31,7 @@ add_custom_target(_robot_control_generate_messages_check_deps_${_filename}
 _generate_msg_cpp(robot_control
   "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Int8.msg"
+  ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/robot_control
 )
 
@@ -64,7 +64,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS robot_control_generate_messages_cpp
 _generate_msg_eus(robot_control
   "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Int8.msg"
+  ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/robot_control
 )
 
@@ -97,7 +97,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS robot_control_generate_messages_eus
 _generate_msg_lisp(robot_control
   "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Int8.msg"
+  ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/robot_control
 )
 
@@ -130,7 +130,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS robot_control_generate_messages_lis
 _generate_msg_nodejs(robot_control
   "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Int8.msg"
+  ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/robot_control
 )
 
@@ -163,7 +163,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS robot_control_generate_messages_nod
 _generate_msg_py(robot_control
   "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Int8.msg"
+  ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/robot_control
 )
 
