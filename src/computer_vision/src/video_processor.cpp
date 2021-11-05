@@ -1,3 +1,18 @@
+#include "ros/ros.h"
+#include "computer_vision/motor_cmd.h"
+#include "std_msgs/String.h"
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include "sensor_msgs/Image.h"
+
+#include <sstream>
+
+ros::NodeHandle n;
+ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
+
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
     cv_bridge::CvImagePtr cv_ptr;
@@ -36,8 +51,6 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         int y = moment.m01 / moment.m00;
         cv::circle(drawing, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
     
-        ros::NodeHandle n;
-        ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
         // Decide whether the robot should turn left or right or go straight
         std_msgs::String  msg;
         std::stringstream ss;
@@ -63,7 +76,6 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 int main(int argc, char **argv) {
     
     ros::init(argc, argv, "video_processor");
-    ros::NodeHandle n;
     ros::Subscriber video_sub = n.subscribe("video_feed",30, videoCallback); 
     ROS_INFO("ROS INITLIAZED");
     ros::spin();
