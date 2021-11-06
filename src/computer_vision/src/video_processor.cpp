@@ -10,9 +10,7 @@
 
 #include <sstream>
 
-ros::Publisher command_pub = n.advertise<std_msgs::String>("motor_controls", 100);
-std_msgs::String  msg;
-msg.data = "";
+ros::Publisher command_pub;
 
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -47,6 +45,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     // Find the center of the biggest contour and draw a circle 
     cv::Moments moment = cv::moments(contours[max_index], false);
     ROS_INFO("ENTERING TRY STATEMENT");
+    std_msgs::String  msg;
     try {
         int x = moment.m10 / moment.m00;
         int y = moment.m01 / moment.m00;
@@ -65,6 +64,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
             msg.data = ss.str();
         }   
         ROS_INFO("%s", msg.data.c_str());
+        command_pub.publish(msg);
     } catch (int exc) {
         ROS_INFO("Error in videoprocessor.cpp");
 }
@@ -73,9 +73,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 int main(int argc, char **argv) {
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle n;
-    ros::Subscriber video_sub = n.subscribe("video_feed",30, videoCallback); 
-    command_pub.publish(msg);
-    ROS_INFO("Published msg");
+    ros::Subscriber video_sub = n.subscribe("video_feed", 10, videoCallback); 
+    command_pub = n.advertise<std_msgs::String>("motor_controls", 10);
     ros::spin();
     return 0;
 }
