@@ -6,29 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-
 /home/ubuntu/catkin_ws/src/computer_vision/src/video_processor.cpp
 ros/ros.h
 /home/ubuntu/catkin_ws/src/computer_vision/src/ros/ros.h
-computer_vision/motor_cmd.h
-/home/ubuntu/catkin_ws/src/computer_vision/src/computer_vision/motor_cmd.h
 std_msgs/String.h
 /home/ubuntu/catkin_ws/src/computer_vision/src/std_msgs/String.h
+sensor_msgs/Image.h
+/home/ubuntu/catkin_ws/src/computer_vision/src/sensor_msgs/Image.h
 image_transport/image_transport.h
 -
 cv_bridge/cv_bridge.h
@@ -39,8 +23,6 @@ opencv2/imgproc/imgproc.hpp
 -
 opencv2/highgui/highgui.hpp
 -
-sensor_msgs/Image.h
-/home/ubuntu/catkin_ws/src/computer_vision/src/sensor_msgs/Image.h
 sstream
 -
 

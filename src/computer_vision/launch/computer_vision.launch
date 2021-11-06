@@ -1,5 +1,5 @@
 <launch>
   <node name="video_processor" pkg="computer_vision" type="video_processor" output="screen"/>
   <node name="video_streamer" pkg="computer_vision" type="video_streamer.py" output="screen"/>
-  <node name="motor_controller" pkg="computer_vision" type="motor_controller.py" output="screen"/>
+  <node name="motor_controller" pkg="robot_control" type="motor_controller.py" output="screen"/>
 </launch>

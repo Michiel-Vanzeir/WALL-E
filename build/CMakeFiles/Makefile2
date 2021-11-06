@@ -181,7 +181,6 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest.dir/clean
 
 # Recursive "all" directory target.
 robot_control/all: robot_control/CMakeFiles/robot_control_generate_messages.dir/all
-robot_control/all: robot_control/CMakeFiles/motor_controller.dir/all
 
 .PHONY : robot_control/all
 
@@ -219,7 +218,6 @@ robot_control/clean: robot_control/CMakeFiles/robot_control_genlisp.dir/clean
 robot_control/clean: robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/clean
 robot_control/clean: robot_control/CMakeFiles/robot_control_generate_messages_py.dir/clean
 robot_control/clean: robot_control/CMakeFiles/robot_control_gennodejs.dir/clean
-robot_control/clean: robot_control/CMakeFiles/motor_controller.dir/clean
 
 .PHONY : robot_control/clean
 
@@ -965,7 +963,7 @@ robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/all: robot_cont
 robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/all: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/all
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/depend
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=18 "Built target robot_control_generate_messages_cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=16 "Built target robot_control_generate_messages_cpp"
 .PHONY : robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1047,7 +1045,7 @@ robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/all: robot_con
 robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/all: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/all
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/depend
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=21 "Built target robot_control_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=19 "Built target robot_control_generate_messages_lisp"
 .PHONY : robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1075,7 +1073,7 @@ robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/all: robot_cont
 robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/all: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/all
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/depend
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=19,20 "Built target robot_control_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=17,18 "Built target robot_control_generate_messages_eus"
 .PHONY : robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1157,7 +1155,7 @@ robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/all: robot_c
 robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/all: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/all
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/depend
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=22 "Built target robot_control_generate_messages_nodejs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=20 "Built target robot_control_generate_messages_nodejs"
 .PHONY : robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1185,7 +1183,7 @@ robot_control/CMakeFiles/robot_control_generate_messages_py.dir/all: robot_contr
 robot_control/CMakeFiles/robot_control_generate_messages_py.dir/all: robot_control/CMakeFiles/_robot_control_generate_messages_check_deps_motor_cmd.dir/all
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_py.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_py.dir/depend
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_generate_messages_py.dir/build.make robot_control/CMakeFiles/robot_control_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=23,24 "Built target robot_control_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=21,22 "Built target robot_control_generate_messages_py"
 .PHONY : robot_control/CMakeFiles/robot_control_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1231,53 +1229,6 @@ robot_control_gennodejs: robot_control/CMakeFiles/robot_control_gennodejs.dir/ru
 robot_control/CMakeFiles/robot_control_gennodejs.dir/clean:
 	$(MAKE) -f robot_control/CMakeFiles/robot_control_gennodejs.dir/build.make robot_control/CMakeFiles/robot_control_gennodejs.dir/clean
 .PHONY : robot_control/CMakeFiles/robot_control_gennodejs.dir/clean
-
-#=============================================================================
-# Target rules for target robot_control/CMakeFiles/motor_controller.dir
-
-# All Build rule for target.
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/roscpp_generate_messages_py.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/roscpp_generate_messages_lisp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/roscpp_generate_messages_eus.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/_catkin_empty_exported_target.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/std_msgs_generate_messages_py.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/robot_control_generate_messages_lisp.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/robot_control_generate_messages_eus.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/all
-robot_control/CMakeFiles/motor_controller.dir/all: robot_control/CMakeFiles/robot_control_generate_messages_py.dir/all
-	$(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/depend
-	$(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=16,17 "Built target motor_controller"
-.PHONY : robot_control/CMakeFiles/motor_controller.dir/all
-
-# Build rule for subdir invocation for target.
-robot_control/CMakeFiles/motor_controller.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/catkin_ws/build/CMakeFiles 9
-	$(MAKE) -f CMakeFiles/Makefile2 robot_control/CMakeFiles/motor_controller.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/catkin_ws/build/CMakeFiles 0
-.PHONY : robot_control/CMakeFiles/motor_controller.dir/rule
-
-# Convenience name for target.
-motor_controller: robot_control/CMakeFiles/motor_controller.dir/rule
-
-.PHONY : motor_controller
-
-# clean rule for target.
-robot_control/CMakeFiles/motor_controller.dir/clean:
-	$(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/clean
-.PHONY : robot_control/CMakeFiles/motor_controller.dir/clean
 
 #=============================================================================
 # Target rules for target computer_vision/CMakeFiles/computer_vision_generate_messages_cpp.dir
@@ -1345,7 +1296,7 @@ computer_vision/CMakeFiles/computer_vision_generate_messages.dir/clean:
 computer_vision/CMakeFiles/video_processor.dir/all:
 	$(MAKE) -f computer_vision/CMakeFiles/video_processor.dir/build.make computer_vision/CMakeFiles/video_processor.dir/depend
 	$(MAKE) -f computer_vision/CMakeFiles/video_processor.dir/build.make computer_vision/CMakeFiles/video_processor.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=25,26 "Built target video_processor"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=23,24 "Built target video_processor"
 .PHONY : computer_vision/CMakeFiles/video_processor.dir/all
 
 # Build rule for subdir invocation for target.

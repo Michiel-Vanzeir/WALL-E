@@ -1,12 +1,11 @@
 #include "ros/ros.h"
-#include "computer_vision/motor_cmd.h"
 #include "std_msgs/String.h"
+#include "sensor_msgs/Image.h"
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "sensor_msgs/Image.h"
 
 #include <sstream>
 
@@ -14,13 +13,16 @@ ros::Publisher command_pub;
 
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
+    // Convert the ROS Image to an OpenCV image
     cv_bridge::CvImagePtr cv_ptr;
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     
+    // Create three Mat objects
     cv::Mat gray_image;
     cv::Mat blurred_image;
     cv::Mat threshold_image;
 
+    // Do some processing on the image and store them in new Mat objects
     cv::cvtColor(cv_ptr->image, gray_image, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray_image, blurred_image, cv::Size(5, 5), 0);
     cv::threshold(blurred_image, threshold_image, 25, 255, cv::THRESH_BINARY);
@@ -40,41 +42,37 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
             max_index = i;
         }
     }
-    cv::drawContours(drawing, contours, max_index, color, 2, 8, hierarchy, 0, cv::Point());
-
+ 
     // Find the center of the biggest contour and draw a circle 
     cv::Moments moment = cv::moments(contours[max_index], false);
-    ROS_INFO("ENTERING TRY STATEMENT");
-    std_msgs::String  msg;
+    std_msgs::String motor_msg;
     try {
         int x = moment.m10 / moment.m00;
         int y = moment.m01 / moment.m00;
-        cv::circle(drawing, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
     
         // Decide whether the robot should turn left or right or go straight
         std::stringstream ss;
         if (x < drawing.cols / 2) {
-            ss << "left";
-            msg.data =  ss.str();
+            ss << "-0.1|0.1";
         } else if (x > drawing.cols / 2) {
-            ss << "right";
-            msg.data = ss.str();
+            ss << "0.1|-0.1";
         } else {
-            ss << "straight";
-            msg.data = ss.str();
+            ss << "0.1|0.1";
         }   
-        ROS_INFO("%s", msg.data.c_str());
-        command_pub.publish(msg);
+        motor_msg.data = ss.str();
+        command_pub.publish(motor_msg);
     } catch (int exc) {
         ROS_INFO("Error in videoprocessor.cpp");
 }
 }
 
 int main(int argc, char **argv) {
+    // Initialize the node, nodehandle, subscriber and define the publisher
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle n;
     ros::Subscriber video_sub = n.subscribe("video_feed", 10, videoCallback); 
     command_pub = n.advertise<std_msgs::String>("motor_controls", 10);
+
     ros::spin();
     return 0;
 }

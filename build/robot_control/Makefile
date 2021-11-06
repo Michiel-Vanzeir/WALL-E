@@ -89,17 +89,6 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -111,6 +100,17 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -587,48 +587,6 @@ robot_control_gennodejs/fast:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f robot_control/CMakeFiles/robot_control_gennodejs.dir/build.make robot_control/CMakeFiles/robot_control_gennodejs.dir/build
 .PHONY : robot_control_gennodejs/fast
 
-# Convenience name for target.
-robot_control/CMakeFiles/motor_controller.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robot_control/CMakeFiles/motor_controller.dir/rule
-.PHONY : robot_control/CMakeFiles/motor_controller.dir/rule
-
-# Convenience name for target.
-motor_controller: robot_control/CMakeFiles/motor_controller.dir/rule
-
-.PHONY : motor_controller
-
-# fast build rule for target.
-motor_controller/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/build
-.PHONY : motor_controller/fast
-
-src/motor_controller.o: src/motor_controller.cpp.o
-
-.PHONY : src/motor_controller.o
-
-# target to build an object file
-src/motor_controller.cpp.o:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o
-.PHONY : src/motor_controller.cpp.o
-
-src/motor_controller.i: src/motor_controller.cpp.i
-
-.PHONY : src/motor_controller.i
-
-# target to preprocess a source file
-src/motor_controller.cpp.i:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.i
-.PHONY : src/motor_controller.cpp.i
-
-src/motor_controller.s: src/motor_controller.cpp.s
-
-.PHONY : src/motor_controller.s
-
-# target to generate assembly for a file
-src/motor_controller.cpp.s:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.s
-.PHONY : src/motor_controller.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -638,7 +596,6 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
-	@echo "... test"
 	@echo "... install"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_eus"
@@ -654,6 +611,7 @@ help:
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... _catkin_empty_exported_target"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... test"
 	@echo "... install/local"
 	@echo "... std_msgs_generate_messages_nodejs"
 	@echo "... rebuild_cache"
@@ -670,10 +628,6 @@ help:
 	@echo "... robot_control_generate_messages_nodejs"
 	@echo "... robot_control_generate_messages_py"
 	@echo "... robot_control_gennodejs"
-	@echo "... motor_controller"
-	@echo "... src/motor_controller.o"
-	@echo "... src/motor_controller.i"
-	@echo "... src/motor_controller.s"
 .PHONY : help
 
 

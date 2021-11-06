@@ -649,19 +649,6 @@ robot_control_gennodejs/fast:
 .PHONY : robot_control_gennodejs/fast
 
 #=============================================================================
-# Target rules for targets named motor_controller
-
-# Build rule for target.
-motor_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 motor_controller
-.PHONY : motor_controller
-
-# fast build rule for target.
-motor_controller/fast:
-	$(MAKE) -f robot_control/CMakeFiles/motor_controller.dir/build.make robot_control/CMakeFiles/motor_controller.dir/build
-.PHONY : motor_controller/fast
-
-#=============================================================================
 # Target rules for targets named computer_vision_generate_messages_cpp
 
 # Build rule for target.
@@ -1010,7 +997,6 @@ help:
 	@echo "... robot_control_generate_messages_nodejs"
 	@echo "... robot_control_generate_messages_py"
 	@echo "... robot_control_gennodejs"
-	@echo "... motor_controller"
 	@echo "... computer_vision_generate_messages_cpp"
 	@echo "... computer_vision_generate_messages"
 	@echo "... video_processor"
