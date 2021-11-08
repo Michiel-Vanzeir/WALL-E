@@ -8,7 +8,9 @@ def video_stream():
     
     # Initialize camera, publisher, and the CvBridge
     cap = cv2.VideoCapture(0)
-    video_pub = rospy.Publisher('video_feed', Image, queue_size=100)    
+    cap.set(3, 640)
+    cap.set(4, 480)
+    video_pub = rospy.Publisher('video_feed', Image, queue_size=10)    
     bridge = CvBridge()
 
     # Check whether the initialization of the camera went well
@@ -17,13 +19,11 @@ def video_stream():
 
     # Start the node, publish three times per second
     rospy.init_node('video_streamer')
-    rate = rospy.Rate(3) # 10hz
+    rate = rospy.Rate(4) # 4hz
 
     while not rospy.is_shutdown():
-        # Read the frame from the video feed, resize it to 150 by 150
+        # Read the frame from the video feed
         ret, frame = cap.read()
-        frame = cv2.resize(frame,(150,150))
-
         # Convert the frame to a ROS image and publish it 
         image_message = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
         video_pub.publish(image_message)

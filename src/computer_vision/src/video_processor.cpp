@@ -25,7 +25,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     // Do some processing on the image and store them in new Mat objects
     cv::cvtColor(cv_ptr->image, gray_image, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray_image, blurred_image, cv::Size(5, 5), 0);
-    cv::threshold(blurred_image, threshold_image, 25, 255, cv::THRESH_BINARY);
+    cv::threshold(blurred_image, threshold_image, 45, 255, cv::THRESH_BINARY_INV);
     
     // Find the biggest contour and draw it
     std::vector<std::vector<cv::Point>> contours;
@@ -52,12 +52,15 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     
         // Decide whether the robot should turn left or right or go straight
         std::stringstream ss;
-        if (x < drawing.cols / 2) {
-            ss << "-0.1|0.1";
-        } else if (x > drawing.cols / 2) {
-            ss << "0.1|-0.1";
+        if (x <= drawing.cols / 3) {
+            ss << "-0.05|0";
+            ROS_INFO("Turning left");
+        } else if (x >= drawing.cols / 3) {
+            ss << "0|-0.05";
+            ROS_INFO("Turning right");
         } else {
-            ss << "0.1|0.1";
+            ss << "0.05|0.05";
+            ROS_INFO("Going straight");
         }   
         motor_msg.data = ss.str();
         command_pub.publish(motor_msg);
