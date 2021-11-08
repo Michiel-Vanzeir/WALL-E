@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import rospy
+import time
 from std_msgs.msg import String
 from adafruit_motorkit import MotorKit
 
@@ -13,9 +14,16 @@ def controlMotors(msg):
     left_speed = float(msg[0])
     right_speed = float(msg[1])
     
-    # Set the speed of the motors
-    kit.motor1.throttle = left_speed
-    kit.motor2.throttle = right_speed
+    if left_speed > right_speed or right_speed > left_speed:
+        kit.motor1.throttle = left_speed
+        kit.motor2.throttle = right_speed
+        time.sleep(0.1)
+        kit.motor1.throttle = 0
+        kit.motor2.throttle = 0
+    else:
+        # Set the speed of the motors
+        kit.motor1.throttle = left_speed
+        kit.motor2.throttle = right_speed
 
 
 def subscriber():
