@@ -3,6 +3,6 @@ prefix=/home/ubuntu/catkin_ws/install
 Name: robot_control
 Description: Description of robot_control
 Version: 0.0.0
-Cflags: -I${prefix}/include
+Cflags: 
 Libs: -L${prefix}/lib 
 Requires: 

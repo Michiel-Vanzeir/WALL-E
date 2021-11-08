@@ -8,7 +8,6 @@ project(robot_control)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
   roscpp
   std_msgs
 )
@@ -47,10 +46,7 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  motor_cmd.msg
-)
+
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -66,10 +62,6 @@ add_message_files(
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

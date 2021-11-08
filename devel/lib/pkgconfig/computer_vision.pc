@@ -3,6 +3,6 @@ prefix=/home/ubuntu/catkin_ws/devel
 Name: computer_vision
 Description: Description of computer_vision
 Version: 0.0.0
-Cflags: -I/home/ubuntu/catkin_ws/devel/include
+Cflags: 
 Libs: -L${prefix}/lib 
 Requires: 
