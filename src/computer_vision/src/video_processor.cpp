@@ -17,15 +17,18 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     cv_bridge::CvImagePtr cv_ptr;
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     
+    // Only use the bottom part of the cv image
+    cv::Mat image = cv_ptr->image(cv::Rect(0, 0, cv_ptr->image.cols, cv_ptr->image.rows/3));
+
     // Create three Mat objects
     cv::Mat gray_image;
     cv::Mat blurred_image;
     cv::Mat threshold_image;
 
     // Do some processing on the image and store them in new Mat objects
-    cv::cvtColor(cv_ptr->image, gray_image, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(image, gray_image, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(gray_image, blurred_image, cv::Size(5, 5), 0);
-    cv::threshold(blurred_image, threshold_image, 45, 255, cv::THRESH_BINARY_INV);
+    cv::threshold(blurred_image, threshold_image, 5, 255, cv::THRESH_BINARY);
     
     // Find the biggest contour and draw it
     std::vector<std::vector<cv::Point>> contours;
