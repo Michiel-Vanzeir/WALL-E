@@ -27,7 +27,7 @@ def video_stream():
         # Convert the frame to a ROS image and publish it 
         image_message = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
         video_pub.publish(image_message)
-        
+        rospy.loginfo("published video frame");      
         rate.sleep()
         
     # End video feed after shutdown
