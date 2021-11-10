@@ -16,25 +16,16 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     // Convert the ROS Image to an OpenCV image
     cv_bridge::CvImagePtr cv_ptr;
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    
-    // Only use the bottom part of the cv image
-    cv::Mat image = cv_ptr->image(cv::Rect(0, 0, cv_ptr->image.cols, cv_ptr->image.rows/3));
-
-    // Create three Mat objects
-    cv::Mat gray_image;
-    cv::Mat blurred_image;
-    cv::Mat threshold_image;
 
     // Do some processing on the image and store them in new Mat objects
-    cv::cvtColor(image, gray_image, cv::COLOR_BGR2GRAY);
-    cv::GaussianBlur(gray_image, blurred_image, cv::Size(5, 5), 0);
-    cv::threshold(blurred_image, threshold_image, 5, 255, cv::THRESH_BINARY);
-    
+    cv::cvtColor(cv_ptr->image, image, cv::COLOR_BGR2GRAY);
+    cv::GaussianBlur(image, image, cv::Size(5, 5), 0);
+    cv::threshold(image, image, 60, 255, cv::THRESH_BINARY_INV);
     // Find the biggest contour and draw it
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
-    cv::findContours(threshold_image, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
-    cv::Mat drawing = cv::Mat::zeros(gray_image.size(), CV_8UC3);
+    cv::findContours(image.copy(), contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
+    cv::Mat drawing = cv::Mat::zeros(image.size(), CV_8UC3);
     cv::Scalar color = cv::Scalar(255, 255, 255);
     double max_area = 0;
     int max_index = 0;
@@ -55,20 +46,20 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     
         // Decide whether the robot should turn left or right or go straight
         std::stringstream ss;
-        if (x <= drawing.cols / 3) {
-            ss << "-0.5|0";
+        if (x >= 120) {
+            ss << "0|0.395";
             ROS_INFO("Turning left");
-        } else if (x >= (drawing.cols / 3)*2) {
-            ss << "0|-0.5";
+        } else if (x <= 50) {
+            ss << "0.5|0";
             ROS_INFO("Turning right");
         } else {
-            ss << "0.5|0.5";
+            ss << "0.5|0.395";
             ROS_INFO("Going straight");
         }   
         motor_msg.data = ss.str();
         command_pub.publish(motor_msg);
-    } catch (int exc) {
-        ROS_INFO("Error in videoprocessor.cpp");
+    } catch (int err) {
+        ROS_INFO("Error when deciding how to turn");
 }
 }
 
