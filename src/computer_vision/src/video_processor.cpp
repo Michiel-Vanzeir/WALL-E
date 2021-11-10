@@ -16,7 +16,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     // Convert the ROS Image to an OpenCV image
     cv_bridge::CvImagePtr cv_ptr;
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-
+    cv::Mat image;
     // Do some processing on the image and store them in new Mat objects
     cv::cvtColor(cv_ptr->image, image, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(image, image, cv::Size(5, 5), 0);
@@ -24,7 +24,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     // Find the biggest contour and draw it
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
-    cv::findContours(image.copy(), contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
+    cv::findContours(image, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
     cv::Mat drawing = cv::Mat::zeros(image.size(), CV_8UC3);
     cv::Scalar color = cv::Scalar(255, 255, 255);
     double max_area = 0;
