@@ -16,9 +16,6 @@ def controlMotors(msg):
 
     kit.motor1.throttle = left_speed
     kit.motor2.throttle = right_speed
-    time.sleep(0.15)
-    kit.motor1.throttle = 0
-    kit.motor2.throttle = 0
 
 
 def subscriber():

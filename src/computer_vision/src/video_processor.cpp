@@ -46,14 +46,14 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     
         // Decide whether the robot should turn left or right or go straight
         std::stringstream ss;
-        if (x >= 120) {
-            ss << "0|0.395";
+        if (x <= 50) {
+            ss << "0|0.35";
             ROS_INFO("Turning left");
-        } else if (x <= 50) {
-            ss << "0.5|0";
+        } else if (x >= 120) {
+            ss << "0.2695|0";
             ROS_INFO("Turning right");
         } else {
-            ss << "0.5|0.395";
+            ss << "0.2695|0.35";
             ROS_INFO("Going straight");
         }   
         motor_msg.data = ss.str();
