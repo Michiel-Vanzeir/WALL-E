@@ -1,8 +1,8 @@
 
 "use strict";
 
-let motor_cmd = require('./motor_cmd.js');
+let motor_throttle = require('./motor_throttle.js');
 
 module.exports = {
-  motor_cmd: motor_cmd,
+  motor_throttle: motor_throttle,
 };

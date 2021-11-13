@@ -391,6 +391,9 @@ class_loader_DIR:PATH=/opt/ros/noetic/share/class_loader/cmake
 //Value Computed by CMake
 computer_vision_BINARY_DIR:STATIC=/home/ubuntu/catkin_ws/build/computer_vision
 
+//The directory containing a CMake configuration file for computer_vision.
+computer_vision_DIR:PATH=/home/ubuntu/catkin_ws/devel/share/computer_vision/cmake
+
 //Value Computed by CMake
 computer_vision_SOURCE_DIR:STATIC=/home/ubuntu/catkin_ws/src/computer_vision
 
@@ -471,7 +474,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 image_transport_DIR:PATH=/opt/ros/noetic/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/noetic/lib/librospack.so
+lib:FILEPATH=/opt/ros/noetic/lib/libxmlrpcpp.so
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/noetic/share/message_filters/cmake

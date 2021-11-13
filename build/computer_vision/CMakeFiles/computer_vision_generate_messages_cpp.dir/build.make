@@ -53,17 +53,18 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include computer_vision/CMakeFiles/computer_vision_generate_messages_cpp.dir/progress.make
 
-computer_vision/CMakeFiles/computer_vision_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h
+computer_vision/CMakeFiles/computer_vision_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h
 
 
-/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h: /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_cmd.msg
-/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h: /opt/ros/noetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from computer_vision/motor_cmd.msg"
-	cd /home/ubuntu/catkin_ws/src/computer_vision && /home/ubuntu/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_cmd.msg -Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p computer_vision -o /home/ubuntu/catkin_ws/devel/include/computer_vision -e /opt/ros/noetic/share/gencpp/cmake/..
+/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h: /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg
+/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from computer_vision/motor_throttle.msg"
+	cd /home/ubuntu/catkin_ws/src/computer_vision && /home/ubuntu/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg -Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p computer_vision -o /home/ubuntu/catkin_ws/devel/include/computer_vision -e /opt/ros/noetic/share/gencpp/cmake/..
 
 computer_vision_generate_messages_cpp: computer_vision/CMakeFiles/computer_vision_generate_messages_cpp
-computer_vision_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_cmd.h
+computer_vision_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h
 computer_vision_generate_messages_cpp: computer_vision/CMakeFiles/computer_vision_generate_messages_cpp.dir/build.make
 
 .PHONY : computer_vision_generate_messages_cpp

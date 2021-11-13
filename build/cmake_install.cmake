@@ -131,8 +131,8 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/ubuntu/catkin_ws/build/gtest/cmake_install.cmake")
-  include("/home/ubuntu/catkin_ws/build/robot_control/cmake_install.cmake")
   include("/home/ubuntu/catkin_ws/build/computer_vision/cmake_install.cmake")
+  include("/home/ubuntu/catkin_ws/build/robot_control/cmake_install.cmake")
 
 endif()
 

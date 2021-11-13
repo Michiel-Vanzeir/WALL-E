@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_cmd.js"
+  "/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js"
   "CMakeFiles/robot_control_generate_messages_nodejs"
 )
 

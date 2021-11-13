@@ -1,27 +1,23 @@
 #! /usr/bin/env python3
 import rospy
 import time
-from std_msgs.msg import String
+from computer_vision.msg import motor_throttle
 from adafruit_motorkit import MotorKit
 
 
 kit = MotorKit()
 
 
-def controlMotors(msg):
-    # Retrieve the wanted speed from the msg
-    msg = msg.data.split('|')
-    left_speed = float(msg[0])
-    right_speed = float(msg[1])
+def controlMotors(data):
+    kit.motor1.throttle = data.left_motor
+    kit.motor2.throttle = data.right_motor
 
-    kit.motor1.throttle = left_speed
-    kit.motor2.throttle = right_speed
 
 
 def subscriber():
     # Initialize node and subscriber
     rospy.init_node('motor_controller')
-    rospy.Subscriber('motor_controls', String, controlMotors)
+    rospy.Subscriber('motor_controls', motor_throttle, controlMotors)
 
     rospy.spin()
 

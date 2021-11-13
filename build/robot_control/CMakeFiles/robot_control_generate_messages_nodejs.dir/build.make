@@ -53,16 +53,17 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/progress.make
 
-robot_control/CMakeFiles/robot_control_generate_messages_nodejs: /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_cmd.js
+robot_control/CMakeFiles/robot_control_generate_messages_nodejs: /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js
 
 
-/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_cmd.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_cmd.js: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from robot_control/motor_cmd.msg"
-	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg
+/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg
+/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from robot_control/motor_throttle.msg"
+	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg
 
 robot_control_generate_messages_nodejs: robot_control/CMakeFiles/robot_control_generate_messages_nodejs
-robot_control_generate_messages_nodejs: /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_cmd.js
+robot_control_generate_messages_nodejs: /home/ubuntu/catkin_ws/devel/share/gennodejs/ros/robot_control/msg/motor_throttle.js
 robot_control_generate_messages_nodejs: robot_control/CMakeFiles/robot_control_generate_messages_nodejs.dir/build.make
 
 .PHONY : robot_control_generate_messages_nodejs

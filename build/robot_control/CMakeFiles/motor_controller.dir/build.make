@@ -48,60 +48,21 @@ CMAKE_SOURCE_DIR = /home/ubuntu/catkin_ws/src
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 
-# Include any dependencies generated for this target.
-include robot_control/CMakeFiles/motor_controller.dir/depend.make
+# Utility rule file for motor_controller.
 
 # Include the progress variables for this target.
 include robot_control/CMakeFiles/motor_controller.dir/progress.make
 
-# Include the compile flags for this target's objects.
-include robot_control/CMakeFiles/motor_controller.dir/flags.make
+robot_control/CMakeFiles/motor_controller:
+	cd /home/ubuntu/catkin_ws/build/robot_control && python3 src/motor_controller.py
 
-robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o: robot_control/CMakeFiles/motor_controller.dir/flags.make
-robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o: /home/ubuntu/catkin_ws/src/robot_control/src/motor_controller.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o"
-	cd /home/ubuntu/catkin_ws/build/robot_control && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o -c /home/ubuntu/catkin_ws/src/robot_control/src/motor_controller.cpp
+motor_controller: robot_control/CMakeFiles/motor_controller
+motor_controller: robot_control/CMakeFiles/motor_controller.dir/build.make
 
-robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/motor_controller.dir/src/motor_controller.cpp.i"
-	cd /home/ubuntu/catkin_ws/build/robot_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/catkin_ws/src/robot_control/src/motor_controller.cpp > CMakeFiles/motor_controller.dir/src/motor_controller.cpp.i
-
-robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/motor_controller.dir/src/motor_controller.cpp.s"
-	cd /home/ubuntu/catkin_ws/build/robot_control && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/catkin_ws/src/robot_control/src/motor_controller.cpp -o CMakeFiles/motor_controller.dir/src/motor_controller.cpp.s
-
-# Object files for target motor_controller
-motor_controller_OBJECTS = \
-"CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o"
-
-# External object files for target motor_controller
-motor_controller_EXTERNAL_OBJECTS =
-
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: robot_control/CMakeFiles/motor_controller.dir/src/motor_controller.cpp.o
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: robot_control/CMakeFiles/motor_controller.dir/build.make
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/libroscpp.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libpthread.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_chrono.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/librosconsole.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/librosconsole_log4cxx.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/librosconsole_backend_interface.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/liblog4cxx.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_regex.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/libxmlrpcpp.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/libroscpp_serialization.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/librostime.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_date_time.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /opt/ros/noetic/lib/libcpp_common.so
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_system.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libboost_thread.so.1.71.0
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: /usr/lib/arm-linux-gnueabihf/libconsole_bridge.so.0.4
-/home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller: robot_control/CMakeFiles/motor_controller.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller"
-	cd /home/ubuntu/catkin_ws/build/robot_control && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/motor_controller.dir/link.txt --verbose=$(VERBOSE)
+.PHONY : motor_controller
 
 # Rule to build all files generated by this target.
-robot_control/CMakeFiles/motor_controller.dir/build: /home/ubuntu/catkin_ws/devel/lib/robot_control/motor_controller
+robot_control/CMakeFiles/motor_controller.dir/build: motor_controller
 
 .PHONY : robot_control/CMakeFiles/motor_controller.dir/build
 

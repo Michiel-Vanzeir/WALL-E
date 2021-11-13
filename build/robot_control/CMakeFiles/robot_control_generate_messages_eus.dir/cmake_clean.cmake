@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
   "/home/ubuntu/catkin_ws/devel/share/roseus/ros/robot_control/manifest.l"
-  "/home/ubuntu/catkin_ws/devel/share/roseus/ros/robot_control/msg/motor_cmd.l"
+  "/home/ubuntu/catkin_ws/devel/share/roseus/ros/robot_control/msg/motor_throttle.l"
   "CMakeFiles/robot_control_generate_messages_eus"
 )
 

@@ -1,13 +1,11 @@
 #include "ros/ros.h"
-#include "std_msgs/String.h"
+#include "computer_vision/motor_throttle.h"
 #include "sensor_msgs/Image.h"
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-
-#include <sstream>
 
 ros::Publisher command_pub;
 
@@ -39,24 +37,25 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
  
     // Find the center of the biggest contour and draw a circle 
     cv::Moments moment = cv::moments(contours[max_index], false);
-    std_msgs::String motor_msg;
+    computer_vision::motor_throttle  motor_msg;
     try {
         int x = moment.m10 / moment.m00;
         int y = moment.m01 / moment.m00;
     
         // Decide whether the robot should turn left or right or go straight
-        std::stringstream ss;
         if (x <= 50) {
-            ss << "0|0.35";
+            motor_msg.left_motor = 0;
+            motor_msg.right_motor = 0.35;
             ROS_INFO("Turning left");
         } else if (x >= 120) {
-            ss << "0.2695|0";
+            motor_msg.left_motor = 0.2695;
+            motor_msg.right_motor = 0;
             ROS_INFO("Turning right");
         } else {
-            ss << "0.2695|0.35";
+            motor_msg.left_motor = 0.2695;
+            motor_msg.right_motor = 0.35;
             ROS_INFO("Going straight");
         }   
-        motor_msg.data = ss.str();
         command_pub.publish(motor_msg);
     } catch (int err) {
         ROS_INFO("Error when deciding how to turn");
@@ -68,7 +67,7 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle n;
     ros::Subscriber video_sub = n.subscribe("video_feed", 10, videoCallback); 
-    command_pub = n.advertise<std_msgs::String>("motor_controls", 10);
+    command_pub = n.advertise<computer_vision::motor_throttle>("motor_controls", 10);
 
     ros::spin();
     return 0;

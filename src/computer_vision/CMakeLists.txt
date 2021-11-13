@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   rospy
   sensor_msgs
+  message_generation
   std_msgs
 )
 find_package(OpenCV 4.0.0 REQUIRED)
@@ -51,7 +52,17 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
-## Generate messages in the 'msg' folde
+## Generate messages in the 'msg' folder
+add_message_files(
+  FILES
+  motor_throttle.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -100,7 +111,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES computer_vision
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy message_runtime std_msgs
 #  DEPENDS system_lib
 )
 

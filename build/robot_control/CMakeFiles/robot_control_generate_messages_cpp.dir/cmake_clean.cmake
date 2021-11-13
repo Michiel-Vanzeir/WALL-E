@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h"
+  "/home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h"
   "CMakeFiles/robot_control_generate_messages_cpp"
 )
 

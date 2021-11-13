@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_cmd.msg"
+messages_str = "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
 services_str = ""
 pkg_name = "computer_vision"
 dependencies_str = "std_msgs"

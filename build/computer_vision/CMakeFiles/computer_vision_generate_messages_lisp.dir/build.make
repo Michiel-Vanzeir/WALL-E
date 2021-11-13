@@ -53,16 +53,17 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include computer_vision/CMakeFiles/computer_vision_generate_messages_lisp.dir/progress.make
 
-computer_vision/CMakeFiles/computer_vision_generate_messages_lisp: /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_cmd.lisp
+computer_vision/CMakeFiles/computer_vision_generate_messages_lisp: /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp
 
 
-/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_cmd.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
-/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_cmd.lisp: /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_cmd.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from computer_vision/motor_cmd.msg"
-	cd /home/ubuntu/catkin_ws/build/computer_vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_cmd.msg -Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p computer_vision -o /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg
+/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp: /opt/ros/noetic/lib/genlisp/gen_lisp.py
+/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp: /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg
+/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Lisp code from computer_vision/motor_throttle.msg"
+	cd /home/ubuntu/catkin_ws/build/computer_vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genlisp/cmake/../../../lib/genlisp/gen_lisp.py /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg -Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p computer_vision -o /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg
 
 computer_vision_generate_messages_lisp: computer_vision/CMakeFiles/computer_vision_generate_messages_lisp
-computer_vision_generate_messages_lisp: /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_cmd.lisp
+computer_vision_generate_messages_lisp: /home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp
 computer_vision_generate_messages_lisp: computer_vision/CMakeFiles/computer_vision_generate_messages_lisp.dir/build.make
 
 .PHONY : computer_vision_generate_messages_lisp

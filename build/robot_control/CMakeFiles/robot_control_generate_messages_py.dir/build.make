@@ -53,22 +53,23 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include robot_control/CMakeFiles/robot_control_generate_messages_py.dir/progress.make
 
-robot_control/CMakeFiles/robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py
+robot_control/CMakeFiles/robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py
 robot_control/CMakeFiles/robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/__init__.py
 
 
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG robot_control/motor_cmd"
-	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg
+/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg
+/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG robot_control/motor_throttle"
+	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg
 
 /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/__init__.py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py
+/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/__init__.py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for robot_control"
 	cd /home/ubuntu/catkin_ws/build/robot_control && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg --initpy
 
 robot_control_generate_messages_py: robot_control/CMakeFiles/robot_control_generate_messages_py
-robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_cmd.py
+robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/_motor_throttle.py
 robot_control_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/robot_control/msg/__init__.py
 robot_control_generate_messages_py: robot_control/CMakeFiles/robot_control_generate_messages_py.dir/build.make
 

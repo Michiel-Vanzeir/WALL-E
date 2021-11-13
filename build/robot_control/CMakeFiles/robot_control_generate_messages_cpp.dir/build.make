@@ -53,17 +53,18 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/progress.make
 
-robot_control/CMakeFiles/robot_control_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h
+robot_control/CMakeFiles/robot_control_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h
 
 
-/home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
-/home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg
-/home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h: /opt/ros/noetic/share/gencpp/msg.h.template
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from robot_control/motor_cmd.msg"
-	cd /home/ubuntu/catkin_ws/src/robot_control && /home/ubuntu/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/include/robot_control -e /opt/ros/noetic/share/gencpp/cmake/..
+/home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h: /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg
+/home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h: /opt/ros/noetic/share/gencpp/msg.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from robot_control/motor_throttle.msg"
+	cd /home/ubuntu/catkin_ws/src/robot_control && /home/ubuntu/catkin_ws/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg -Irobot_control:/home/ubuntu/catkin_ws/src/robot_control/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p robot_control -o /home/ubuntu/catkin_ws/devel/include/robot_control -e /opt/ros/noetic/share/gencpp/cmake/..
 
 robot_control_generate_messages_cpp: robot_control/CMakeFiles/robot_control_generate_messages_cpp
-robot_control_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/robot_control/motor_cmd.h
+robot_control_generate_messages_cpp: /home/ubuntu/catkin_ws/devel/include/robot_control/motor_throttle.h
 robot_control_generate_messages_cpp: robot_control/CMakeFiles/robot_control_generate_messages_cpp.dir/build.make
 
 .PHONY : robot_control_generate_messages_cpp

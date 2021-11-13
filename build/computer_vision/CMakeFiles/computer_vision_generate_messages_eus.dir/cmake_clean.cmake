@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
   "/home/ubuntu/catkin_ws/devel/share/roseus/ros/computer_vision/manifest.l"
-  "/home/ubuntu/catkin_ws/devel/share/roseus/ros/computer_vision/msg/motor_cmd.l"
+  "/home/ubuntu/catkin_ws/devel/share/roseus/ros/computer_vision/msg/motor_throttle.l"
   "CMakeFiles/computer_vision_generate_messages_eus"
 )
 

@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
-messages_str = "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_cmd.msg"
+messages_str = "/home/ubuntu/catkin_ws/src/robot_control/msg/motor_throttle.msg"
 services_str = ""
 pkg_name = "robot_control"
 dependencies_str = "std_msgs"

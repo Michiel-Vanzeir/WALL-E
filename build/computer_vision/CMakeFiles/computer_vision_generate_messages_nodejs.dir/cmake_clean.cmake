@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/computer_vision/msg/motor_cmd.js"
+  "/home/ubuntu/catkin_ws/devel/share/gennodejs/ros/computer_vision/msg/motor_throttle.js"
   "CMakeFiles/computer_vision_generate_messages_nodejs"
 )
 

@@ -6,11 +6,29 @@
 
 #IncludeRegexTransform: 
 
+/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
 /home/ubuntu/catkin_ws/src/computer_vision/src/video_processor.cpp
 ros/ros.h
 /home/ubuntu/catkin_ws/src/computer_vision/src/ros/ros.h
-std_msgs/String.h
-/home/ubuntu/catkin_ws/src/computer_vision/src/std_msgs/String.h
+computer_vision/motor_throttle.h
+/home/ubuntu/catkin_ws/src/computer_vision/src/computer_vision/motor_throttle.h
 sensor_msgs/Image.h
 /home/ubuntu/catkin_ws/src/computer_vision/src/sensor_msgs/Image.h
 image_transport/image_transport.h
@@ -22,8 +40,6 @@ sensor_msgs/image_encodings.h
 opencv2/imgproc/imgproc.hpp
 -
 opencv2/highgui/highgui.hpp
--
-sstream
 -
 
 /opt/ros/noetic/include/cv_bridge/cv_bridge.h
@@ -861,22 +877,6 @@ string
 -
 
 /opt/ros/noetic/include/std_msgs/Header.h
-string
--
-vector
--
-map
--
-ros/types.h
--
-ros/serialization.h
--
-ros/builtin_message_traits.h
--
-ros/message_operations.h
--
-
-/opt/ros/noetic/include/std_msgs/String.h
 string
 -
 vector
