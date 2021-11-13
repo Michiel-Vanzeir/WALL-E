@@ -39,21 +39,27 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     cv::Moments moment = cv::moments(contours[max_index], false);
     computer_vision::motor_throttle  motor_msg;
     try {
-        int x = moment.m10 / moment.m00;
-        int y = moment.m01 / moment.m00;
-    
+        int lx = moment.m10 / moment.m00;
+        int ly = moment.m01 / moment.m00;
+
+        int std_throttle_left = 0.21;
+        int std_throttle_right = 0.272;
+        int distance = abs(lx - (image.cols / 2)); 
+        float extra_throttle = distance*0.04;
+
+
         // Decide whether the robot should turn left or right or go straight
-        if (x <= 50) {
-            motor_msg.left_motor = 0;
-            motor_msg.right_motor = 0.35;
+        if (lx <= 50) {
+            motor_msg.left_motor = std_throttle_left;
+            motor_msg.right_motor = std_throttle_right + (extra_throttle*1.295238);
             ROS_INFO("Turning left");
-        } else if (x >= 120) {
-            motor_msg.left_motor = 0.2695;
-            motor_msg.right_motor = 0;
+        } else if (lx >= 120) {
+            motor_msg.left_motor = std_throttle_left + extra_throttle;
+            motor_msg.right_motor = std_throttle_right;
             ROS_INFO("Turning right");
         } else {
-            motor_msg.left_motor = 0.2695;
-            motor_msg.right_motor = 0.35;
+            motor_msg.left_motor = std_throttle_left;
+            motor_msg.right_motor = std_throttle_right;
             ROS_INFO("Going straight");
         }   
         command_pub.publish(motor_msg);
