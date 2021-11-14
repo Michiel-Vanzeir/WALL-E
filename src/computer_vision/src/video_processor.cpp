@@ -45,8 +45,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         int distance = lx - (image.cols / 2); 
         float extra_throttle = distance*0.0025;
 
-        motor_msg.left_motor = std_throttle_left - extra_throttle;
-        motor_msg.right_motor = std_throttle_right + extra_throttle;
+        motor_msg.left_motor = std_throttle_left + extra_throttle;
+        motor_msg.right_motor = std_throttle_right - extra_throttle;
 
         command_pub.publish(motor_msg);
     } catch (int err) {
