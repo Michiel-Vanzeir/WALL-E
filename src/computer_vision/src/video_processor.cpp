@@ -42,18 +42,18 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         int lx = moment.m10 / moment.m00;
         int ly = moment.m01 / moment.m00;
 
-        int std_throttle_left = 0.21;
+        int std_throttle_left = 0.208;
         int std_throttle_right = 0.272;
         int distance = abs(lx - (image.cols / 2)); 
-        float extra_throttle = distance*0.04;
+        float extra_throttle = distance*0.0025;
 
 
         // Decide whether the robot should turn left or right or go straight
-        if (lx <= 50) {
+        if (lx < (image.cols / 3)) {
             motor_msg.left_motor = std_throttle_left;
             motor_msg.right_motor = std_throttle_right + (extra_throttle*1.295238);
             ROS_INFO("Turning left");
-        } else if (lx >= 120) {
+        } else if (lx > (image.cols / 3)*2) {
             motor_msg.left_motor = std_throttle_left + extra_throttle;
             motor_msg.right_motor = std_throttle_right;
             ROS_INFO("Turning right");
