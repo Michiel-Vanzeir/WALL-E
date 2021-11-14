@@ -23,8 +23,6 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(image, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
-    cv::Mat drawing = cv::Mat::zeros(image.size(), CV_8UC3);
-    cv::Scalar color = cv::Scalar(255, 255, 255);
     double max_area = 0;
     int max_index = 0;
     for (int i = 0; i < contours.size(); i++) {
@@ -42,20 +40,20 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         int lx = moment.m10 / moment.m00;
         int ly = moment.m01 / moment.m00;
 
-        int std_throttle_left = 0.208;
-        int std_throttle_right = 0.272;
+        float std_throttle_left = 0.208;
+        float std_throttle_right = 0.272;
         int distance = abs(lx - (image.cols / 2)); 
         float extra_throttle = distance*0.0025;
 
 
         // Decide whether the robot should turn left or right or go straight
         if (lx < (image.cols / 3)) {
-            motor_msg.left_motor = std_throttle_left;
+            motor_msg.left_motor = std_throttle_left - extra_throttle;
             motor_msg.right_motor = std_throttle_right + (extra_throttle*1.295238);
             ROS_INFO("Turning left");
         } else if (lx > (image.cols / 3)*2) {
             motor_msg.left_motor = std_throttle_left + extra_throttle;
-            motor_msg.right_motor = std_throttle_right;
+            motor_msg.right_motor = std_throttle_right - (extra_throttle*1.295238);
             ROS_INFO("Turning right");
         } else {
             motor_msg.left_motor = std_throttle_left;
