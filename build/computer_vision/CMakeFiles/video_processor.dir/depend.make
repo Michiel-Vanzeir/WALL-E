@@ -4,16 +4,6 @@
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /home/ubuntu/catkin_ws/src/computer_vision/src/video_processor.cpp
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/cv_bridge/cv_bridge.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/camera_publisher.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/camera_subscriber.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/exception.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/exports.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/image_transport.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/loader_fwds.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/publisher.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/single_subscriber_publisher.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/subscriber.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/image_transport/transport_hints.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/ros/advertise_options.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/ros/advertise_service_options.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/ros/assert.h
@@ -70,10 +60,8 @@ computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/r
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/ros/wall_timer.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/ros/wall_timer_options.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/rosconsole/macros_generated.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/sensor_msgs/CameraInfo.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/sensor_msgs/CompressedImage.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/sensor_msgs/Image.h
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/sensor_msgs/RegionOfInterest.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/sensor_msgs/image_encodings.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/std_msgs/Header.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
@@ -157,7 +145,6 @@ computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/i
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/flann/saving.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/flann/timer.h
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/highgui.hpp
-computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/highgui/highgui.hpp
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/imgcodecs.hpp
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/imgproc.hpp
 computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o: /usr/include/opencv4/opencv2/imgproc/imgproc.hpp

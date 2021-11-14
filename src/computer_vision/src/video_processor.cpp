@@ -11,7 +11,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
     // Convert the ROS Image to an OpenCV frame
     cv_bridge::CvImagePtr cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
-    cv::Mat frame = cv_ptr->frame;
+    cv::Mat frame = cv_ptr->image;
 
     cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);

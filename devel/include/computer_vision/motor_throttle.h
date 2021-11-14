@@ -15,7 +15,6 @@
 #include <ros/builtin_message_traits.h>
 #include <ros/message_operations.h>
 
-#include <std_msgs/Header.h>
 
 namespace computer_vision
 {
@@ -25,21 +24,16 @@ struct motor_throttle_
   typedef motor_throttle_<ContainerAllocator> Type;
 
   motor_throttle_()
-    : header()
-    , left_motor(0.0)
+    : left_motor(0.0)
     , right_motor(0.0)  {
     }
   motor_throttle_(const ContainerAllocator& _alloc)
-    : header(_alloc)
-    , left_motor(0.0)
+    : left_motor(0.0)
     , right_motor(0.0)  {
   (void)_alloc;
     }
 
 
-
-   typedef  ::std_msgs::Header_<ContainerAllocator>  _header_type;
-  _header_type header;
 
    typedef float _left_motor_type;
   _left_motor_type left_motor;
@@ -76,8 +70,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::computer_vision::motor_throttle_<ContainerAllocator1> & lhs, const ::computer_vision::motor_throttle_<ContainerAllocator2> & rhs)
 {
-  return lhs.header == rhs.header &&
-    lhs.left_motor == rhs.left_motor &&
+  return lhs.left_motor == rhs.left_motor &&
     lhs.right_motor == rhs.right_motor;
 }
 
@@ -111,22 +104,22 @@ struct IsMessage< ::computer_vision::motor_throttle_<ContainerAllocator> const>
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::computer_vision::motor_throttle_<ContainerAllocator> >
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::computer_vision::motor_throttle_<ContainerAllocator> const>
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
 struct HasHeader< ::computer_vision::motor_throttle_<ContainerAllocator> >
-  : TrueType
+  : FalseType
   { };
 
 template <class ContainerAllocator>
 struct HasHeader< ::computer_vision::motor_throttle_<ContainerAllocator> const>
-  : TrueType
+  : FalseType
   { };
 
 
@@ -135,12 +128,12 @@ struct MD5Sum< ::computer_vision::motor_throttle_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "810a90b3c92332e7051784244ee24b0c";
+    return "3e3717ac8e9443aa62d7102a5860f5e7";
   }
 
   static const char* value(const ::computer_vision::motor_throttle_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x810a90b3c92332e7ULL;
-  static const uint64_t static_value2 = 0x051784244ee24b0cULL;
+  static const uint64_t static_value1 = 0x3e3717ac8e9443aaULL;
+  static const uint64_t static_value2 = 0x62d7102a5860f5e7ULL;
 };
 
 template<class ContainerAllocator>
@@ -159,25 +152,8 @@ struct Definition< ::computer_vision::motor_throttle_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "Header header\n"
-"float32 left_motor\n"
+    return "float32 left_motor\n"
 "float32 right_motor\n"
-"\n"
-"================================================================================\n"
-"MSG: std_msgs/Header\n"
-"# Standard metadata for higher-level stamped data types.\n"
-"# This is generally used to communicate timestamped data \n"
-"# in a particular coordinate frame.\n"
-"# \n"
-"# sequence ID: consecutively increasing ID \n"
-"uint32 seq\n"
-"#Two-integer timestamp that is expressed as:\n"
-"# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n"
-"# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n"
-"# time-handling sugar is provided by the client library\n"
-"time stamp\n"
-"#Frame this data is associated with\n"
-"string frame_id\n"
 ;
   }
 
@@ -196,7 +172,6 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.header);
       stream.next(m.left_motor);
       stream.next(m.right_motor);
     }
@@ -217,9 +192,6 @@ struct Printer< ::computer_vision::motor_throttle_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::computer_vision::motor_throttle_<ContainerAllocator>& v)
   {
-    s << indent << "header: ";
-    s << std::endl;
-    Printer< ::std_msgs::Header_<ContainerAllocator> >::stream(s, indent + "  ", v.header);
     s << indent << "left_motor: ";
     Printer<float>::stream(s, indent + "  ", v.left_motor);
     s << indent << "right_motor: ";
