@@ -4,7 +4,7 @@ Old turning system:
 
 New turning system:
 ![Alt Text](https://media.giphy.com/media/ugY61xz5R6IxbngIZI/giphy-downsized-large.gif)
-![Alt Text](https://media.giphy.com/media/Qg3pvovMlgZBpB4poP/giphy.gif)
+![Alt Text](https://media.giphy.com/media/ugY61xz5R6IxbngIZI/giphy-downsized-large.gif)
 ## Setup
 #### Run the following command in the home directory of this repository
 ```bash
