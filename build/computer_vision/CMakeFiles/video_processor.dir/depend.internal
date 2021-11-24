@@ -5,16 +5,6 @@ computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o
  /home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h
  /home/ubuntu/catkin_ws/src/computer_vision/src/video_processor.cpp
  /opt/ros/noetic/include/cv_bridge/cv_bridge.h
- /opt/ros/noetic/include/image_transport/camera_publisher.h
- /opt/ros/noetic/include/image_transport/camera_subscriber.h
- /opt/ros/noetic/include/image_transport/exception.h
- /opt/ros/noetic/include/image_transport/exports.h
- /opt/ros/noetic/include/image_transport/image_transport.h
- /opt/ros/noetic/include/image_transport/loader_fwds.h
- /opt/ros/noetic/include/image_transport/publisher.h
- /opt/ros/noetic/include/image_transport/single_subscriber_publisher.h
- /opt/ros/noetic/include/image_transport/subscriber.h
- /opt/ros/noetic/include/image_transport/transport_hints.h
  /opt/ros/noetic/include/ros/advertise_options.h
  /opt/ros/noetic/include/ros/advertise_service_options.h
  /opt/ros/noetic/include/ros/assert.h
@@ -71,10 +61,8 @@ computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o
  /opt/ros/noetic/include/ros/wall_timer.h
  /opt/ros/noetic/include/ros/wall_timer_options.h
  /opt/ros/noetic/include/rosconsole/macros_generated.h
- /opt/ros/noetic/include/sensor_msgs/CameraInfo.h
  /opt/ros/noetic/include/sensor_msgs/CompressedImage.h
  /opt/ros/noetic/include/sensor_msgs/Image.h
- /opt/ros/noetic/include/sensor_msgs/RegionOfInterest.h
  /opt/ros/noetic/include/sensor_msgs/image_encodings.h
  /opt/ros/noetic/include/std_msgs/Header.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
@@ -158,7 +146,6 @@ computer_vision/CMakeFiles/video_processor.dir/src/video_processor.cpp.o
  /usr/include/opencv4/opencv2/flann/saving.h
  /usr/include/opencv4/opencv2/flann/timer.h
  /usr/include/opencv4/opencv2/highgui.hpp
- /usr/include/opencv4/opencv2/highgui/highgui.hpp
  /usr/include/opencv4/opencv2/imgcodecs.hpp
  /usr/include/opencv4/opencv2/imgproc.hpp
  /usr/include/opencv4/opencv2/imgproc/imgproc.hpp
