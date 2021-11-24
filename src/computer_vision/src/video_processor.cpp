@@ -6,6 +6,8 @@
 #include "sensor_msgs/Image.h"
 
 ros::Publisher  motor_throttle_pub;
+float prvs_throttle_l = 0;
+float prvs_throttle_r = 0;
 
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -45,8 +47,10 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         // Find the distance between the center of the biggest contour and the center of the image and decide the extra throttle value
         float extra_throttle = (lx - (frame.cols / 2))*0.0025; 
 
-        motor_msg.left_motor = std_throttle_left + extra_throttle;
-        motor_msg.right_motor = std_throttle_right - (extra_throttle*1.30769230769);
+        motor_msg.left_motor = extra_throttle + prvs_throttle_l;
+        motor_msg.right_motor = extra_throttle + prvs_throttle_r;
+        float prvs_throttle_l = std_throttle_left + extra_throttle;
+        float prvs_throttle_r = std_throttle_right - (extra_throttle*1.30769230769);
 
         motor_throttle_pub.publish(motor_msg);
     } catch (int err) {
