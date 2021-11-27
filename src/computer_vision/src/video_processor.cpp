@@ -41,8 +41,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         int lx = moment.m10 / moment.m00;
 
         // Motor speeds are imabalanced, so these are the values for going straight
-        float std_throttle_left = 0.208;
-        float std_throttle_right = 0.272;
+        float std_throttle_left = 0.240;
+        float std_throttle_right = 0.313846;
 
         int error = (lx - (frame.cols / 2)); 
         integral_error += error;
@@ -50,7 +50,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         prvs_error = error;
 
         // Implementing a PID controller
-        float PIDValue = (0.0025*error) + (0.0001*integral_error) + (0.0005*derivate);
+        float PIDValue = (0.0030*error) + (0.0001*integral_error) + (0.001*derivate);
         motor_msg.left_motor = std_throttle_left + PIDValue;
         motor_msg.right_motor = std_throttle_right - PIDValue;
         ROS_INFO("Left motor value: %f\nPID value: %f", motor_msg.left_motor, PIDValue);
