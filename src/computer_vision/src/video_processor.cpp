@@ -44,17 +44,17 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         float std_throttle_left = 0.208;
         float std_throttle_right = 0.272;
 
-        // Find the distance between the center of the biggest contour and the center of the image and decide the extra throttle value
         int error = (lx - (frame.cols / 2)); 
-        float derivate = error - prvs_error;
         integral_error += error;
+        float derivate = error - prvs_error;
+        prvs_error = error;
 
         // Implementing a PID controller
-        float PIDValue = (0.0025*error) + (0.001*prvs_error) + (0.0005*derivate);
+        float PIDValue = (0.0025*error) + (0.0001*integral_error) + (0.0005*derivate);
         motor_msg.left_motor = std_throttle_left + PIDValue;
         motor_msg.right_motor = std_throttle_right - PIDValue;
+        ROS_INFO("Left motor value: %f\nPID value: %f", motor_msg.left_motor, PIDValue);
 
-        prvs_error = error;
         motor_throttle_pub.publish(motor_msg);
     } catch (int err) {
         ROS_INFO("Error when deciding how to turn");
