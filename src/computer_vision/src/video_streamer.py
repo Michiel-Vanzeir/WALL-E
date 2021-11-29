@@ -1,8 +1,14 @@
 #! /usr/bin/env python3
 import cv2
 from cv_bridge import CvBridge
+import imagezmq
 import rospy
 from sensor_msgs.msg import Image
+import socket
+
+server_ip = "192.168.1.26"
+sender = imagezmq.ImageSender(connect_to=f"tcp://{server_ip}:5555")
+rpiName = socket.gethostname()
 
 def video_stream_publisher():
     cap = cv2.VideoCapture(0)
@@ -27,6 +33,7 @@ def video_stream_publisher():
             frame = frame[60:120, 0:160]
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
             video_pub.publish(ros_image)
+            sender.send_image(rpiName, frame)
 
         rate.sleep()
         
