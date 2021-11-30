@@ -8,7 +8,6 @@ import socket
 
 
 def video_stream_publisher():
-    global algorithm_status
     cap = cv2.VideoCapture(0)
     rpiName = socket.gethostname()
     server_ip = socket.gethostbyname(rpiName)
@@ -26,7 +25,7 @@ def video_stream_publisher():
 
     rospy.init_node('video_streamer', anonymous=True)
     rate = rospy.Rate(4) # 4hz
-
+    rospy.loginfo(f"{server_ip}")
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         
