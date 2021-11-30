@@ -43,7 +43,7 @@ def video_stream_publisher():
         if ret:
             frame = frame[60:120, 0:160]
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
-            video_pub.publish(ros_image)
+            if algorithm_status: video_pub.publish(ros_image)
             sender.send_image(rpiName, frame)
 
         rate.sleep()
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     try:
         threading.Thread(target=lambda: app.run(host="0.0.0.0", port=8080)).start()
         print("SERVER STARTED")
-        threading.Thread(target=video_stream_publisher).start()
+        video_stream_publisher()
         print("VIDEO STREAMER STARTED")
     except rospy.ROSInterruptException:
         rospy.loginfo("Video streamer node terminated.")
