@@ -2,12 +2,23 @@
 import cv2
 from cv_bridge import CvBridge
 import imagezmq
+import flask
 import rospy
 from sensor_msgs.msg import Image
 import socket
+import threading
 
+algorithm_status = False
+app = flask.Flask(__name__)
+
+@app.route('/')
+def get_status():
+    global algorithm_status
+    algorithm_status = True if flask.request.args.get('status') == 'True' else False
+    return "Succesfully set status to " + str(algorithm_status)
 
 def video_stream_publisher():
+    global algorithm_status
     cap = cv2.VideoCapture(0)
     rpiName = socket.gethostname()
     server_ip = "192.168.1.42"
@@ -43,6 +54,9 @@ def video_stream_publisher():
 
 if __name__ == '__main__':
     try:
-        video_stream_publisher()
+        threading.Thread(target=lambda: app.run(host="0.0.0.0", port=8080)).start()
+        print("SERVER STARTED")
+        threading.Thread(target=video_stream_publisher).start()
+        print("VIDEO STREAMER STARTED")
     except rospy.ROSInterruptException:
         rospy.loginfo("Video streamer node terminated.")
