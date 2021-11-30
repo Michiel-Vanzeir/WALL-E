@@ -10,7 +10,7 @@ import socket
 def video_stream_publisher():
     cap = cv2.VideoCapture(0)
     rpiName = socket.gethostname()
-    server_ip = socket.gethostbyname(rpiName)
+    server_ip = "192.168.1.42"
     sender = imagezmq.ImageSender(connect_to=f"tcp://{server_ip}:5555")
 
     if not cap.isOpened():
@@ -25,7 +25,6 @@ def video_stream_publisher():
 
     rospy.init_node('video_streamer', anonymous=True)
     rate = rospy.Rate(4) # 4hz
-    rospy.loginfo(f"{server_ip}")
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         
