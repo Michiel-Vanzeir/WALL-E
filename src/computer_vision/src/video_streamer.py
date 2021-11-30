@@ -2,15 +2,21 @@
 import cv2
 from cv_bridge import CvBridge
 import imagezmq
+from fastapi import FastApi
 import rospy
-from sensor_msgs.msg import Image, Bool
+from sensor_msgs.msg import Image
 import socket
+import threading
+import uvicorn
 
+api = FastApi()
 algorithm_status = False 
 
-def setStatus(data):
+@api.get("/algorithm_status/{status}/")
+def get_status(status: bool):
     global algorithm_status
-    algorithm_status = data.data
+    print(status)
+    algorithm_status = status
 
 def video_stream_publisher():
     global algorithm_status
@@ -33,7 +39,6 @@ def video_stream_publisher():
     rate = rospy.Rate(4) # 4hz
 
     while not rospy.is_shutdown():
-        rospy.Subscriber('algorithm_status', Bool, callback=setStatus)
         ret, frame = cap.read()
         
         # Convert the frame to a publishable ROS image and publish it 
@@ -42,7 +47,7 @@ def video_stream_publisher():
             ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
             if algorithm_status: 
                 video_pub.publish(ros_image)
-                rospy.loginfo("Publishing video feed")
+                print("Published to algorithm")
             sender.send_image(rpiName, frame)
 
         rate.sleep()
@@ -53,6 +58,9 @@ def video_stream_publisher():
 
 if __name__ == '__main__':
     try:
-        video_stream_publisher()
+        threading.Thread(target=video_stream_publisher).start()
+        print("here1")
+        uvicorn.run("video_streamer:api",host='0.0.0.0', port=4554, reload=True, debug=True, workers=3)
+        print("here2")
     except rospy.ROSInterruptException:
         rospy.loginfo("Video streamer node terminated.")
