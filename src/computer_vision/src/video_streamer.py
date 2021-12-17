@@ -9,16 +9,22 @@ import socket
 import threading
 
 algorithm_status = False
+frame = None
 app = flask.Flask(__name__)
 
-@app.route('/')
+@app.route('/algorithm_status', methods=['GET'])
 def get_status():
     global algorithm_status
     algorithm_status = True if flask.request.args.get('status') == 'True' else False
     return "Succesfully set status to " + str(algorithm_status)
 
+@app.route('/video_stream')
+def get_stream():
+    img_encoded = cv2.imencode('.jpg', frame)[1].tostring()
+    return flask.Response(img_encoded, mimetype='image/jpeg')
+
 def video_stream_publisher():
-    global algorithm_status
+    global algorithm_status, frame
     cap = cv2.VideoCapture(0)
     rpiName = socket.gethostname()
     server_ip = "192.168.1.42"
