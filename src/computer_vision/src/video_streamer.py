@@ -12,7 +12,7 @@ algorithm_status = False
 frame = None
 app = flask.Flask(__name__)
 
-@app.route('/algorithm_status', methods=['GET'])
+@app.route('/algorithm_status')
 def get_status():
     global algorithm_status
     algorithm_status = True if flask.request.args.get('status') == 'True' else False
@@ -34,8 +34,8 @@ def video_stream_publisher():
         rospy.logerr("Unable to open camera")
         return
 
-    cap.set(3, 160)
-    cap.set(4, 120)  
+    cap.set(3, 640)
+    cap.set(4, 480)  
     bridge = CvBridge()
 
     video_pub = rospy.Publisher('video_feed', Image, queue_size=2) 
@@ -47,10 +47,10 @@ def video_stream_publisher():
         
         # Convert the frame to a publishable ROS image and publish it 
         if ret:
-            frame = frame[60:120, 0:160]
-            ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+            cropped_frame = frame[240:, 200:500]
+            ros_image = bridge.cv2_to_imgmsg(cropped_frame, encoding="bgr8")
             if algorithm_status: video_pub.publish(ros_image)
-            sender.send_image(rpiName, frame)
+            #sender.send_image(rpiName, cropped_frame)
 
         rate.sleep()
         
