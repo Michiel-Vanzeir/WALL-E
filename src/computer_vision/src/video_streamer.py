@@ -1,13 +1,15 @@
 #! /usr/bin/env python3
+from adafruit_motorkit import MotorKit
 import cv2
 from cv_bridge import CvBridge
-import imagezmq
 import flask
 import rospy
 from sensor_msgs.msg import Image
 import socket
 import threading
+import time
 
+kit = MotorKit()
 algorithm_status = False
 frame = None
 app = flask.Flask(__name__)
@@ -16,7 +18,13 @@ app = flask.Flask(__name__)
 def get_status():
     global algorithm_status
     algorithm_status = True if flask.request.args.get('status') == 'True' else False
-    return "Succesfully set status to " + str(algorithm_status)
+
+    time.sleep(1)
+    if algorithm_status == False:
+        kit.motor1.throttle = 0
+        kit.motor2.throttle = 0
+
+    return f"Succesfully set status to {algorithm_status}"
 
 @app.route('/video_stream')
 def get_stream():
@@ -26,9 +34,6 @@ def get_stream():
 def video_stream_publisher():
     global algorithm_status, frame
     cap = cv2.VideoCapture(0)
-    rpiName = socket.gethostname()
-    server_ip = "192.168.1.42"
-    sender = imagezmq.ImageSender(connect_to=f"tcp://{server_ip}:5555")
 
     if not cap.isOpened():
         rospy.logerr("Unable to open camera")
@@ -46,11 +51,10 @@ def video_stream_publisher():
         ret, frame = cap.read()
         
         # Convert the frame to a publishable ROS image and publish it 
-        if ret:
+        if ret and algorithm_status:
             cropped_frame = frame[240:, 200:500]
             ros_image = bridge.cv2_to_imgmsg(cropped_frame, encoding="bgr8")
-            if algorithm_status: video_pub.publish(ros_image)
-            #sender.send_image(rpiName, cropped_frame)
+            video_pub.publish(ros_image)
 
         rate.sleep()
         
