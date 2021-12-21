@@ -7,29 +7,30 @@ kit = MotorKit()
 
 app = flask.Flask(__name__)
 
-@app.route('/algorithm_status', methods=['POST'])
+@app.route('/algorithm_status', methods=['GET'])
 def algorithm_status():
     global algorithm_status
     
-    algorithm_status = True if flask.request.form['status'] == 'True' else False
+    algorithm_status = True if flask.request.args.get('status')  == 'True' else False
     kit.motor1.throttle, kit.motor2.throttle = 0, 0 
-    return "Success"
+    return "Succes"
 
-@app.route('/motor_throttle', methods=['POST'])
+@app.route('/motor_throttle', methods=['GET'])
 def motor_throttle():
     global algorithm_status
-    data = flask.request.form
-    print(data)
+    data = flask.request.args
 
     if algorithm_status and data['sender'] == 'video_processor':
         kit.motor1.throttle = float(data['left_motor'])
         kit.motor2.throttle = float(data['right_motor'])
-        return "Success"
+        return ""
 
     if not algorithm_status and data['sender'] == 'flutter_app':
         kit.motor1.throttle = float(data['left_motor'])
         kit.motor2.throttle = float(data['right_motor'])
-        return "Success"
+        return ""
+
+    return ""
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

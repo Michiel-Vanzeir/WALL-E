@@ -1,7 +1,3 @@
-file(REMOVE_RECURSE
-  "/home/ubuntu/catkin_ws/devel/include/computer_vision/motor_throttle.h"
-  "CMakeFiles/computer_vision_generate_messages_cpp"
-)
 
 # Per-language clean rules from dependency scanning.
 foreach(lang )

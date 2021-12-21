@@ -8,24 +8,19 @@
 
 using namespace std;
 
+string jsonstr = "{\"username\":\"bob\",\"password\":\"12345\"}";
 float prvs_error = 0;
 float integral_error = 0;
 
-void postThrottle(float left_motor, float right_motor) {
+void getThrottle(float left_motor, float right_motor) {
+    // Make a GET request 
     CURL *curl;
     CURLcode res;
-
-    curl_global_init(CURL_GLOBAL_ALL);
-
     curl = curl_easy_init();
-    if (curl){
-        curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.26:8080/motor_throttle");
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "sender=video_processor" + "&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor));
-
+    if (curl) {
+        string url = "http://192.168.1.26:8080/motor_throttle?sender=video_processor&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor);
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         res = curl_easy_perform(curl);
-        if (res != CURLE_OK)
-            ROS_INFO("CURL POST REQUEST FAILED");
-
         curl_easy_cleanup(curl);
     }
 }
@@ -57,7 +52,6 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
  
     // Find the center of the biggest contour and decide the moto throttle value
     cv::Moments moment = cv::moments(contours[max_index], false);
-    computer_vision::motor_throttle  motor_msg;
     try {
         int lx = moment.m10 / moment.m00;
 
@@ -75,8 +69,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         float left_motor = std_throttle_left + PIDValue;
         float right_motor = std_throttle_right - PIDValue;
 
-        postThrottle(left_motor, right_motor);
-        ROS_INFO("Left motor value: %f\nPID value: %f\n", left_motor, PIDValue);
+        getThrottle(left_motor, right_motor);
+        //ROS_INFO("Left motor value: %f\nPID value: %f\n", left_motor, PIDValue);
 
     } catch (int err) {
         ROS_INFO("Error in video_processor.cpp");

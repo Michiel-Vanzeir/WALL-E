@@ -3,6 +3,6 @@ prefix=/home/ubuntu/catkin_ws/install
 Name: computer_vision
 Description: Description of computer_vision
 Version: 0.0.0
-Cflags: -I${prefix}/include
+Cflags: 
 Libs: -L${prefix}/lib 
 Requires: roscpp rospy message_runtime std_msgs

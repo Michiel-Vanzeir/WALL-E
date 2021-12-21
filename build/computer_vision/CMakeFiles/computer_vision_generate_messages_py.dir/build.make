@@ -53,23 +53,14 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 # Include the progress variables for this target.
 include computer_vision/CMakeFiles/computer_vision_generate_messages_py.dir/progress.make
 
-computer_vision/CMakeFiles/computer_vision_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py
 computer_vision/CMakeFiles/computer_vision_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/__init__.py
 
 
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py: /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG computer_vision/motor_throttle"
-	cd /home/ubuntu/catkin_ws/build/computer_vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg -Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p computer_vision -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg
-
 /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/__init__.py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for computer_vision"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python msg __init__.py for computer_vision"
 	cd /home/ubuntu/catkin_ws/build/computer_vision && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg --initpy
 
 computer_vision_generate_messages_py: computer_vision/CMakeFiles/computer_vision_generate_messages_py
-computer_vision_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/_motor_throttle.py
 computer_vision_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python3/dist-packages/computer_vision/msg/__init__.py
 computer_vision_generate_messages_py: computer_vision/CMakeFiles/computer_vision_generate_messages_py.dir/build.make
 

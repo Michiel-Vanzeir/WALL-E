@@ -56,6 +56,16 @@ CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -79,17 +89,6 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -101,16 +100,6 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -134,6 +123,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -256,21 +256,6 @@ computer_vision_geneus: computer_vision/CMakeFiles/computer_vision_geneus.dir/ru
 computer_vision_geneus/fast:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f computer_vision/CMakeFiles/computer_vision_geneus.dir/build.make computer_vision/CMakeFiles/computer_vision_geneus.dir/build
 .PHONY : computer_vision_geneus/fast
-
-# Convenience name for target.
-computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
-.PHONY : computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-computer_vision_generate_messages_eus: computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
-
-.PHONY : computer_vision_generate_messages_eus
-
-# fast build rule for target.
-computer_vision_generate_messages_eus/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/build.make computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/build
-.PHONY : computer_vision_generate_messages_eus/fast
 
 # Convenience name for target.
 computer_vision/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
@@ -528,21 +513,6 @@ geometry_msgs_generate_messages_py/fast:
 .PHONY : geometry_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/rule
-.PHONY : computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/rule
-
-# Convenience name for target.
-_computer_vision_generate_messages_check_deps_motor_throttle: computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/rule
-
-.PHONY : _computer_vision_generate_messages_check_deps_motor_throttle
-
-# fast build rule for target.
-_computer_vision_generate_messages_check_deps_motor_throttle/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/build.make computer_vision/CMakeFiles/_computer_vision_generate_messages_check_deps_motor_throttle.dir/build
-.PHONY : _computer_vision_generate_messages_check_deps_motor_throttle/fast
-
-# Convenience name for target.
 computer_vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 computer_vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
 .PHONY : computer_vision/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
@@ -737,6 +707,21 @@ geometry_msgs_generate_messages_eus/fast:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f computer_vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build.make computer_vision/CMakeFiles/geometry_msgs_generate_messages_eus.dir/build
 .PHONY : geometry_msgs_generate_messages_eus/fast
 
+# Convenience name for target.
+computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
+.PHONY : computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+computer_vision_generate_messages_eus: computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/rule
+
+.PHONY : computer_vision_generate_messages_eus
+
+# fast build rule for target.
+computer_vision_generate_messages_eus/fast:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/build.make computer_vision/CMakeFiles/computer_vision_generate_messages_eus.dir/build
+.PHONY : computer_vision_generate_messages_eus/fast
+
 src/video_processor.o: src/video_processor.cpp.o
 
 .PHONY : src/video_processor.o
@@ -770,6 +755,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... list_install_components"
 	@echo "... test"
 	@echo "... video_processor"
 	@echo "... computer_vision_genpy"
@@ -778,8 +764,6 @@ help:
 	@echo "... computer_vision_genlisp"
 	@echo "... computer_vision_generate_messages_nodejs"
 	@echo "... computer_vision_geneus"
-	@echo "... edit_cache"
-	@echo "... computer_vision_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
 	@echo "... computer_vision_generate_messages_lisp"
 	@echo "... rosgraph_msgs_generate_messages_nodejs"
@@ -798,8 +782,6 @@ help:
 	@echo "... install"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_py"
-	@echo "... list_install_components"
-	@echo "... _computer_vision_generate_messages_check_deps_motor_throttle"
 	@echo "... install/local"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_nodejs"
@@ -815,6 +797,8 @@ help:
 	@echo "... computer_vision_gencpp"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
+	@echo "... edit_cache"
+	@echo "... computer_vision_generate_messages_eus"
 	@echo "... src/video_processor.o"
 	@echo "... src/video_processor.i"
 	@echo "... src/video_processor.s"

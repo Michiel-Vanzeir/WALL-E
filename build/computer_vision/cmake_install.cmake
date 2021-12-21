@@ -38,10 +38,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/computer_vision/msg" TYPE FILE FILES "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg")
-endif()
-
-if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/computer_vision/cmake" TYPE FILE FILES "/home/ubuntu/catkin_ws/build/computer_vision/catkin_generated/installspace/computer_vision-msg-paths.cmake")
 endif()
 

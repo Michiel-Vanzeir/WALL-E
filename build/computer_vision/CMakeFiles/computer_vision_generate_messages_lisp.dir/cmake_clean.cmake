@@ -1,7 +1,3 @@
-file(REMOVE_RECURSE
-  "/home/ubuntu/catkin_ws/devel/share/common-lisp/ros/computer_vision/msg/motor_throttle.lisp"
-  "CMakeFiles/computer_vision_generate_messages_lisp"
-)
 
 # Per-language clean rules from dependency scanning.
 foreach(lang )

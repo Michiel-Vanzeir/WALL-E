@@ -1,8 +1,10 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "computer_vision: 1 messages, 0 services")
+message(WARNING "Invoking generate_messages() without having added any message or service file before.
+You should either add add_message_files() and/or add_service_files() calls or remove the invocation of generate_messages().")
+message(STATUS "computer_vision: 0 messages, 0 services")
 
-set(MSG_I_FLAGS "-Icomputer_vision:/home/ubuntu/catkin_ws/src/computer_vision/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,23 +19,12 @@ add_custom_target(computer_vision_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_custom_target(_computer_vision_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "computer_vision" "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" "std_msgs/Header"
-)
-
 #
 #  langs = gencpp;geneus;genlisp;gennodejs;genpy
 #
 
 ### Section generating for lang: gencpp
 ### Generating Messages
-_generate_msg_cpp(computer_vision
-  "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
-  "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
-  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/computer_vision
-)
 
 ### Generating Services
 
@@ -49,8 +40,6 @@ add_custom_target(computer_vision_generate_messages_cpp
 add_dependencies(computer_vision_generate_messages computer_vision_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_dependencies(computer_vision_generate_messages_cpp _computer_vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(computer_vision_gencpp)
@@ -61,12 +50,6 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS computer_vision_generate_messages_c
 
 ### Section generating for lang: geneus
 ### Generating Messages
-_generate_msg_eus(computer_vision
-  "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
-  "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
-  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/computer_vision
-)
 
 ### Generating Services
 
@@ -82,8 +65,6 @@ add_custom_target(computer_vision_generate_messages_eus
 add_dependencies(computer_vision_generate_messages computer_vision_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_dependencies(computer_vision_generate_messages_eus _computer_vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(computer_vision_geneus)
@@ -94,12 +75,6 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS computer_vision_generate_messages_e
 
 ### Section generating for lang: genlisp
 ### Generating Messages
-_generate_msg_lisp(computer_vision
-  "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
-  "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
-  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/computer_vision
-)
 
 ### Generating Services
 
@@ -115,8 +90,6 @@ add_custom_target(computer_vision_generate_messages_lisp
 add_dependencies(computer_vision_generate_messages computer_vision_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_dependencies(computer_vision_generate_messages_lisp _computer_vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(computer_vision_genlisp)
@@ -127,12 +100,6 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS computer_vision_generate_messages_l
 
 ### Section generating for lang: gennodejs
 ### Generating Messages
-_generate_msg_nodejs(computer_vision
-  "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
-  "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
-  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/computer_vision
-)
 
 ### Generating Services
 
@@ -148,8 +115,6 @@ add_custom_target(computer_vision_generate_messages_nodejs
 add_dependencies(computer_vision_generate_messages computer_vision_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_dependencies(computer_vision_generate_messages_nodejs _computer_vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(computer_vision_gennodejs)
@@ -160,12 +125,6 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS computer_vision_generate_messages_n
 
 ### Section generating for lang: genpy
 ### Generating Messages
-_generate_msg_py(computer_vision
-  "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg"
-  "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
-  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/computer_vision
-)
 
 ### Generating Services
 
@@ -181,8 +140,6 @@ add_custom_target(computer_vision_generate_messages_py
 add_dependencies(computer_vision_generate_messages computer_vision_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/catkin_ws/src/computer_vision/msg/motor_throttle.msg" NAME_WE)
-add_dependencies(computer_vision_generate_messages_py _computer_vision_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(computer_vision_genpy)

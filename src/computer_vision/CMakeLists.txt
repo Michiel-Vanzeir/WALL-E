@@ -3,6 +3,7 @@ project(computer_vision)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
+set(CURL_LIBRARY "-lcurl")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,8 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 find_package(OpenCV 4.0.0 REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS}) 
-
+find_package(CURL REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+include_directories(${CURL_INCLUDE_DIR}) 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -124,6 +126,7 @@ include_directories(
 
 add_executable(video_processor src/video_processor.cpp)
 target_link_libraries(video_processor ${catkin_LIBRARIES})
+target_link_libraries(video_processor ${CURL_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
