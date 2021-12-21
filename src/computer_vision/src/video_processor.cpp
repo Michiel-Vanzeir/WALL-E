@@ -1,13 +1,34 @@
+#include <curl/curl.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
+#include <stdio.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include "ros/ros.h"
-#include "computer_vision/motor_throttle.h"
 #include "sensor_msgs/Image.h"
 
-ros::Publisher  motor_throttle_pub;
+using namespace std;
+
 float prvs_error = 0;
 float integral_error = 0;
+
+void postThrottle(float left_motor, float right_motor) {
+    CURL *curl;
+    CURLcode res;
+
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    curl = curl_easy_init();
+    if (curl){
+        curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.26:8080/motor_throttle");
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "sender=video_processor" + "&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor));
+
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK)
+            ROS_INFO("CURL POST REQUEST FAILED");
+
+        curl_easy_cleanup(curl);
+    }
+}
 
 void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 {
@@ -51,14 +72,15 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 
         // Implementing a PID controller
         float PIDValue = (0.0030*error) + (0.0001*integral_error) + (0.001*derivate);
-        motor_msg.left_motor = std_throttle_left + PIDValue;
-        motor_msg.right_motor = std_throttle_right - PIDValue;
-        ROS_INFO("Left motor value: %f\nPID value: %f", motor_msg.left_motor, PIDValue);
+        float left_motor = std_throttle_left + PIDValue;
+        float right_motor = std_throttle_right - PIDValue;
 
-        motor_throttle_pub.publish(motor_msg);
+        postThrottle(left_motor, right_motor);
+        ROS_INFO("Left motor value: %f\nPID value: %f\n", left_motor, PIDValue);
+
     } catch (int err) {
-        ROS_INFO("Error when deciding how to turn");
-}
+        ROS_INFO("Error in video_processor.cpp");
+    }
 }
 
 int main(int argc, char **argv) {
@@ -66,7 +88,6 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle nh;
     ros::Subscriber video_sub = nh.subscribe("video_feed", 2, videoCallback); 
-    motor_throttle_pub = nh.advertise<computer_vision::motor_throttle>("throttle_feed", 2);
 
     ros::spin();
     return 0;

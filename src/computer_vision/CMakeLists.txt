@@ -53,10 +53,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  motor_throttle.msg
-)
 
 generate_messages(
   DEPENDENCIES
