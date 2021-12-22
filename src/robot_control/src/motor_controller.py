@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 def algorithm_status():
     global algorithm_status
     
-    algorithm_status = True if flask.request.args.get('status')  == 'True' else False
+    algorithm_status = True if flask.request.args.get('status')  == 'true' else False
     kit.motor1.throttle, kit.motor2.throttle = 0, 0 
     return "Succes"
 

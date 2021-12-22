@@ -9,8 +9,7 @@
 using namespace std;
 
 string jsonstr = "{\"username\":\"bob\",\"password\":\"12345\"}";
-float prvs_error = 0;
-float integral_error = 0;
+float prvs_spd_error, prvs_angle_error, speed_integral, angle_integral = 0;
 
 void getThrottle(float left_motor, float right_motor) {
     // Make a GET request 
@@ -54,20 +53,26 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     cv::Moments moment = cv::moments(contours[max_index], false);
     try {
         int lx = moment.m10 / moment.m00;
+        int ly = moment.m01 / moment.m00;
+        // Default throttle for going straight
+        float std_throttle_left = 0.190;
+        float std_throttle_right = 0.24846141666;
 
-        // Motor speeds are imabalanced, so these are the values for going straight
-        float std_throttle_left = 0.240;
-        float std_throttle_right = 0.313846;
+        float speed_error = (ly-(frame.rows/2))
+        float angle_error = (lx-(frame.cols/2))
+        speed_integral += speed_error;
+        angle_integral += angle_error;
 
-        int error = (lx - (frame.cols / 2)); 
-        integral_error += error;
-        float derivate = error - prvs_error;
-        prvs_error = error;
+        float speed_derivate = speed_error - prvs_spd_error;
+        float angle_derivate = angle_error - prvs_angle_error;
+        prvs_spd_error = speed_error;
+        prvs_angle_error = angle_error;
 
-        // Implementing a PID controller
-        float PIDValue = (0.0030*error) + (0.0001*integral_error) + (0.001*derivate);
-        float left_motor = std_throttle_left + PIDValue;
-        float right_motor = std_throttle_right - PIDValue;
+        float speedPID = 0.0010 * speed_error + 0.0001 * speed_integral + 0.001 * speed_derivate;
+        float anglePID = 0.0030 * angle_error + 0.0001 * angle_integral + 0.001 * angle_derivate;
+
+        float left_motor = std_throttle_left + speedPID + anglePID;
+        float right_motor = std_throttle_left + speedPID - anglePID;
 
         getThrottle(left_motor, right_motor);
         //ROS_INFO("Left motor value: %f\nPID value: %f\n", left_motor, PIDValue);
