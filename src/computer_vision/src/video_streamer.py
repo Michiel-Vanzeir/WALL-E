@@ -26,7 +26,7 @@ def video_stream_publisher():
         
         # Convert the frame to a publishable ROS image and publish it 
         if ret:
-            cropped_frame = frame[:440, 200:500]
+            cropped_frame = frame[100:440, 200:500]
             ros_image = bridge.cv2_to_imgmsg(cropped_frame, encoding="bgr8")
             video_pub.publish(ros_image)
 

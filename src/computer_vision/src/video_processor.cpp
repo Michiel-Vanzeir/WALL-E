@@ -8,14 +8,14 @@
 
 using namespace std;
 
-float prvs_spd_error, prvs_angle_error, speed_integral, angle_integral = 0;
+float prvs_error, PIDintegral = 0;
 
 void postThrottle(float left_motor, float right_motor) { 
     CURL *curl;
     CURLcode res;
     curl = curl_easy_init();
     if (curl) {
-        string url = "http://192.168.1.26:8080/motor_throttle?sender=video_processor&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor);
+        string url = "http://192.168.1.44:8080/motor_throttle?sender=video_processor&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor);
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
@@ -52,29 +52,24 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         // Find the center of the biggest contour and decide the motor throttle value
         cv::Moments moment = cv::moments(contours[max_index], false);
         int lx = moment.m10 / moment.m00;
-        int ly = moment.m01 / moment.m00;
         // Default throttle for going straight
         float std_throttle_left = 0.190;
         float std_throttle_right = 0.24846141666;
+;
+        float error = lx - frame.cols/2;
+        PIDintegral += error;
 
-        float speed_error = frame.rows/2 - ly;
-        float angle_error = lx - frame.cols/2;
-        speed_integral += speed_error;
-        angle_integral += angle_error;
+        float PIDderivate = error - prvs_error;
+        prvs_error = error;
 
-        float speed_derivate = speed_error - prvs_spd_error;
-        float angle_derivate = angle_error - prvs_angle_error;
-        prvs_spd_error = speed_error;
-        prvs_angle_error = angle_error;
+        float speedP = 0.0015 * error;
+        float anglePID = 0.0030 * error + 0.0001 * PIDintegral;
 
-        float speedPID = 0.0015 * speed_error;
-        float anglePID = 0.0030 * angle_error + 0.0001 * angle_integral;
-
-        float left_motor = std_throttle_left + speedPID + anglePID;
-        float right_motor = std_throttle_left + speedPID - anglePID;
+        float left_motor = std_throttle_left*speedP + anglePID;
+        float right_motor = std_throttle_left*speedP - anglePID;
 
         //postThrottle(left_motor, right_motor);
-        ROS_INFO("\nLeft motor: %d\nPID speed: %d\nPID angle: %f\n", ly, (frame.rows/2), speed_error);
+        ROS_INFO("\nLeft motor: %d\nPID speed: %d\nPID angle: %f\n", std_throttle_left, speedP, anglePID);
     }
 }
 
