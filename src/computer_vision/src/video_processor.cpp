@@ -8,11 +8,9 @@
 
 using namespace std;
 
-string jsonstr = "{\"username\":\"bob\",\"password\":\"12345\"}";
 float prvs_spd_error, prvs_angle_error, speed_integral, angle_integral = 0;
 
-void getThrottle(float left_motor, float right_motor) {
-    // Make a GET request 
+void postThrottle(float left_motor, float right_motor) { 
     CURL *curl;
     CURLcode res;
     curl = curl_easy_init();
@@ -58,8 +56,8 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         float std_throttle_left = 0.190;
         float std_throttle_right = 0.24846141666;
 
-        float speed_error = (ly-(frame.rows/2))
-        float angle_error = (lx-(frame.cols/2))
+        float speed_error = (ly-(frame.rows/2));
+        float angle_error = (lx-(frame.cols/2));
         speed_integral += speed_error;
         angle_integral += angle_error;
 
@@ -68,14 +66,14 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         prvs_spd_error = speed_error;
         prvs_angle_error = angle_error;
 
-        float speedPID = 0.0010 * speed_error + 0.0001 * speed_integral + 0.001 * speed_derivate;
-        float anglePID = 0.0030 * angle_error + 0.0001 * angle_integral + 0.001 * angle_derivate;
+        float speedPID = 0.0015 * speed_error;
+        float anglePID = 0.0030 * angle_error + 0.0001 * angle_integral;
 
         float left_motor = std_throttle_left + speedPID + anglePID;
         float right_motor = std_throttle_left + speedPID - anglePID;
 
-        getThrottle(left_motor, right_motor);
-        //ROS_INFO("Left motor value: %f\nPID value: %f\n", left_motor, PIDValue);
+        //postThrottle(left_motor, right_motor);
+        ROS_INFO("\nLeft motor: %d\nPID speed: %d\nPID angle: %f\n", ly, (frame.rows/2), speed_error);
 
     } catch (int err) {
         ROS_INFO("Error in video_processor.cpp");
