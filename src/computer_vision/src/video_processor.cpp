@@ -32,32 +32,33 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
     cv::threshold(frame, frame, 60, 255, cv::THRESH_BINARY_INV);
 
-    // Find the biggest contour and draw it
+    // Find the contours of the frame
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(frame, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
 
-    double max_area = 0;
-    int max_index = 0;
-    for (int i = 0; i < contours.size(); i++) {
-        double area = cv::contourArea(contours[i]);
-        if (area > max_area) {
-            max_area = area;
-            max_index = i;
+    // Find the largest contour if it exists
+    if (contours.size() > 0) {
+        double max_area = 0;
+        int max_index = 0;
+        for (int i = 0; i < contours.size(); i++) {
+            double area = cv::contourArea(contours[i]);
+            if (area > max_area) {
+                max_area = area;
+                max_index = i;
+            }
         }
-    }
- 
-    // Find the center of the biggest contour and decide the moto throttle value
-    cv::Moments moment = cv::moments(contours[max_index], false);
-    try {
+    
+        // Find the center of the biggest contour and decide the motor throttle value
+        cv::Moments moment = cv::moments(contours[max_index], false);
         int lx = moment.m10 / moment.m00;
         int ly = moment.m01 / moment.m00;
         // Default throttle for going straight
         float std_throttle_left = 0.190;
         float std_throttle_right = 0.24846141666;
 
-        float speed_error = (ly-(frame.rows/2));
-        float angle_error = (lx-(frame.cols/2));
+        float speed_error = frame.rows/2 - ly;
+        float angle_error = lx - frame.cols/2;
         speed_integral += speed_error;
         angle_integral += angle_error;
 
@@ -74,9 +75,6 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 
         //postThrottle(left_motor, right_motor);
         ROS_INFO("\nLeft motor: %d\nPID speed: %d\nPID angle: %f\n", ly, (frame.rows/2), speed_error);
-
-    } catch (int err) {
-        ROS_INFO("Error in video_processor.cpp");
     }
 }
 
