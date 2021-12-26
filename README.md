@@ -1,5 +1,5 @@
 # A linefollower using a Raspberry Pi 
-![Alt Text](https://giphy.com/gifs/ugY61xz5R6IxbngIZI)
+![Alt Text](https://media.giphy.com/media/Qg3pvovMlgZBpB4poP/giphy.gif)
 
 New system: 
 ## Setup
