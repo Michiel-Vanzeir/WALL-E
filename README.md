@@ -1,7 +1,7 @@
 # A linefollower using a Raspberry Pi 
 ![Alt Text](https://media.giphy.com/media/ugY61xz5R6IxbngIZI/giphy-downsized.gif)
 
-New system: 
+
 ## Setup
 #### Run the following command in the home directory of this repository
 ```bash
