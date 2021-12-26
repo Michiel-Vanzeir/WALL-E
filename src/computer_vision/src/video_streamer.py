@@ -13,8 +13,8 @@ def video_stream_publisher():
         rospy.logerr("Unable to open camera")
         return
 
-    cap.set(3, 640)
-    cap.set(4, 480)  
+    cap.set(3, 160)
+    cap.set(4, 120)  
     bridge = CvBridge()
 
     video_pub = rospy.Publisher('video_feed', Image, queue_size=2) 
@@ -26,7 +26,7 @@ def video_stream_publisher():
         
         # Convert the frame to a publishable ROS image and publish it 
         if ret:
-            cropped_frame = frame[100:440, 200:500]
+            cropped_frame = frame[60:100, 0:160]
             ros_image = bridge.cv2_to_imgmsg(cropped_frame, encoding="bgr8")
             video_pub.publish(ros_image)
 

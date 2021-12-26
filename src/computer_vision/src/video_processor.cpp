@@ -30,7 +30,7 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
 
     cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
-    cv::threshold(frame, frame, 60, 255, cv::THRESH_BINARY_INV);
+    cv::threshold(frame, frame, 35, 255, cv::THRESH_BINARY_INV);
 
     // Find the contours of the frame
     std::vector<std::vector<cv::Point>> contours;
@@ -53,23 +53,23 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         cv::Moments moment = cv::moments(contours[max_index], false);
         int lx = moment.m10 / moment.m00;
         // Default throttle for going straight
-        float std_throttle_left = 0.190;
-        float std_throttle_right = 0.24846141666;
-;
+        float std_throttle_left = 0.4;
+        float std_throttle_right = 0.385;
+
         float error = lx - frame.cols/2;
         PIDintegral += error;
 
-        float PIDderivate = error - prvs_error;
+        float PIDderivative = error - prvs_error;
         prvs_error = error;
 
-        float speedP = 0.0015 * error;
-        float anglePID = 0.0030 * error + 0.0001 * PIDintegral;
+        float speedP = 0.0022 * abs(error);
+        float anglePID = 0.625 * error;
 
-        float left_motor = std_throttle_left*speedP + anglePID;
-        float right_motor = std_throttle_left*speedP - anglePID;
+        float left_motor = (std_throttle_left - speedP*1.038961) + (((std_throttle_left - speedP*1.038961)*(anglePID/100))/2)*1.038961;
+        float right_motor = (std_throttle_right - speedP) - ((std_throttle_left - speedP)*(anglePID/100))/2;
 
-        //postThrottle(left_motor, right_motor);
-        ROS_INFO("\nLeft motor: %d\nPID speed: %d\nPID angle: %f\n", std_throttle_left, speedP, anglePID);
+        postThrottle(left_motor, right_motor);
+        ROS_INFO("\nMotors: %f, %f\nP speed: %f\nPID angle: %f\n", left_motor, right_motor, speedP, anglePID);
     }
 }
 
