@@ -1,8 +1,8 @@
 #include <curl/curl.h>
 #include <cv_bridge/cv_bridge.h>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <sensor_msgs/image_encodings.h>
 #include <stdio.h>
-#include <opencv2/imgproc/imgproc.hpp>
 #include "ros/ros.h"
 #include "sensor_msgs/Image.h"
 
@@ -12,12 +12,13 @@ float prvs_error, PIDintegral = 0;
 
 void postThrottle(float left_motor, float right_motor) { 
     CURL *curl;
-    CURLcode res;
     curl = curl_easy_init();
+
     if (curl) {
-        string url = "http://192.168.1.44:8080/motor_throttle?sender=video_processor&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor);
+        string url = "http://localhost:8080/motor_throttle?sender=video_processor&left_motor=" + to_string(left_motor) + "&right_motor=" + to_string(right_motor);
+        
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        res = curl_easy_perform(curl);
+        curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
 }
@@ -32,12 +33,12 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
     cv::threshold(frame, frame, 35, 255, cv::THRESH_BINARY_INV);
 
-    // Find the contours of the frame
+    // Look for contours in the frame
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(frame, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
 
-    // Find the largest contour if it exists
+    // Find the largest contour if there are any contours
     if (contours.size() > 0) {
         double max_area = 0;
         int max_index = 0;
@@ -49,9 +50,10 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
             }
         }
     
-        // Find the center of the biggest contour and decide the motor throttle value
+        // Find the center of the biggest contour
         cv::Moments moment = cv::moments(contours[max_index], false);
         int lx = moment.m10 / moment.m00;
+
         // Default throttle for going straight
         float std_throttle_left = 0.4;
         float std_throttle_right = 0.385;
@@ -69,12 +71,11 @@ void videoCallback(const sensor_msgs::ImageConstPtr& msg)
         float right_motor = (std_throttle_right - speedP) - ((std_throttle_left - speedP)*(anglePID/100))/2;
 
         postThrottle(left_motor, right_motor);
-        ROS_INFO("\nMotors: %f, %f\nP speed: %f\nPID angle: %f\n", left_motor, right_motor, speedP, anglePID);
+        // ROS_INFO("\nMotors: left=%f, right=%f \nP speed: %f \nPID angle: %f\n", left_motor, right_motor, speedP, anglePID);
     }
 }
 
 int main(int argc, char **argv) {
-    // Initialize the node, nodehandle, subscriber and define the publisher
     ros::init(argc, argv, "video_processor");
     ros::NodeHandle nh;
     ros::Subscriber video_sub = nh.subscribe("video_feed", 2, videoCallback); 

@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-from adafruit_motorkit import MotorKit
 import cv2
 from cv_bridge import CvBridge
 import rospy
@@ -8,6 +7,7 @@ from sensor_msgs.msg import Image
 
 def video_stream_publisher():
     cap = cv2.VideoCapture(0)
+    bridge = CvBridge()
 
     if not cap.isOpened():
         rospy.logerr("Unable to open camera")
@@ -15,30 +15,28 @@ def video_stream_publisher():
 
     cap.set(3, 160)
     cap.set(4, 120)  
-    bridge = CvBridge()
 
     video_pub = rospy.Publisher('video_feed', Image, queue_size=2) 
-
     rospy.init_node('video_streamer', anonymous=True)
     rate = rospy.Rate(4) # 4hz
+
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         
-        # Convert the frame to a publishable ROS image and publish it 
+        # Convert the frame to a ROS image and publish it 
         if ret:
-            cropped_frame = frame[60:100, 0:160]
-            ros_image = bridge.cv2_to_imgmsg(cropped_frame, encoding="bgr8")
+            frame = frame[60:100, :160]
+            ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
             video_pub.publish(ros_image)
 
         rate.sleep()
         
-    # End video feed after shutdown
+    # Close the capture
     cap.release()
 
 
 if __name__ == '__main__':
     try:
-        rospy.loginfo("Video streamer node started.")
         video_stream_publisher()
     except rospy.ROSInterruptException:
         rospy.loginfo("Video streamer node terminated.")
