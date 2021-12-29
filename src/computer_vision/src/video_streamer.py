@@ -20,7 +20,7 @@ def video_stream_publisher():
     video_pub = rospy.Publisher('video_feed', Image, queue_size=2) 
 
     rospy.init_node('video_streamer', anonymous=True)
-    rate = rospy.Rate(4) # 4hz
+    rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         
