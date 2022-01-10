@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
-from adafruit_motorkit import MotorKit
+import adafruit_motorkit
 import flask
 
 algorithm_status = False
-kit = MotorKit()
+kit = adafruit_motorkit.MotorKit()
 
 app = flask.Flask(__name__)
 
@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 def algorithm_status():
     global algorithm_status
     
-    algorithm_status = True if flask.request.args.get('status')  == 'true' else False
+    algorithm_status = True if flask.request.args.get('status') == 'true' else False
     kit.motor1.throttle, kit.motor2.throttle = 0, 0 
     return "Succes"
 
@@ -33,4 +33,4 @@ def motor_throttle():
     return ""
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=8080)

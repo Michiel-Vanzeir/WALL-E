@@ -1,13 +1,13 @@
 #! /usr/bin/env python3
 import cv2
-from cv_bridge import CvBridge
+import cv_bridge
 import rospy
 from sensor_msgs.msg import Image
 
 
 def video_stream_publisher():
     cap = cv2.VideoCapture(0)
-    bridge = CvBridge()
+    bridge = cv_bridge.CvBridge()
 
     if not cap.isOpened():
         rospy.logerr("Unable to open camera")
@@ -18,8 +18,8 @@ def video_stream_publisher():
 
     video_pub = rospy.Publisher('video_feed', Image, queue_size=2) 
     rospy.init_node('video_streamer', anonymous=True)
-    rate = rospy.Rate(4) # 4hz
-
+    rate = rospy.Rate(10) # 10hz
+    
     while not rospy.is_shutdown():
         ret, frame = cap.read()
         
