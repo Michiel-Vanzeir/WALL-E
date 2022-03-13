@@ -8,12 +8,12 @@ project(my_robot_driver)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  my_robot_msgs
   roscpp
   rospy
-  sensor_msgs
-  std_msgs
   image_transport
+  cv_bridge
+  my_robot_msgs
+  std_msgs
   OpenCV
 )
 
@@ -122,7 +122,21 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
+
+add_executable(video_streamer src/video_streamer.cpp)
+target_link_libraries(
+  video_streamer
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+
+catkin_install_python(
+  PROGRAMS scripts/motor_operator.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+add_dependencies(motor_operator.py ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}

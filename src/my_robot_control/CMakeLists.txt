@@ -8,8 +8,13 @@ project(my_robot_control)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  my_robot_msgs
   roscpp
+  my_robot_msgs
+  std_msgs
+  sensor_msgs
+  cv_bridge
+  image_transport
+  OpenCV
 )
 
 ## System dependencies are found with CMake's conventions
@@ -117,7 +122,17 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
+
+add_executable(input_processor src/input_processor.cpp)
+target_link_libraries(
+  input_processor
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+)
+
+add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
