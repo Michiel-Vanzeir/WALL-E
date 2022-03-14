@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/ros/install
+
+Name: my_robot_msgs
+Description: Description of my_robot_msgs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime
