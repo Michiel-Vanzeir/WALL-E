@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <cv_bridge/cv_bridge.h>
 
 #include "my_robot_msgs/Inputvars.h"
@@ -69,27 +70,23 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
             return  {moment.m10 / moment.m00, rect.angle - 90};
         }
     }
-    return {240, 0};
+    return {320, 0};
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
-    try {
-        cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
-        auto [line_center, angle] = calculateInputVars(frame);
+    cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+    auto [line_center, angle] = calculateInputVars(frame);
 
-        // Calculate the distance between the middle of the frame and the center of the line
-        auto message = my_robot_msgs::Inputvars();
-        message.error = line_center - frame.cols/2;
-        message.angle = angle;
-        
-        // Make sure the error is within the possible range
-        if (message.error <= 240 && message.error >= -240)
-            inputvarspub.publish(message);
-    }
-    catch (cv_bridge::Exception& e) {
-        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
-    }
+    // Calculate the distance between the middle of the frame and the center of the line
+    auto message = my_robot_msgs::Inputvars();
+    message.error = line_center - frame.cols/2;
+    message.angle = angle;
+    
+    // Make sure the error is within the possible range
+    if (message.error <= 320 && message.error >= -320 && message.angle <= 90 && message.angle >= -90) {
+        inputvarspub.publish(message);
   }
+}
   
 int main(int argc, char **argv) {
     ros::init(argc, argv, "input_processor");

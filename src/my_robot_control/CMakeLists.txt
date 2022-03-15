@@ -14,8 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   cv_bridge
   image_transport
-  OpenCV
+  
 )
+find_package(OpenCV 4.0.0 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -109,7 +110,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES my_robot_control
-#  CATKIN_DEPENDS my_robot_msgs roscpp
+  CATKIN_DEPENDS my_robot_msgs roscpp message_runtime
 #  DEPENDS system_lib
 )
 
