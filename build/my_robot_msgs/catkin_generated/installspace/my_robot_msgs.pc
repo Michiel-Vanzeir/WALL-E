@@ -1,4 +1,4 @@
-prefix=/home/ubuntu/ros/install
+prefix=/home/michi/ros/install
 
 Name: my_robot_msgs
 Description: Description of my_robot_msgs

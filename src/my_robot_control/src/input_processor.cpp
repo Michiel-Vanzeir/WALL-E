@@ -75,6 +75,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+    frame = preprocess_frame(frame);
     auto [line_center, angle] = calculateInputVars(frame);
 
     // Calculate the distance between the middle of the frame and the center of the line
@@ -87,7 +88,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
         inputvarspub.publish(message);
   }
 }
-  
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "input_processor");
     ros::NodeHandle nh;
