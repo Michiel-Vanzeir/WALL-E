@@ -86,6 +86,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     // Make sure the error is within the possible range
     if (message.error <= 320 && message.error >= -320 && message.angle <= 90 && message.angle >= -90) {
         inputvarspub.publish(message);
+        ros::spinOnce();
   }
 }
 
