@@ -1,4 +1,4 @@
-prefix=/home/michi/ros/devel
+prefix=/home/ubuntu/ros/devel
 
 Name: my_robot_bringup
 Description: Description of my_robot_bringup

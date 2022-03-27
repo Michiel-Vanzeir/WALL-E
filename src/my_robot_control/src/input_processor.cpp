@@ -82,11 +82,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     auto message = my_robot_msgs::Inputvars();
     message.error = line_center - frame.cols/2;
     message.angle = angle;
-    
     // Make sure the error is within the possible range
     if (message.error <= 320 && message.error >= -320 && message.angle <= 90 && message.angle >= -90) {
         inputvarspub.publish(message);
-        ros::spinOnce();
   }
 }
 
