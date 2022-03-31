@@ -9,14 +9,14 @@
 ros::Publisher inputvarspub;
 
 cv::Mat preprocess_frame(cv::Mat frame) {
-    // Convert frame to grayscale
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
-
     // Add Gaussian blur to reduce noise
     cv::GaussianBlur(frame, frame, cv::Size(5,5), 0);
 
-    // Add threshold to make image binary
-    cv::threshold(frame, frame, 60, 200, cv::THRESH_BINARY_INV);
+    // Convert frame to grayscale
+    cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
+
+    // Make a mask to only detect the line
+    cv::inRange(frame, cv::Scalar(84, 0, 0), cv::Scalar(180, 255, 85), frame);
     return frame;
 }
 
@@ -61,7 +61,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         }
 
         // Show the frame
-        cv::imshow("Video Stream", frame);
+        cv::imshow("Mask", frame);
         cv::waitKey(1);
 
         if (rect.size.width < rect.size.height) {
