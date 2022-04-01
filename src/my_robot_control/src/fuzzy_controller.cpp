@@ -37,31 +37,31 @@ class FuzzyEngine {
             error->addTerm(new fl::Triangle("medium", 70.0, 170.0, 250.0));
             error->addTerm(new fl::Trapezoid("large", 200.0, 250.0, 320.0, 320.0));
             engine->addInputVariable(error);
-
+    
             right_throttle->setName("rthrottle");
             right_throttle->setEnabled(true);
-            right_throttle->setRange(-0.3, 0.5);
+            right_throttle->setRange(-0.3, 0.55);
             right_throttle->setLockValueInRange(false);
             right_throttle->setAggregation(new fl::Maximum());
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
-            right_throttle->addTerm(new fl::Triangle("nlow", -0.3, -0.2, -0.2));
-            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.3));
-            right_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.4));
-            right_throttle->addTerm(new fl::Trapezoid("high", 0.35, 0.42, 0.5, 0.5));
+            right_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.2, -0.2));
+            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
+            right_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
+            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.55, 0.55));
             engine->addOutputVariable(right_throttle);
 
             left_throttle->setName("lthrottle");
             left_throttle->setEnabled(true);
-            left_throttle->setRange(-0.3, 0.5);
+            left_throttle->setRange(-0.3, 0.55);
             left_throttle->setLockValueInRange(false);
             left_throttle->setAggregation(new fl::Maximum());
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
-            left_throttle->addTerm(new fl::Triangle("nlow", -0.3, -0.2, -0.2));
-            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.3));
-            left_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.4));
-            left_throttle->addTerm(new fl::Trapezoid("high", 0.35, 0.42, 0.5, 0.5));
+            left_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.2, -0.2));
+            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
+            left_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
+            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.55, 0.55));
             engine->addOutputVariable(left_throttle);
 
             rules->setName("rules");

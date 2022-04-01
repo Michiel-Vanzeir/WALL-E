@@ -8,14 +8,37 @@
 
 ros::Publisher inputvarspub;
 
-cv::Mat preprocess_frame(cv::Mat frame) {
-    // Add Gaussian blur to reduce noise
-    cv::GaussianBlur(frame, frame, cv::Size(5,5), 0);
+cv::Mat removeShadows(cv::Mat img) {
+    // Split the image into its channels
+    cv::Mat rgb_planes[3];
+    cv::split(img, rgb_planes);
 
-    // Convert frame to grayscale
+    cv::Mat result_planes[3];
+
+    // Normalize each channel
+    for (int i = 0; i < 3; i++) {
+        cv::Mat plane_result;
+        
+        cv::dilate(rgb_planes[i], plane_result, cv::Size(7, 7));
+        cv::medianBlur(plane_result, plane_result, 21);
+        plane_result = 255 - cv::absdiff(rgb_planes[i], plane_result);
+        cv::normalize(plane_result, plane_result, 0, 200, cv::NORM_MINMAX, cv::CV_8UC1);
+        result_planes[i] = plane_result;
+    }
+
+    // Merge the channels
+    cv::Mat result = cv::merge(result_planes);
+    return result;
+}
+
+cv::Mat preprocess_frame(cv::Mat frame) {
+    // Remove the shadows from the frame
+    frame = removeShadows(frame);
+
+    // Convert the frame to grayscale
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
 
-    // Make a mask to only detect the line
+    // Make a mask to binarize the frame to detect the line
     cv::inRange(frame, cv::Scalar(84, 0, 0), cv::Scalar(180, 255, 85), frame);
     return frame;
 }
