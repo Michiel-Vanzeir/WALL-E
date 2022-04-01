@@ -42,8 +42,6 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     // Remove the shadows from the frame
     frame = removeShadows(frame);
 
-    cv::imshow("noshadow", frame);
-    cv::waitKey(2);
     // Convert the frame to grayscale
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
 
