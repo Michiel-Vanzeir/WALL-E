@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import rospy
+import time
 from adafruit_motorkit import MotorKit
 from my_robot_msgs.msg import Throttle
 
@@ -8,6 +9,9 @@ kit = MotorKit()
 def callback(msg):
     kit.motor1.throttle = msg.right_throttle
     kit.motor2.throttle = msg.left_throttle
+    time.sleep(0.025)
+    kit.motor1.throttle = 0
+    kit.motor2.throttle = 0
     
 def motor_operator():
     rospy.init_node('motor_operator')

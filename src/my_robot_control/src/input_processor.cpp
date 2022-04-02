@@ -81,13 +81,13 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         cv::RotatedRect rect = cv::minAreaRect(contours[max_index]);
 
         // Draw the largest contour
-        cv::drawContours(frame, contours, max_index, cv::Scalar(255,255,255), 2);
+        cv::drawContours(frame, contours, max_index, cv::Scalar(0,0,255), 2);
 
         // Draw the rotated rect
         cv::Point2f vertices[4];
         rect.points(vertices);
         for (int i = 0; i < 4; i++) {
-            cv::line(frame, vertices[i], vertices[(i+1)%4], cv::Scalar(255,255,255), 2);
+            cv::line(frame, vertices[i], vertices[(i+1)%4], cv::Scalar(0,0,255), 2);
         }
 
         // Show the frame
@@ -100,7 +100,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
             return  {moment.m10 / moment.m00, rect.angle - 90};
         }
     }
-    return {320, 0};
+    return {160, 0};
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
@@ -113,7 +113,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     message.error = line_center - frame.cols/2;
     message.angle = angle;
     // Make sure the error is within the possible range
-    if (message.error <= 320 && message.error >= -320 && message.angle <= 90 && message.angle >= -90) {
+    if (message.error <= 160 && message.error >= -160 && message.angle <= 90 && message.angle >= -90) {
         inputvarspub.publish(message);
   }
 }
