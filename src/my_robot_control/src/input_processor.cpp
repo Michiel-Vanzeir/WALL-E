@@ -46,7 +46,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
 
     // Make a mask to binarize the frame to detect the line
-    cv::inRange(frame, cv::Scalar(84, 0, 0), cv::Scalar(180, 255, 85), frame);
+    cv::inRange(frame, cv::Scalar(0, 0, 0), cv::Scalar(180, 12, 175), frame);
     return frame;
 }
 
