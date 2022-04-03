@@ -40,7 +40,7 @@ cv::Mat removeShadows(cv::Mat img) {
 
 cv::Mat preprocess_frame(cv::Mat frame) {
     // Add Gaussian
-    cv::GaussianBlur(frame, frame, cv::Size(8, 8), 0);
+    cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
 
     // Remove the shadows from the frame
     frame = removeShadows(frame);
@@ -87,23 +87,23 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
 
         // Draw the rotated rectangle
-        cv::Point2f vertices[4];
-        rect.points(vertices);
-        for (int i = 0; i < 4; i++) {
-            cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
-        }
+        //cv::Point2f vertices[4];
+        //rect.points(vertices);
+        //for (int i = 0; i < 4; i++) {
+        //    cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
+        //}
 
         // Show the frame
-        cv::imshow("Mask", frame2);
-        cv::waitKey(1);
+        //cv::imshow("Mask", frame2);
+        //cv::waitKey(1);
 
         if (rect.size.width < rect.size.height) {
             return {moment.m10 / moment.m00, rect.angle};
         } else {
-            return  {moment.m10 / moment.m00, rect.angle - 90};
+            return  {moment.m10 / moment.m00, rect.angle + 90};
         }
     }
-    return {160, 0};
+    return {0, 0};
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
@@ -117,8 +117,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     message.error = line_center - frame.cols/2;
     message.angle = angle;
     // Make sure the error is within the possible range
+    //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
     if (message.error <= 160 && message.error >= -160 && message.angle <= 90 && message.angle >= -90) {
-        ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
+        //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
         inputvarspub.publish(message);
   }
 }
