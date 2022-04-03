@@ -20,11 +20,11 @@ class FuzzyEngine {
             angle->setEnabled(true);
             angle->setRange(-90.0, 90.0);
             angle->setLockValueInRange(false);
-            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -60.0, -45.0));
-            angle->addTerm(new fl::Triangle("nmedium", -55.0, -40.0, -15.0));
-            angle->addTerm(new fl::Trapezoid("small", -25.0, -10.0, 10.0, 25.0));
-            angle->addTerm(new fl::Triangle("medium", 15.0, 40.0, 55.0));
-            angle->addTerm(new fl::Trapezoid("large", 45.0, 60.0, 90.0, 90.0));
+            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -45.0, -20.0));
+            angle->addTerm(new fl::Triangle("nmedium", -30.0, -20.0, -10.0));
+            angle->addTerm(new fl::Trapezoid("small", -15.0, -10.0, 10.0, 15.0));
+            angle->addTerm(new fl::Triangle("medium", 10.0, 20.0, 30.0));
+            angle->addTerm(new fl::Trapezoid("large", 20.0, 45.0, 90.0, 90.0));
             engine->addInputVariable(angle);
 
             error->setName("error");

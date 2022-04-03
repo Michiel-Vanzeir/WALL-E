@@ -86,9 +86,6 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         // Draw the largest contour
         //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
 
-        // Draw the rotated rectangle
-        //cv::Point2f vertices[4];
-        //rect.points(vertices);
         //for (int i = 0; i < 4; i++) {
         //    cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
         //}
@@ -97,7 +94,10 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         //cv::imshow("Mask", frame2);
         //cv::waitKey(1);
 
-        if (rect.size.width < rect.size.height) {
+        cv::Point2f vertices[4];
+        rect.points(vertices);
+        
+        if (vertices[0].x < vertices[1].x) {
             return {moment.m10 / moment.m00, rect.angle};
         } else {
             return  {moment.m10 / moment.m00, rect.angle + 90};
