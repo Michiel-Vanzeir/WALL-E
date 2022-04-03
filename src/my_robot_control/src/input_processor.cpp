@@ -80,14 +80,11 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         // Find the angle of the largest contour using areaminrect
         cv::RotatedRect rect = cv::minAreaRect(contours[max_index]);
 
-        // Convert back to BGR
-        cv::cvtColor(frame, frame, cv::COLOR_HSV2BGR);
-
         // Draw the largest contour
-        cv::drawContours(frame, contours, max_index, cv::Scalar(0,255,0), 2);
+        cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
 
         // Show the frame
-        cv::imshow("Mask", frame);
+        cv::imshow("Mask", frame2);
         cv::waitKey(1);
 
         if (rect.size.width < rect.size.height) {
@@ -101,8 +98,9 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+    cv::Mat frame2 = frame; 
     frame = preprocess_frame(frame);
-    auto [line_center, angle] = calculateInputVars(frame);
+    auto [line_center, angle] = calculateInputVars(frame, frame2);
 
     // Calculate the distance between the middle of the frame and the center of the line
     auto message = my_robot_msgs::Inputvars();
