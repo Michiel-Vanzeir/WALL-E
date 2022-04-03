@@ -67,7 +67,7 @@ int largest_contour(std::vector<std::vector<cv::Point>> contours) {
     return max_area_index;
 }
 
-std::tuple<int, int> calculateInputVars(cv::Mat frame) {
+std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
     // Find contours in the frame
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
