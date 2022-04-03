@@ -39,6 +39,9 @@ cv::Mat removeShadows(cv::Mat img) {
 }
 
 cv::Mat preprocess_frame(cv::Mat frame) {
+    // Add Gaussian
+    cv::GaussianBlur(frame, frame, cv::Size(8, 8), 0);
+
     // Remove the shadows from the frame
     frame = removeShadows(frame);
 
@@ -81,7 +84,14 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         cv::RotatedRect rect = cv::minAreaRect(contours[max_index]);
 
         // Draw the largest contour
-        cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
+        //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
+
+        // Draw the rotated rectangle
+        cv::Point2f vertices[4];
+        rect.points(vertices);
+        for (int i = 0; i < 4; i++) {
+            cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
+        }
 
         // Show the frame
         cv::imshow("Mask", frame2);
