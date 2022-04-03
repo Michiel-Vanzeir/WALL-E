@@ -42,7 +42,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     // Remove the shadows from the frame
     frame = removeShadows(frame);
 
-    // Convert the frame to grayscale
+    // Convert the frame to HSV
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
 
     // Make a mask to binarize the frame to detect the line
@@ -80,19 +80,15 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         // Find the angle of the largest contour using areaminrect
         cv::RotatedRect rect = cv::minAreaRect(contours[max_index]);
 
-        // Draw the largest contour
-        cv::drawContours(frame, contours, max_index, cv::Scalar(0,0,255), 2);
+        // Convert back to BGR
+        cv::cvtColor(frame, frame, cv::COLOR_HSV2BGR);
 
-        // Draw the rotated rect
-        cv::Point2f vertices[4];
-        rect.points(vertices);
-        for (int i = 0; i < 4; i++) {
-            cv::line(frame, vertices[i], vertices[(i+1)%4], cv::Scalar(0,0,255), 2);
-        }
+        // Draw the largest contour
+        cv::drawContours(frame, contours, max_index, cv::Scalar(0,255,0), 2);
 
         // Show the frame
-        //cv::imshow("Mask", frame);
-        //cv::waitKey(1);
+        cv::imshow("Mask", frame);
+        cv::waitKey(1);
 
         if (rect.size.width < rect.size.height) {
             return {moment.m10 / moment.m00, rect.angle};
@@ -114,6 +110,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     message.angle = angle;
     // Make sure the error is within the possible range
     if (message.error <= 160 && message.error >= -160 && message.angle <= 90 && message.angle >= -90) {
+        ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
         inputvarspub.publish(message);
   }
 }
