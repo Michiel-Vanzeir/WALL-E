@@ -46,7 +46,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
 
     // Make a mask to binarize the frame to detect the line
-    cv::inRange(frame, cv::Scalar(0, 0, 0), cv::Scalar(180, 12, 175), frame);
+    cv::inRange(frame, cv::Scalar(0, 0, 0), cv::Scalar(180, 175, 170), frame);
     return frame;
 }
 
@@ -91,8 +91,8 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame) {
         }
 
         // Show the frame
-        cv::imshow("Mask", frame);
-        cv::waitKey(1);
+        //cv::imshow("Mask", frame);
+        //cv::waitKey(1);
 
         if (rect.size.width < rect.size.height) {
             return {moment.m10 / moment.m00, rect.angle};

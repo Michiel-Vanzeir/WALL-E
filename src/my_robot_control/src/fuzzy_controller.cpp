@@ -40,28 +40,28 @@ class FuzzyEngine {
     
             right_throttle->setName("rthrottle");
             right_throttle->setEnabled(true);
-            right_throttle->setRange(-0.3, 0.55);
+            right_throttle->setRange(-0.3, 0.6);
             right_throttle->setLockValueInRange(false);
             right_throttle->setAggregation(new fl::Maximum());
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
-            right_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.2, -0.2));
+            right_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
             right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
             right_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
-            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.55, 0.55));
+            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.6, 0.6));
             engine->addOutputVariable(right_throttle);
 
             left_throttle->setName("lthrottle");
             left_throttle->setEnabled(true);
-            left_throttle->setRange(-0.3, 0.55);
+            left_throttle->setRange(-0.3, 0.6);
             left_throttle->setLockValueInRange(false);
             left_throttle->setAggregation(new fl::Maximum());
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
-            left_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.2, -0.2));
+            left_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
             left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
             left_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
-            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.55, 0.55));
+            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.6, 0.6));
             engine->addOutputVariable(left_throttle);
 
             rules->setName("rules");
