@@ -20,11 +20,11 @@ class FuzzyEngine {
             angle->setEnabled(true);
             angle->setRange(-90.0, 90.0);
             angle->setLockValueInRange(false);
-            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -45.0, -20.0));
+            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -45.0, -30.0));
             angle->addTerm(new fl::Triangle("nmedium", -30.0, -20.0, -10.0));
             angle->addTerm(new fl::Trapezoid("small", -15.0, -10.0, 10.0, 15.0));
             angle->addTerm(new fl::Triangle("medium", 10.0, 20.0, 30.0));
-            angle->addTerm(new fl::Trapezoid("large", 20.0, 45.0, 90.0, 90.0));
+            angle->addTerm(new fl::Trapezoid("large", 30.0, 45.0, 90.0, 90.0));
             engine->addInputVariable(angle);
 
             error->setName("error");
@@ -40,11 +40,12 @@ class FuzzyEngine {
     
             right_throttle->setName("rthrottle");
             right_throttle->setEnabled(true);
-            right_throttle->setRange(-0.3, 0.6);
+            right_throttle->setRange(-0.5, 0.6);
             right_throttle->setLockValueInRange(false);
             right_throttle->setAggregation(new fl::Maximum());
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
+            right_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, 0.3));
             right_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
             right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
             right_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
@@ -53,11 +54,12 @@ class FuzzyEngine {
 
             left_throttle->setName("lthrottle");
             left_throttle->setEnabled(true);
-            left_throttle->setRange(-0.3, 0.6);
+            left_throttle->setRange(-0.5, 0.6);
             left_throttle->setLockValueInRange(false);
             left_throttle->setAggregation(new fl::Maximum());
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
+            left_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, -0.3));
             left_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
             left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
             left_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
@@ -70,13 +72,13 @@ class FuzzyEngine {
             rules->setDisjunction(new fl::Maximum());
             rules->setImplication(new fl::AlgebraicProduct());
             rules->setActivation(new fl::General());
-            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is high", engine));   
+            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is naverage and rthrottle is high", engine));   
             rules->addRule(fl::Rule::parse("if error is nlarge or angle is nlarge then lthrottle is low and rthrottle is high", engine));         
             rules->addRule(fl::Rule::parse("if error is nmedium or angle is nmedium then lthrottle is low and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is small and angle is small then lthrottle is average and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is medium or angle is medium then lthrottle is average and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large or angle is large then lthrottle is high and rthrottle is low", engine));
-            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is high and rthrottle is nlow", engine));
+            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is high and rthrottle is naverage", engine));
             engine->addRuleBlock(rules);
         }
 
