@@ -101,8 +101,8 @@ void calculate_throttle(const my_robot_msgs::Inputvars::ConstPtr& msg) {
         auto [left_throttle, right_throttle] = engine.calculateOutput((float)msg->error, (float)msg->angle);
 
         my_robot_msgs::Throttle throttle_msg;
-        throttle_msg.left_throttle = left_throttle;
-        throttle_msg.right_throttle = right_throttle;
+        throttle_msg.left_throttle = left_throttle*0.8;
+        throttle_msg.right_throttle = right_throttle*0.8;
         throttlepub.publish(throttle_msg);
         ros::spinOnce();
     } else {

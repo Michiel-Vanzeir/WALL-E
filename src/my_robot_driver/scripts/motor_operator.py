@@ -7,9 +7,9 @@ from my_robot_msgs.msg import Throttle
 kit = MotorKit()
 
 def callback(msg):
-    kit.motor1.throttle = msg.right_throttle*0.8
-    kit.motor2.throttle = msg.left_throttle*0.8
-    #time.sleep(0.075)
+    kit.motor1.throttle = msg.right_throttle
+    kit.motor2.throttle = msg.left_throttle
+    #time.sleep(0.025)
     #kit.motor1.throttle = 0
     #kit.motor2.throttle = 0
     

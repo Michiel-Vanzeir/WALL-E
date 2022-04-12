@@ -91,7 +91,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         //}
 
         // Show the frame
-        //cv::imshow("Mask", frame2);
+        //cv::imshow("Mask", frame);
         //cv::waitKey(1);
 
         cv::Point2f vertices[4];
