@@ -88,14 +88,11 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
 
         // Draw the largest contour
         //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
-
+        cv::Point2f vertices[4];
+        rect.points(vertices);
         for (int i = 0; i < 4; i++) {
             cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
         }
-
-
-        cv::Point2f vertices[4];
-        rect.points(vertices);
         
         if (vertices[0].x < vertices[1].x) {
             // Put text the angle
@@ -106,12 +103,12 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
             return {moment.m10 / moment.m00, rect.angle};
         } else {
             // Put text the angle
-            cv::putText(frame2, std::to_string(rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
+            cv::putText(frame2, std::to_string(rect.angle), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
 
             // Show the frame
             cv::imshow("Mask", frame2);
             cv::waitKey(1);
-            return  {moment.m10 / moment.m00, rect.angle + 90};
+            return  {moment.m10 / moment.m00, rect.angle};
         }
     }
     return {0, 0};
