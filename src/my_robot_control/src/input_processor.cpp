@@ -95,7 +95,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         }
         
         // Rosinfo the vertices
-        //ROS_INFO("Vertices: %f, %f", vertices[0].x, vertices[1].x);
+        ROS_INFO("Vertices: %f, %f", vertices[0].x, vertices[1].x);
         if (vertices[0].x < vertices[1].x) {
             // Put text the angle
             cv::putText(frame2, "a: " + std::to_string(rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
