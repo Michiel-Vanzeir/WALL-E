@@ -96,16 +96,16 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         
         // Rosinfo the vertices
         ROS_INFO("Vertices: %f, %f", vertices[0].x, vertices[1].x);
-        if (vertices[0].x < vertices[1].x) {
+        if (rect.size.width > rect.size.height) {
             // Put text the angle
-            cv::putText(frame2, "a: " + std::to_string(rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
+            cv::putText(frame2, "right: " + std::to_string(rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
             // Show the frame
             cv::imshow("Mask", frame2);
             cv::waitKey(1);
             return {moment.m10 / moment.m00, rect.angle+90};
         } else {
             // Put text the angle
-            cv::putText(frame2, "b: " + std::to_string(rect.angle), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
+            cv::putText(frame2, "left: " + std::to_string(rect.angle), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
 
             // Show the frame
             cv::imshow("Mask", frame2);
