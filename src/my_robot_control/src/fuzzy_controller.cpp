@@ -70,13 +70,13 @@ class FuzzyEngine {
             rules->setDisjunction(new fl::Maximum());
             rules->setImplication(new fl::AlgebraicProduct());
             rules->setActivation(new fl::General());
-            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is high", engine));   
+            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is average", engine));   
             rules->addRule(fl::Rule::parse("if error is nlarge or angle is nlarge then lthrottle is low and rthrottle is high", engine));         
             rules->addRule(fl::Rule::parse("if error is nmedium or angle is nmedium then lthrottle is low and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is small and angle is small then lthrottle is average and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is medium or angle is medium then lthrottle is average and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large or angle is large then lthrottle is high and rthrottle is low", engine));
-            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is high and rthrottle is nlow", engine));
+            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is average and rthrottle is nlow", engine));
             engine->addRuleBlock(rules);
         }
 
