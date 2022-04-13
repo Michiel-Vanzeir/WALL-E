@@ -45,12 +45,10 @@ class FuzzyEngine {
             right_throttle->setAggregation(new fl::Maximum());
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
-            right_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, 0.3));
             right_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
-            right_throttle->addTerm(new fl::Triangle("zero", 0, 0, 0));
-            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.28));
-            right_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
-            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.42, 0.55, 0.55));
+            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
+            right_throttle->addTerm(new fl::Triangle("average", 0.2, 0.3, 0.47));
+            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.44, 0.55, 0.55));
             engine->addOutputVariable(right_throttle);
 
             left_throttle->setName("lthrottle");
@@ -60,12 +58,10 @@ class FuzzyEngine {
             left_throttle->setAggregation(new fl::Maximum());
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
-            left_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, -0.3));
             left_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
-            left_throttle->addTerm(new fl::Triangle("zero", 0, 0, 0));
-            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.28));
-            left_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
-            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.42, 0.55, 0.55));
+            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
+            left_throttle->addTerm(new fl::Triangle("average", 0.2, 0.3, 0.47));
+            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.44, 0.55, 0.55));
             engine->addOutputVariable(left_throttle);
 
             rules->setName("rules");
