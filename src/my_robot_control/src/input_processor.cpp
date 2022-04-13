@@ -28,7 +28,7 @@ cv::Mat removeShadows(cv::Mat img) {
         cv::absdiff(rgb_planes[i], plane_result, abs_diff);
         plane_result = scalar - abs_diff;
 
-        cv::normalize(plane_result, plane_result, 0, 200, cv::NORM_MINMAX, CV_8UC1);
+        cv::normalize(plane_result, plane_result, 0, 255, cv::NORM_MINMAX, CV_8UC1);
         result_planes[i] = plane_result;
     }
 
@@ -89,13 +89,13 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         // Draw the largest contour
         //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
 
-        //for (int i = 0; i < 4; i++) {
-        //    cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
-        //}
+        for (int i = 0; i < 4; i++) {
+            cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
+        }
 
         // Show the frame
-        //cv::imshow("Mask", frame);
-        //cv::waitKey(1);
+        cv::imshow("Mask", frame2);
+        cv::waitKey(1);
 
         cv::Point2f vertices[4];
         rect.points(vertices);
