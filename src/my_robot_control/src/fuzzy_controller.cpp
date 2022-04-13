@@ -98,11 +98,11 @@ class FuzzyEngine {
 void calculate_throttle(const my_robot_msgs::Inputvars::ConstPtr& msg) {
     FuzzyEngine engine;
     if (engine.ready()) {
-        auto [left_throttle, right_throttle] = engine.calculateOutput((float)msg->error, (float)msg->angle);
+        std::tuple<float, float> output = engine.calculateOutput(msg->error, msg->angle);
 
         my_robot_msgs::Throttle throttle_msg;
-        throttle_msg.left_throttle = left_throttle;
-        throttle_msg.right_throttle = right_throttle;
+        throttle_msg.left_throttle = std::get<0>(output);
+        throttle_msg.right_throttle = std::get<1>(output);
         throttlepub.publish(throttle_msg);
         ros::spinOnce();
     } else {

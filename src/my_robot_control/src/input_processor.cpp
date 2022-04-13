@@ -111,12 +111,12 @@ void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
     cv::Mat frame2 = frame; 
     frame = preprocess_frame(frame);
-    auto [line_center, angle] = calculateInputVars(frame, frame2);
+    std::tuple<int, int> inputvars = calculateInputVars(frame, frame2);
 
     // Calculate the distance between the middle of the frame and the center of the line
     auto message = my_robot_msgs::Inputvars();
-    message.error = line_center - frame.cols/2;
-    message.angle = angle;
+    message.error = std::get<0>(inputvars) - frame.cols/2;
+    message.angle = std::get<1>(inputvars);
     // Make sure the error is within the possible range
     //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
     if (message.error <= 160 && message.error >= -160 && message.angle <= 90 && message.angle >= -90) {
