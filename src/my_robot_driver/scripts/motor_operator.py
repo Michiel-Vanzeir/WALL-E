@@ -10,7 +10,7 @@ def callback(msg):
     kit.motor1.throttle = msg.right_throttle
     kit.motor2.throttle = msg.left_throttle
     rospy.loginfo(f"Left throttle: {msg.left_throttle} || Right throttle: {msg.right_throttle}")
-    time.sleep(0.025)
+    time.sleep(0.020)
     kit.motor1.throttle = 0
     kit.motor2.throttle = 0
     
