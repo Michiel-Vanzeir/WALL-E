@@ -96,7 +96,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         
         if (vertices[0].x < vertices[1].x) {
             // Put text the angle
-            cv::putText(frame2, std::to_string("a: %.2f", rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
+            cv::putText(frame2, "a: " + std::to_string(rect.angle+90), cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 255, 0), 2);
             // Show the frame
             cv::imshow("Mask", frame2);
             cv::waitKey(1);
