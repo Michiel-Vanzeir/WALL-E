@@ -31,11 +31,11 @@ class FuzzyEngine {
             error->setEnabled(true);
             error->setRange(-160.0, 160.0);
             error->setLockValueInRange(false);
-            error->addTerm(new fl::Trapezoid("nlarge", -160.0, -160.0, -125.0, -100.0));
-            error->addTerm(new fl::Triangle("nmedium", -125.0, -85.0, -35.0));
+            error->addTerm(new fl::Trapezoid("nlarge", -160.0, -160.0, -145.0, -120.0));
+            error->addTerm(new fl::Triangle("nmedium", -135.0, -85.0, -35.0));
             error->addTerm(new fl::Triangle("small", -50.0, 0.0, 50.0));            
-            error->addTerm(new fl::Triangle("medium", 35.0, 85.0, 125.0));
-            error->addTerm(new fl::Trapezoid("large", 100.0, 125.0, 160.0, 160.0));
+            error->addTerm(new fl::Triangle("medium", 35.0, 85.0, 135.0));
+            error->addTerm(new fl::Trapezoid("large", 120.0, 145.0, 160.0, 160.0));
             engine->addInputVariable(error);
     
             right_throttle->setName("rthrottle");
