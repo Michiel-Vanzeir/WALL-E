@@ -47,7 +47,7 @@ class FuzzyEngine {
             right_throttle->setDefaultValue(0.0);
             right_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
             right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
-            right_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
+            right_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.47));
             right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.5, 0.55, 0.55));
             engine->addOutputVariable(right_throttle);
 
@@ -60,7 +60,7 @@ class FuzzyEngine {
             left_throttle->setDefaultValue(0.0);
             left_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
             left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
-            left_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
+            left_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.47));
             left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.5, 0.55, 0.55));
             engine->addOutputVariable(left_throttle);
 
@@ -73,7 +73,7 @@ class FuzzyEngine {
             rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is average", engine));   
             rules->addRule(fl::Rule::parse("if error is nlarge or angle is nlarge then lthrottle is low and rthrottle is high", engine));         
             rules->addRule(fl::Rule::parse("if error is nmedium or angle is nmedium then lthrottle is low and rthrottle is average", engine));
-            rules->addRule(fl::Rule::parse("if error is small then lthrottle is average and rthrottle is average", engine));
+            rules->addRule(fl::Rule::parse("if error is small and angle is small then lthrottle is average and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is medium or angle is medium then lthrottle is average and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large or angle is large then lthrottle is high and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is average and rthrottle is nlow", engine));
