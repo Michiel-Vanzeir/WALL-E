@@ -46,10 +46,11 @@ class FuzzyEngine {
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
             right_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, 0.3));
-            right_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
-            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
-            right_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
-            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.6, 0.6));
+            right_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
+            right_throttle->addTerm(new fl::Triangle("zero", 0, 0, 0));
+            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.28));
+            right_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
+            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.42, 0.55, 0.55));
             engine->addOutputVariable(right_throttle);
 
             left_throttle->setName("lthrottle");
@@ -60,10 +61,11 @@ class FuzzyEngine {
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
             left_throttle->addTerm(new fl::Trapezoid("naverage", -0.5, -0.5, -0.4, -0.3));
-            left_throttle->addTerm(new fl::Triangle("nlow", -0.4, -0.25, -0.25));
-            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.33));
-            left_throttle->addTerm(new fl::Triangle("average", 0.3, 0.35, 0.47));
-            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.45, 0.6, 0.6));
+            left_throttle->addTerm(new fl::Triangle("nlow", -0.35, -0.25, -0.25));
+            left_throttle->addTerm(new fl::Triangle("zero", 0, 0, 0));
+            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.28));
+            left_throttle->addTerm(new fl::Triangle("average", 0.32, 0.37, 0.47));
+            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.42, 0.55, 0.55));
             engine->addOutputVariable(left_throttle);
 
             rules->setName("rules");
@@ -72,13 +74,13 @@ class FuzzyEngine {
             rules->setDisjunction(new fl::Maximum());
             rules->setImplication(new fl::AlgebraicProduct());
             rules->setActivation(new fl::General());
-            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is naverage and rthrottle is high", engine));   
+            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is high", engine));   
             rules->addRule(fl::Rule::parse("if error is nlarge or angle is nlarge then lthrottle is low and rthrottle is high", engine));         
             rules->addRule(fl::Rule::parse("if error is nmedium or angle is nmedium then lthrottle is low and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is small and angle is small then lthrottle is average and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is medium or angle is medium then lthrottle is average and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large or angle is large then lthrottle is high and rthrottle is low", engine));
-            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is high and rthrottle is naverage", engine));
+            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is high and rthrottle is nlow", engine));
             engine->addRuleBlock(rules);
         }
 
@@ -103,8 +105,8 @@ void calculate_throttle(const my_robot_msgs::Inputvars::ConstPtr& msg) {
         auto [left_throttle, right_throttle] = engine.calculateOutput((float)msg->error, (float)msg->angle);
 
         my_robot_msgs::Throttle throttle_msg;
-        throttle_msg.left_throttle = left_throttle*0.8;
-        throttle_msg.right_throttle = right_throttle*0.8;
+        throttle_msg.left_throttle = left_throttle;
+        throttle_msg.right_throttle = right_throttle;
         throttlepub.publish(throttle_msg);
         ros::spinOnce();
     } else {
