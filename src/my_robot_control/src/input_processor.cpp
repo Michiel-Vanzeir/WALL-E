@@ -50,6 +50,9 @@ cv::Mat preprocess_frame(cv::Mat frame) {
 
     // Make a mask to binarize the frame to detect the line
     cv::inRange(frame, cv::Scalar(0, 0, 0), cv::Scalar(180, 175, 170), frame);
+
+    // Dilate white pixels in the frame
+    cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
     return frame;
 }
 
