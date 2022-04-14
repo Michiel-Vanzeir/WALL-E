@@ -20,48 +20,46 @@ class FuzzyEngine {
             angle->setEnabled(true);
             angle->setRange(-90.0, 90.0);
             angle->setLockValueInRange(false);
-            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -45.0, -30.0));
-            angle->addTerm(new fl::Triangle("nmedium", -30.0, -20.0, -10.0));
-            angle->addTerm(new fl::Trapezoid("small", -15.0, -10.0, 10.0, 15.0));
-            angle->addTerm(new fl::Triangle("medium", 10.0, 20.0, 30.0));
-            angle->addTerm(new fl::Trapezoid("large", 30.0, 45.0, 90.0, 90.0));
+            angle->addTerm(new fl::Trapezoid("nlarge", -90.0, -90.0, -45.0, -25.0));
+            angle->addTerm(new fl::Triangle("nmedium", -37.0, -23.0, -10.0));
+            angle->addTerm(new fl::Triangle("small", -15, 0, 15));
+            angle->addTerm(new fl::Triangle("medium", 10.0, 23.0, 37.0));
+            angle->addTerm(new fl::Trapezoid("large", 25.0, 45.0, 90.0, 90.0));
             engine->addInputVariable(angle);
 
             error->setName("error");
             error->setEnabled(true);
             error->setRange(-160.0, 160.0);
             error->setLockValueInRange(false);
-            error->addTerm(new fl::Trapezoid("nlarge", -160.0, -160.0, -145.0, -120.0));
-            error->addTerm(new fl::Triangle("nmedium", -135.0, -85.0, -35.0));
-            error->addTerm(new fl::Triangle("small", -50.0, 0.0, 50.0));            
-            error->addTerm(new fl::Triangle("medium", 35.0, 85.0, 135.0));
-            error->addTerm(new fl::Trapezoid("large", 120.0, 145.0, 160.0, 160.0));
+            error->addTerm(new fl::Trapezoid("nlarge", -160.0, -160.0, -125.0, -95.0));
+            error->addTerm(new fl::Triangle("nmedium", -110.0, -60.0, -20.0));
+            error->addTerm(new fl::Triangle("small", -40.0, 0.0, 40.0));            
+            error->addTerm(new fl::Triangle("medium", 20.0, 60.0, 110.0));
+            error->addTerm(new fl::Trapezoid("large", 95, 125.0, 160.0, 160.0));
             engine->addInputVariable(error);
     
             right_throttle->setName("rthrottle");
             right_throttle->setEnabled(true);
-            right_throttle->setRange(-0.5, 0.6);
+            right_throttle->setRange(0, 1);
             right_throttle->setLockValueInRange(false);
             right_throttle->setAggregation(new fl::Maximum());
             right_throttle->setDefuzzifier(new fl::Centroid(100));
             right_throttle->setDefaultValue(0.0);
-            right_throttle->addTerm(new fl::Triangle("nlow", -0.45, -0.25, -0.25));
-            right_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
-            right_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.47));
-            right_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.5, 0.55, 0.55));
+            right_throttle->addTerm(new fl::Triangle("low", 0, 0, 0.3));
+            right_throttle->addTerm(new fl::Triangle("average", 0.2, 0.4, 0.65));
+            right_throttle->addTerm(new fl::Trapezoid("high", 0.6, 0.8, 1, 1));
             engine->addOutputVariable(right_throttle);
 
             left_throttle->setName("lthrottle");
             left_throttle->setEnabled(true);
-            left_throttle->setRange(-0.5, 0.6);
+            left_throttle->setRange(0, 1);
             left_throttle->setLockValueInRange(false);
             left_throttle->setAggregation(new fl::Maximum());
             left_throttle->setDefuzzifier(new fl::Centroid(100));
             left_throttle->setDefaultValue(0.0);
-            left_throttle->addTerm(new fl::Triangle("nlow", -0.45, -0.25, -0.25));
-            left_throttle->addTerm(new fl::Triangle("low", 0.2, 0.2, 0.24));
-            left_throttle->addTerm(new fl::Triangle("average", 0.25, 0.35, 0.47));
-            left_throttle->addTerm(new fl::Trapezoid("high", 0.37, 0.5, 0.55, 0.55));
+            left_throttle->addTerm(new fl::Triangle("low", 0, 0, 0.3));
+            left_throttle->addTerm(new fl::Triangle("average", 0.2, 0.4, 0.65));
+            left_throttle->addTerm(new fl::Trapezoid("high", 0.6, 0.8, 1, 1));
             engine->addOutputVariable(left_throttle);
 
             rules->setName("rules");
@@ -70,13 +68,11 @@ class FuzzyEngine {
             rules->setDisjunction(new fl::Maximum());
             rules->setImplication(new fl::AlgebraicProduct());
             rules->setActivation(new fl::General());
-            rules->addRule(fl::Rule::parse("if error is nlarge and angle is nlarge then lthrottle is nlow and rthrottle is average", engine));   
             rules->addRule(fl::Rule::parse("if error is nlarge or angle is nlarge then lthrottle is low and rthrottle is high", engine));         
             rules->addRule(fl::Rule::parse("if error is nmedium or angle is nmedium then lthrottle is low and rthrottle is average", engine));
-            rules->addRule(fl::Rule::parse("if error is small and angle is small then lthrottle is average and rthrottle is average", engine));
+            rules->addRule(fl::Rule::parse("if error is small or angle is small then lthrottle is average and rthrottle is average", engine));
             rules->addRule(fl::Rule::parse("if error is medium or angle is medium then lthrottle is average and rthrottle is low", engine));
             rules->addRule(fl::Rule::parse("if error is large or angle is large then lthrottle is high and rthrottle is low", engine));
-            rules->addRule(fl::Rule::parse("if error is large and angle is large then lthrottle is average and rthrottle is nlow", engine));
             engine->addRuleBlock(rules);
         }
 
@@ -101,8 +97,8 @@ void calculate_throttle(const my_robot_msgs::Inputvars::ConstPtr& msg) {
         std::tuple<float, float> output = engine.calculateOutput(msg->error, msg->angle);
 
         my_robot_msgs::Throttle throttle_msg;
-        throttle_msg.left_throttle = std::get<0>(output);
-        throttle_msg.right_throttle = std::get<1>(output);
+        throttle_msg.left_throttle = 0.15 + std::get<0>(output)*0.4;
+        throttle_msg.right_throttle = 0.15 + std::get<1>(output)*0.4;
         throttlepub.publish(throttle_msg);
         ros::spinOnce();
     } else {
