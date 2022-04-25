@@ -34,7 +34,6 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/my_robot_control/lib/fuzzylite
 )
 
 add_executable(input_processor src/input_processor.cpp)
@@ -44,15 +43,6 @@ target_link_libraries(
   ${OpenCV_LIBRARIES}
 )
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
-
-add_executable(fuzzy_controller src/fuzzy_controller.cpp)
-target_link_libraries(
-  fuzzy_controller
-  ${catkin_LIBRARIES}
-  ${CMAKE_SOURCE_DIR}/my_robot_control/lib/fuzzylite/release/bin/libfuzzylite-static.a
-)
-target_include_directories(fuzzy_controller PRIVATE ${CMAKE_SOURCE_DIR}/my_robot_control/lib/fuzzylite)
-add_dependencies(fuzzy_controller ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}

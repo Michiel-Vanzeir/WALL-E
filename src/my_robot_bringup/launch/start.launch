@@ -1,6 +1,5 @@
 <launch>
   <node name="video_streamer" pkg="my_robot_driver" type="video_streamer" output="screen"/>
   <node name="motor_operator" pkg="my_robot_driver" type="motor_operator.py" output="screen"/>
-  <node name="fuzzy_controller" pkg="my_robot_control" type="fuzzy_controller" output="screen"/> 
   <node name="input_processor" pkg="my_robot_control" type="input_processor" output="screen"/>
 </launch>
