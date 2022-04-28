@@ -41,7 +41,7 @@ int largest_contour(std::vector<std::vector<cv::Point>> contours) {
     return max_area_index;
 }
 
-std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
+double calculateInputVars(cv::Mat frame, cv::Mat frame2) {
     // Find contours in the frame
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
@@ -56,7 +56,7 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
 
         return moment.m10 / moment.m00;
     }
-    return 0;
+    return 0.0;
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
