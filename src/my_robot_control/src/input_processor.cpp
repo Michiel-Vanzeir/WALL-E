@@ -20,6 +20,10 @@ cv::Mat preprocess_frame(cv::Mat frame) {
 
     // Dilate white pixels in the frame
     cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
+    // Cv imshow
+    cv::imshow("frame", frame);
+    cv::waitKey(3);
+
     return frame;
 }
 
