@@ -8,42 +8,9 @@
 
 ros::Publisher inputvarspub;
 
-cv::Mat removeShadows(cv::Mat img) {
-    // Split the image into its channels
-    std::vector<cv::Mat> rgb_planes;
-    cv::split(img, rgb_planes);
-
-    cv::Mat result_planes[3];
-
-    // Normalize each channel
-    for (int i = 0; i < 3; i++) {
-        cv::Mat plane_result;
-        
-        cv::dilate(rgb_planes[i], plane_result, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
-        cv::medianBlur(plane_result, plane_result, 21);
-       
-        // cv:absdiff and 255
-        cv::Mat abs_diff;
-        cv::Mat scalar = cv::Mat(plane_result.size(), CV_8UC1, cv::Scalar(255));
-        cv::absdiff(rgb_planes[i], plane_result, abs_diff);
-        plane_result = scalar - abs_diff;
-
-        cv::normalize(plane_result, plane_result, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-        result_planes[i] = plane_result;
-    }
-
-    // Merge the channels
-    cv::Mat result;
-    cv::merge(result_planes, 3, result);
-    return result;
-}
-
 cv::Mat preprocess_frame(cv::Mat frame) {
     // Add Gaussian
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
-
-    // Remove the shadows from the frame
-    frame = removeShadows(frame);
 
     // Convert the frame to HSV
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
@@ -83,43 +50,23 @@ std::tuple<int, int> calculateInputVars(cv::Mat frame, cv::Mat frame2) {
         // Find the center of the largest contour (x only)
         cv::Moments moment = cv::moments(contours[max_index], false);
 
-        // Find the angle of the largest contour using areaminrect
-        cv::RotatedRect rect = cv::minAreaRect(contours[max_index]);
-
-        // Draw the largest contour
-        //cv::drawContours(frame2, contours, max_index, cv::Scalar(0,255,0), 2);
-
-        // cv::Point2f vertices[4];
-        // rect.points(vertices);
-        // for (int i = 0; i < 4; i++) {
-        //     cv::line(frame2, vertices[i], vertices[(i+1)%4], cv::Scalar(0,255,0), 2);
-        // }
-        
-        cv::imshow("Mask", frame);
-        cv::waitKey(1);
-
-        if (rect.size.width > rect.size.height) {
-            return {moment.m10 / moment.m00, rect.angle+90};
-        } else {
-            return  {moment.m10 / moment.m00, rect.angle};
-        }
+        return moment.m10 / moment.m00;
     }
-    return {0, 0};
+    return 0;
 }
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
     cv::Mat frame2 = frame; 
     frame = preprocess_frame(frame);
-    std::tuple<int, int> inputvars = calculateInputVars(frame, frame2);
+    int inputvar = calculateInputVars(frame, frame2);
 
     // Calculate the distance between the middle of the frame and the center of the line
     auto message = my_robot_msgs::Inputvars();
-    message.error = std::get<0>(inputvars) - frame.cols/2;
-    message.angle = std::get<1>(inputvars);
+    message.error = inputvar;
+
     // Make sure the error is within the possible range
-    //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
-    if (message.error <= 160 && message.error >= -160 && message.angle <= 90 && message.angle >= -90) {
+    if (message.error <= 160 && message.error >= -160) {
         //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
         inputvarspub.publish(message);
   }
