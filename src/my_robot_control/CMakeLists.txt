@@ -37,13 +37,20 @@ include_directories(
 )
 
 add_executable(input_processor src/input_processor.cpp)
+add_executable(pid_controller src/pid_controller.cpp)
 target_link_libraries(
   input_processor
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
-add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 
+target_link_libraries(
+  pid_controller
+  ${catkin_LIBRARIES}
+)
+
+add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
+add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/my_robot_control.cpp
