@@ -20,8 +20,20 @@ cv::Mat preprocess_frame(cv::Mat frame) {
 
     // Dilate white pixels in the frame
     cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
-    // Cv imshow
-    cv::imshow("frame", frame);
+
+    // Search and draw contours 
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+    cv::findContours(frame, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
+
+    // Draw the contours on the frame
+    cv::Mat drawing = cv::Mat::zeros(frame.size(), CV_8UC3);
+    for (int i = 0; i < contours.size(); i++) {
+        cv::Scalar color = cv::Scalar(255, 255, 255);
+        cv::drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, cv::Point());
+    }
+
+    cv::imshow("frame", drawing);
     cv::waitKey(3);
 
     return frame;
