@@ -8,9 +8,42 @@
 
 ros::Publisher inputvarspub;
 
+cv::Mat removeShadows(cv::Mat img) {
+    // Split the image into its channels
+    std::vector<cv::Mat> rgb_planes;
+    cv::split(img, rgb_planes);
+
+    cv::Mat result_planes[3];
+
+    // Normalize each channel
+    for (int i = 0; i < 3; i++) {
+        cv::Mat plane_result;
+        
+        cv::dilate(rgb_planes[i], plane_result, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
+        cv::medianBlur(plane_result, plane_result, 21);
+       
+        // cv:absdiff and 255
+        cv::Mat abs_diff;
+        cv::Mat scalar = cv::Mat(plane_result.size(), CV_8UC1, cv::Scalar(255));
+        cv::absdiff(rgb_planes[i], plane_result, abs_diff);
+        plane_result = scalar - abs_diff;
+
+        cv::normalize(plane_result, plane_result, 0, 255, cv::NORM_MINMAX, CV_8UC1);
+        result_planes[i] = plane_result;
+    }
+
+    // Merge the channels
+    cv::Mat result;
+    cv::merge(result_planes, 3, result);
+    return result;
+}
+
 cv::Mat preprocess_frame(cv::Mat frame) {
     // Add Gaussian
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
+
+    // Remove shadows
+    frame = removeShadows(frame);
 
     // Convert the frame to HSV
     cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
@@ -21,7 +54,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     // Dilate white pixels in the frame
     cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
 
-    cv::imshow("frame", drawing);
+    cv::imshow("frame", frame);
     cv::waitKey(3);
 
     return frame;
