@@ -43,16 +43,13 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
 
     // Remove shadows
-    frame = removeShadows(frame);
+    // frame = removeShadows(frame);
 
-    // Convert the frame to HSV
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
+    // Convert to grayscale
+    cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
 
-    // Make a mask to binarize the frame to detect the line
-    cv::inRange(frame, cv::Scalar(0, 0, 0), cv::Scalar(180, 175, 170), frame);
-
-    // Dilate white pixels in the frame
-    cv::dilate(frame, frame, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
+    // Threshold
+    cv::threshold(frame, frame, 60, 255, cv::THRESH_BINARY_INV);
 
     cv::imshow("frame", frame);
     cv::waitKey(3);
@@ -74,7 +71,7 @@ int largest_contour(std::vector<std::vector<cv::Point>> contours) {
     return max_area_index;
 }
 
-double calculateInputVars(cv::Mat frame, cv::Mat frame2) {
+double calculateInputVars(cv::Mat frame) {
     // Find contours in the frame
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Vec4i> hierarchy;
@@ -94,16 +91,15 @@ double calculateInputVars(cv::Mat frame, cv::Mat frame2) {
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
-    cv::Mat frame2 = frame; 
     frame = preprocess_frame(frame);
-    int inputvar = calculateInputVars(frame, frame2);
+    int inputvar = calculateInputVars(frame);
 
     // Calculate the distance between the middle of the frame and the center of the line
     auto message = my_robot_msgs::Inputvars();
     message.error = inputvar - (frame.cols / 2);
 
     // Make sure the error is within the possible range
-    if (message.error <= 120 && message.error >= -120) {
+    if (message.error <= 160 && message.error >= -160) {
         //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
         inputvarspub.publish(message);
   }

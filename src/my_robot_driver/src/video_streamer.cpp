@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     cv::Mat frame;
     sensor_msgs::ImagePtr msg;
 
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(20);
     while (nh.ok()) {
         cap >> frame;
 

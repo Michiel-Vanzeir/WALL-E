@@ -11,7 +11,7 @@ void inputCallback(const my_robot_msgs::Inputvars::ConstPtr& msg) {
     int error = msg->error;
     double std_throttle = 0.25;
 
-    double _Kp = 0.0008;
+    double _Kp = 0.00125;
     double _Ki = 0.0;
     double _Kd = 0.0;
 
