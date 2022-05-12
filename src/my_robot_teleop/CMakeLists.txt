@@ -10,6 +10,14 @@ project(my_robot_teleop)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  my_robot_msgs
+)
+
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES my_robot_driver
+  CATKIN_DEPENDS my_robot_msgs  rospy std_msgs message_runtime
+#  DEPENDS system_lib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -100,12 +108,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## INCLUDE_DIRS: uncomment this if your package contains header files
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES my_robot_teleop
-#  CATKIN_DEPENDS rospy std_msgs
-#  DEPENDS system_lib
+## DEPENDS: system dependencies of this project that dependent projects also ne
+catkin_install_python(
+  PROGRAMS src/controls.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ###########

@@ -5,17 +5,23 @@
 
 ros::Publisher throttlepub;
 int _integral = 0;
+int count = 0;
 int _prev_error = 0;
 
 void inputCallback(const my_robot_msgs::Inputvars::ConstPtr& msg) {
     int error = msg->error;
     double std_throttle = 0.25;
 
-    double _Kp = 0.00125;
-    double _Ki = 0.0;
-    double _Kd = 0.0;
+    double _Kp = 0.0009;
+    double _Ki = 0.0000003;
+    double _Kd = 0.005;
 
     _integral += error;
+    count++;
+    if (count >= 20) {
+	_integral = 0;
+	count = 0;
+    }
     double output = _Kp*error + _Ki*_integral + _Kd*(error - _prev_error);
 
     auto message = my_robot_msgs::Throttle();

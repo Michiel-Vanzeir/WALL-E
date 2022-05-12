@@ -7,8 +7,13 @@ from my_robot_msgs.msg import Throttle
 kit = MotorKit()
 
 def callback(msg):
-    kit.motor1.throttle = msg.right_throttle
-    kit.motor2.throttle = msg.left_throttle
+    if msg.right_throttle > 1:
+        kit.motor1.throttle = 1
+    elif msg.left_throttle > 1:
+        kit.motor2.throttle = 1
+    else:
+        kit.motor1.throttle = msg.right_throttle
+        kit.motor2.throttle = msg.left_throttle
     rospy.loginfo(f"Left throttle: {msg.left_throttle} || Right throttle: {msg.right_throttle}")
     
 def motor_operator():

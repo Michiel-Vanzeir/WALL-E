@@ -3,10 +3,11 @@ import rospy
 from pynput.keyboard import Listener
 from my_robot_msgs.msg import Throttle
 
-pub = rospy.Publisher('/throttlefeed', Throttle)
+pub = rospy.Publisher('/throttlefeed', Throttle, queue_size=2)
 throttle = 0.3
 
 def doit(key):
+    global throttle
     key = str(key).replace("'", "")
     msg = Throttle()
     
@@ -43,4 +44,5 @@ def controls():
     with Listener(on_press=doit) as l:
         l.join()
 
-
+if __name__ == '__main__':
+    controls()

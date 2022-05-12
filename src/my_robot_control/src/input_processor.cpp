@@ -49,7 +49,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
 
     // Threshold
-    cv::threshold(frame, frame, 60, 255, cv::THRESH_BINARY_INV);
+    cv::threshold(frame, frame, 80, 255, cv::THRESH_BINARY_INV);
 
     cv::imshow("frame", frame);
     cv::waitKey(3);
