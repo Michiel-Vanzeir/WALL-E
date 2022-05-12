@@ -30,6 +30,11 @@ def doit(key):
         msg.left_throttle = 0
         msg.right_throttle = 0
 
+    if (msg.left_throttle > 1):
+        msg.left_throttle = 1
+    if (msg.right_throttle > 1):
+        msg.right_throttle = 1
+    
     pub.publish(msg)
 
 def controls():
