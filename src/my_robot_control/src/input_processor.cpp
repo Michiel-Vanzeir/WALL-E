@@ -8,42 +8,9 @@
 
 ros::Publisher inputvarspub;
 
-cv::Mat removeShadows(cv::Mat img) {
-    // Split the image into its channels
-    std::vector<cv::Mat> rgb_planes;
-    cv::split(img, rgb_planes);
-
-    cv::Mat result_planes[3];
-
-    // Normalize each channel
-    for (int i = 0; i < 3; i++) {
-        cv::Mat plane_result;
-        
-        cv::dilate(rgb_planes[i], plane_result, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
-        cv::medianBlur(plane_result, plane_result, 21);
-       
-        // cv:absdiff and 255
-        cv::Mat abs_diff;
-        cv::Mat scalar = cv::Mat(plane_result.size(), CV_8UC1, cv::Scalar(255));
-        cv::absdiff(rgb_planes[i], plane_result, abs_diff);
-        plane_result = scalar - abs_diff;
-
-        cv::normalize(plane_result, plane_result, 0, 255, cv::NORM_MINMAX, CV_8UC1);
-        result_planes[i] = plane_result;
-    }
-
-    // Merge the channels
-    cv::Mat result;
-    cv::merge(result_planes, 3, result);
-    return result;
-}
-
 cv::Mat preprocess_frame(cv::Mat frame) {
     // Add Gaussian
     cv::GaussianBlur(frame, frame, cv::Size(5, 5), 0);
-
-    // Remove shadows
-    // frame = removeShadows(frame);
 
     // Convert to grayscale
     cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
@@ -51,7 +18,7 @@ cv::Mat preprocess_frame(cv::Mat frame) {
     // Threshold
     cv::threshold(frame, frame, 80, 255, cv::THRESH_BINARY_INV);
 
-    cv::imshow("frame", frame);
+    cv::imshow("Processed Frame", frame);
     cv::waitKey(3);
 
     return frame;
@@ -91,16 +58,17 @@ double calculateInputVars(cv::Mat frame) {
 
 void imageCallback(const sensor_msgs::ImageConstPtr& msg) {
     cv::Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+
     frame = preprocess_frame(frame);
+    // Calculate the middle of the area of the line on the x-axis
     int inputvar = calculateInputVars(frame);
 
-    // Calculate the distance between the middle of the frame and the center of the line
+    // Calculate the distance between the middle of the frame and middle of the line area
     auto message = my_robot_msgs::Inputvars();
     message.error = inputvar - (frame.cols / 2);
 
     // Make sure the error is within the possible range
-    if (message.error <= 160 && message.error >= -160) {
-        //ROS_INFO("Error: %d, Angle: %d", message.error, message.angle);
+    if (message.error <= 160 && message.error >= -160) {    
         inputvarspub.publish(message);
   }
 }
@@ -109,9 +77,9 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "input_processor");
     ros::NodeHandle nh;
 
-    inputvarspub = nh.advertise<my_robot_msgs::Inputvars>("inputfeed", 1);
+    inputvarspub = nh.advertise<my_robot_msgs::Inputvars>("inputfeed", 2);
     image_transport::ImageTransport it(nh);
-    image_transport::Subscriber sub = it.subscribe("videofeed", 1, imageCallback);
+    image_transport::Subscriber sub = it.subscribe("videofeed", 2, imageCallback);
 
     ros::spin();
 }

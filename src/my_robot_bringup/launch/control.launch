@@ -1,5 +1,5 @@
 <launch>
-    <node name="teleoperator" pkg="my_robot_teleop" type="controls.py" output="screen"/>
+    <node name="tele_operator" pkg="my_robot_teleop" type="controls.py" output="screen"/>
     <node name="motor_operator" pkg="my_robot_driver" type="motor_operator.py" output="screen"/>
 </launch>
   

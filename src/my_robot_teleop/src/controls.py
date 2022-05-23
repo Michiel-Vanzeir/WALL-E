@@ -4,7 +4,7 @@ from pynput.keyboard import Listener
 from my_robot_msgs.msg import Throttle
 
 pub = rospy.Publisher('/throttlefeed', Throttle, queue_size=2)
-throttle = 0.3
+throttle = 0.3 # Starting throttle
 
 def doit(key):
     global throttle
@@ -24,23 +24,21 @@ def doit(key):
         msg.left_throttle = -throttle
         msg.right_throttle = -throttle
     elif (key == "i"):
+        # Increase throttle
         throttle *= 1.1
     elif (key == "k"):
+        # Decrease throttle
         throttle *= 0.9
     else:
         msg.left_throttle = 0
         msg.right_throttle = 0
-
-    if (msg.left_throttle > 1):
-        msg.left_throttle = 1
-    if (msg.right_throttle > 1):
-        msg.right_throttle = 1
     
     pub.publish(msg)
 
 def controls():
     rospy.init_node('teleoperator')
     
+    # Listener for keystrokes
     with Listener(on_press=doit) as l:
         l.join()
 
