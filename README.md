@@ -1,5 +1,6 @@
 # A WALL-E using a Raspberry Pi 
 ![Alt Text](https://media.giphy.com/media/LKACSWdocbYle79yEt/giphy-downsized-large.gif)
+<br>
 A simple differential drive robot with the ability to follow a black line and be controller using a keyboard. 2D tracking with a Kalman filter and IMU coming up next. 
 
 ## Setup
