@@ -1,2 +1,2 @@
-my_robot_bringup:my_robot_control:my_robot_driver:my_robot_msgs
+my_robot_bringup:my_robot_control:my_robot_driver:my_robot_msgs:my_robot_teleop
 -DCATKIN_DEVEL_PREFIX=/home/ubuntu/ros/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/ros/install -G Unix Makefiles
