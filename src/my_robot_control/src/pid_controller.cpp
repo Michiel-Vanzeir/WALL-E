@@ -8,6 +8,7 @@ ros::Publisher throttlepub;
 int _integral = 0;
 int _prev_error = 0;
 int integral_counter = 0;
+int count = 0;
 
 void inputCallback(const my_robot_msgs::Inputvars::ConstPtr& msg) {
     int error = msg->error;
