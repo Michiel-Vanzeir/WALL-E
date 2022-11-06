@@ -14,9 +14,10 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   cv_bridge
   image_transport
-  
+  tf2_ros
 )
 find_package(OpenCV 4.0.0 REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -24,6 +25,9 @@ catkin_package(
   CATKIN_DEPENDS my_robot_msgs roscpp message_runtime
 #  DEPENDS system_lib
 )
+
+# Add the kalman filter class as a library from the lib folder
+add_library(kalman_lib lib/kalmanfilter.cpp)
 
 ###########
 ## Build ##
@@ -38,6 +42,7 @@ include_directories(
 
 add_executable(input_processor src/input_processor.cpp)
 add_executable(pid_controller src/pid_controller.cpp)
+add_executable(kalman_filter src/kalman_filter.cpp)
 target_link_libraries(
   input_processor
   ${catkin_LIBRARIES}
@@ -49,8 +54,15 @@ target_link_libraries(
   ${catkin_LIBRARIES}
 )
 
+target_link_libraries(
+  kalman_filter
+  kalman_lib
+  ${catkin_LIBRARIES}
+)
+
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
+add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/my_robot_control.cpp
