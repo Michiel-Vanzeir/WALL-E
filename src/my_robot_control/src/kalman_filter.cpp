@@ -5,9 +5,7 @@
 #include <message_filters/synchronizer.h>
 #include <message_filters/subscriber.h>
 
-#include <tf2/LinearMath/Quaternion.h>
-#include <tf2_ros/transform_broadcaster.h>
- #include <geometry_msgs/TransformStamped.h>
+#include <tf/transform_broadcaster.h>
 
 #include "../lib/kalmanfilter.h"
 #include "../lib/sensors.h" // can be removed
@@ -15,13 +13,18 @@
 ros::Publisher statepub;
 KalmanFilter kf;
 
+constexpr double GYRO_STD_X = 0.001243;
+constexpr double GYRO_STD_Y = 0.0055;
+constexpr double GYRO_STD_Z = 0.0045;
+constexpr double ACCEL_STD_X = 0.034;
+constexpr double ACCEL_STD_Y = 0.05;
+constexpr double ACCEL_STD_Z = 0.65;
+constexpr double LIDAR_STD = 0.2;
+
+
 void KalmanCallback(const sensor_msgs::Imu::ConstPtr& imu, const sensor_msgs::LaserScan::ConstPtr& scan) {
-    static tf2_ros::TransformBroadcaster br;
-    geometry_msgs::TransformStamped transformStamped;
-    
-    transformStamped.header.stamp = ros::Time::now();
-    transformStamped.header.frame_id = "world";
-    transformStamped.child_frame_id = "/baselink";
+    static tf::TransformBroadcaster br;
+    tf::Transform transform;
     
     // Store all sensor info in structs
     GyroMeasurement gyro;   
@@ -47,18 +50,12 @@ void KalmanCallback(const sensor_msgs::Imu::ConstPtr& imu, const sensor_msgs::La
 
     // Publish the state
     VectorXd state = kf.getState();
-    transformStamped.transform.translation.x = state(0);
-    transformStamped.transform.translation.y = state(1);
-    transformStamped.transform.translation.z = state(2);
-    tf2::Quaternion q;
+
+    transform.setOrigin(tf::Vector3(state(0), state(1), state(2)));
+    tf::Quaternion q;
     q.setRPY(0, state(3), state(4));
-    transformStamped.transform.rotation.x = q.x();
-    transformStamped.transform.rotation.y = q.y();
-    transformStamped.transform.rotation.z = q.z();
-    transformStamped.transform.rotation.w = q.w();
-
-    br.sendTransform(transformStamped);
-
+    transform.setRotation(q);
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/map", "/base_link"));
     // Run the update step
     kf.updateStep(accel, lidar);
 }
@@ -69,13 +66,14 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "kalman_filter");
     ros::NodeHandle nh;
 
-    VectorXd state = VectorXd::Zero(6);
-    state(5) = 1;
-    MatrixXd cov = MatrixXd::Identity(6,6);
+
+    // Initialise the Kalman filter
+    Eigen::VectorXd state = VectorXd::Zero(6);
+    Eigen::MatrixXd cov = MatrixXd::Identity(6,6);
+    Eigen::Vector3d gyro_noise_std(GYRO_STD_X, GYRO_STD_Y, GYRO_STD_Z);
+    Eigen::Vector3d accel_noise_std(ACCEL_STD_X, ACCEL_STD_Y, ACCEL_STD_Z);
     
-    kf.setState(state);
-    kf.setCovariance(cov);
-    kf.setGyro(0.01, 0); // Noise std, bias
+    kf = KalmanFilter(state, cov, gyro_noise_std, accel_noise_std, LIDAR_STD);
 
     message_filters::Subscriber<sensor_msgs::Imu> imu_sub(nh, "/imu/data", 10);
     message_filters::Subscriber<sensor_msgs::LaserScan> lidar_sub(nh, "/scan", 10);
