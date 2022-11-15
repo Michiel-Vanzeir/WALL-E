@@ -2,6 +2,24 @@
     <include file="$(find imu_bno055)/launch/imu.launch" />
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
+    <node name="line_extractor" pkg="laser_line_extraction" type="line_extraction_node">
+        <!-- <param name="~frequency" value="30.0" /> -->
+        <param name="~frame_id" value="world" />
+        <param name="~scan_topic" value="scan" />
+        <param name="~publish_markers" value="true" />
+        <param name="~bearing_std_dev" value="0.0025" />
+        <param name="~range_std_dev" value="0.02" />
+        <param name="~least_sq_angle_thresh" value="0.0001" />
+        <param name="~least_sq_radius_thresh" value="0.0001" />
+        <param name="~max_line_gap" value="0.5" />
+        <param name="~min_line_length" value="0.4" />
+        <param name="~min_range" value="0.15" />
+        <param name="~max_range" value="12.0" />
+        <param name="~outlier_dist" value="0.06" />
+        <param name="~min_line_points" value="10" />
+        <param name="~min_split_dist" value="0.05" />
+    </node>
+
     <node name="laserscan_processor" pkg="my_robot_control" type="laserscan_processor" output="screen" />
     <node name="kalman_filter" pkg="my_robot_control" type="kalman_filter" output="screen"/>
 </launch>

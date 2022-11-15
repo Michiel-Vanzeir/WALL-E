@@ -55,7 +55,7 @@ void KalmanCallback(const sensor_msgs::Imu::ConstPtr& imu, const sensor_msgs::La
     tf::Quaternion q;
     q.setRPY(0, state(3), state(4));
     transform.setRotation(q);
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/map", "/base_link"));
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/world", "/robot"));
     // Run the update step
     kf.updateStep(accel, lidar);
 }
