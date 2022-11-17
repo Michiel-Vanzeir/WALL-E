@@ -2,8 +2,7 @@
     <include file="$(find imu_bno055)/launch/imu.launch" />
     <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
-    <node name="line_extractor" pkg="laser_line_extraction" type="line_extraction_node">
-        <!-- <param name="~frequency" value="30.0" /> -->
+    <node ns="lidar" name="line_extractor" pkg="laser_line_extraction" type="line_extraction_node">
         <param name="~frame_id" value="world" />
         <param name="~scan_topic" value="scan" />
         <param name="~publish_markers" value="true" />

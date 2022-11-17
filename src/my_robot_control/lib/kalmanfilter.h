@@ -2,17 +2,11 @@
 #define KALMANFILTER_H
 #pragma once
 
-#include <vector>
 #include <eigen3/Eigen/Dense>
-#include "sensors.h"
+#include "measurements.h"
 
 using Eigen::VectorXd;
-using Eigen::Vector2d;
-using Eigen::Vector4d;
-
 using Eigen::MatrixXd;
-using Eigen::Matrix2d;
-using Eigen::Matrix4d;
 
 class KalmanFilter {
     public:

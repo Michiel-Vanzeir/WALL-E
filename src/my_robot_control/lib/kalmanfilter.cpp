@@ -1,6 +1,7 @@
 #include "kalmanfilter.h"
-#include "sensors.h"
+#include "measurements.h"
 
+// Wraps angles to [-pi, pi]
 double wrapAngle(double angle) {
     angle = fmod(angle, (2.0*M_PI));
     if (angle <= -M_PI){angle += (2.0*M_PI);}
@@ -8,10 +9,12 @@ double wrapAngle(double angle) {
     return angle;
 }
 
+// Constructor (exists for overloading)
 KalmanFilter::KalmanFilter() {
     fl_initialised = false;
 }
 
+// Constructor for KalmanFilter class
 KalmanFilter::KalmanFilter(VectorXd state, MatrixXd covariance, VectorXd gyro_noise_std, VectorXd acccel_noise_std, double lidar_std) {
     fl_gyro_noise_std = gyro_noise_std;
     fl_accel_noise_std = acccel_noise_std;
@@ -23,6 +26,7 @@ KalmanFilter::KalmanFilter(VectorXd state, MatrixXd covariance, VectorXd gyro_no
     fl_initialised = true;
 }
 
+// Kalman filter prediction step (uses gyro measurements only)
 void KalmanFilter::predictionStep(GyroMeasurement gyro, double dt) {
     if (!isInitialised()) {
         return;
@@ -67,6 +71,7 @@ void KalmanFilter::predictionStep(GyroMeasurement gyro, double dt) {
     setCovariance(cov_pred);
 }
 
+// Kalman Update step (uses Lidar, Accelerometer & odometry)
 void KalmanFilter::updateStep(AccelerometerMeasurement accel, LidarMeasurement lidar) {
     int x = 5;
 }

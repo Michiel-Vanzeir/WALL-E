@@ -51,6 +51,8 @@ add_message_files(
   FILES
   Inputvars.msg
   Throttle.msg
+  LineSegment.msg
+  LineSegmentList.msg
 )
 
 ## Generate services in the 'srv' folder
