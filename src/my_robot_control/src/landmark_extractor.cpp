@@ -7,6 +7,7 @@
 #include <sensor_msgs/LaserScan.h>
 #include <sensor_msgs/PointCloud.h>
 
+// Converts laserscans to pointclouds and extracts landmarks from them
 class LaserProcessor {
   private:
     ros::NodeHandle nh_;
@@ -19,7 +20,11 @@ class LaserProcessor {
   public:
     LaserProcessor() {
       scan_sub_ = nh_.subscribe<sensor_msgs::LaserScan>("/scan", 10, &LaserProcessor::scanCallback, this);
-      cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud>("/cloud", 10, false);
+      cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud>("/pointcloud", 10, false);
+    }
+
+    void extractLandmarks(const sensor_msgs::PointCloud cloud) {
+      
     }
 
     void scanCallback (const sensor_msgs::LaserScan::ConstPtr& scan_in) {
@@ -31,6 +36,8 @@ class LaserProcessor {
         ROS_ERROR("Received an exception trying to transform a laser scan: %s", e.what());
         return;
       }
+
+      extractLandmarks(cloud);
       cloud_pub_.publish(cloud);
     }
 };

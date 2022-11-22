@@ -27,8 +27,9 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-# Add the kalman filter class as a library from the lib folder
+# Add the needed libraries
 add_library(kalman_lib lib/kalmanfilter.cpp)
+add_library(ransac_lib lib/ransac.cpp)
 
 ###########
 ## Build ##
@@ -43,8 +44,8 @@ include_directories(
 
 add_executable(input_processor src/input_processor.cpp)
 add_executable(pid_controller src/pid_controller.cpp)
-add_executable(kalman_filter src/kalman_filter.cpp)
-add_executable(laserscan_processor src/laserscan_processor.cpp)
+#add_executable(kalman_filter src/kalman_filter.cpp)
+add_executable(landmark_extractor src/landmark_extractor.cpp)
 target_link_libraries(
   input_processor
   ${catkin_LIBRARIES}
@@ -57,20 +58,20 @@ target_link_libraries(
 )
 
 target_link_libraries(
-  laserscan_processor
+  landmark_extractor
   ${catkin_LIBRARIES}
 )
 
-target_link_libraries(
-  kalman_filter
-  kalman_lib
-  ${catkin_LIBRARIES}
-)
+# target_link_libraries(
+#   kalman_filter
+#   kalman_lib
+#   ${catkin_LIBRARIES}
+# )
 
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
-add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
-add_dependencies(laserscan_processor ${catkin_EXPORTED_TARGETS})
+#add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
+add_dependencies(landmark_extractor ${catkin_EXPORTED_TARGETS})
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/my_robot_control.cpp
 # )
