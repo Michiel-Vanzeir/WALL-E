@@ -3,15 +3,13 @@
 RANSAC::RANSAC(double max_delta, 
                double max_avg_delta,
                double min_line_length, 
-               int min_inliers, 
-               int max_iterations
+               int min_inliers
                ) {
     
     // Initialise the RANSAC parameters
     max_delta = max_delta;
     max_avg_delta = max_avg_delta;
     min_inliers = min_inliers;
-    max_iterations = max_iterations;
     min_line_length = min_line_length;
 }
 
@@ -20,6 +18,10 @@ int RANSAC::calculateIterations(int s, int e) {
     // s = sample size, e = estimated prob of a point being an outlier
     int max_iterations = log(1 - 0.99) / log(1 - pow(e, s));
     return max_iterations+3; // Add three iterations to play it safe
+}
+
+void RANSAC::setIterations(int optimal_iterations) {
+    max_iterations = optimal_iterations;
 }
 
 // Extract a line from a point cloud & removes the inliers from it 
