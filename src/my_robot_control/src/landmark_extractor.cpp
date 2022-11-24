@@ -7,6 +7,8 @@
 #include <sensor_msgs/LaserScan.h>
 #include <sensor_msgs/PointCloud.h>
 #include "my_robot_msgs/Landmark.h"
+#include "my_robot_msgs/LandmarkList.h"
+#include <visualization_msgs/Marker.h>
 
 #include "../lib/ransac.h"
 
@@ -18,14 +20,17 @@ class LaserProcessor {
     tf::TransformListener tfListener_;
     
     ros::Subscriber scan_sub_;
+    ros::Publisher pointcloud_pub_;
     ros::Publisher landmark_pub_;
-    RANSAC ransac(3.0, 2.0, 40.0, 6);
+    RANSAC ransac;
 
   public:
     LaserProcessor() {
-      scan_sub_ = nh_.subscribe<sensor_msgs::LaserScan>("/scan", 10, &LaserProcessor::scanCallback, this);
-      landmark_pub_ = nh_.advertise<my_robot_msgs::Landmark>("/landmarks", 10, false);
-      optimal_iterations = ransac.calculateIterations(2, 0.1);
+      scan_sub_ = nh_.subscribe<sensor_msgs::LaserScan>("/lidar/scan", 10, &LaserProcessor::scanCallback, this);
+      pointcloud_pub_ = nh_.advertise<sensor_msgs::PointCloud>("/slam/pointcloud", 10, false);
+      landmark_pub_ = nh_.advertise<my_robot_msgs::LandmarkList>("/slam/landmarks", 10, false);
+      ransac = RANSAC(0.03, 0.015, 0.40, 100); // (in meters)
+      int optimal_iterations = ransac.calculateIterations(2, 0.7);
       ransac.setIterations(optimal_iterations);
     }
 
@@ -39,8 +44,12 @@ class LaserProcessor {
         return;
       }
 
-      // Extract landmarks from the pointcloud
-      std::vector<Vector2d> landmarks = ransac.extractLandmarks(cloud);
+      //ROS_INFO("min_x: %f, max_x: %f, min_y: %f, max_y: %f", min_x, max_x, min_y, max_y);
+      // publish pointcloud
+      pointcloud_pub_.publish(cloud);
+      
+      // Extract landmarks from the pointcloud & publish them
+      my_robot_msgs::LandmarkList landmarks = ransac.extractLandmarks(cloud);
 
       landmark_pub_.publish(landmarks);
     }

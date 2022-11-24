@@ -1,23 +1,27 @@
 #include "ransac.h"
+#include "ros/ros.h"
+#include <cmath>
 
-RANSAC::RANSAC(double max_delta, 
-               double max_avg_delta,
-               double min_line_length, 
-               int min_inliers
+RANSAC::RANSAC() {return;}
+
+RANSAC::RANSAC(double delta, 
+               double avg_delta,
+               double line_length, 
+               int inliers
                ) {
     
     // Initialise the RANSAC parameters
-    max_delta = max_delta;
-    max_avg_delta = max_avg_delta;
-    min_inliers = min_inliers;
-    min_line_length = min_line_length;
+    max_delta = delta;
+    max_avg_delta = avg_delta;
+    min_inliers = inliers;
+    min_line_length = line_length;
 }
 
 // Calculate the optimal number of iterations
-int RANSAC::calculateIterations(int s, int e) {
+int RANSAC::calculateIterations(int s, double e) {
     // s = sample size, e = estimated prob of a point being an outlier
-    int max_iterations = log(1 - 0.99) / log(1 - pow(e, s));
-    return max_iterations+3; // Add three iterations to play it safe
+    int max_iterations = log(1 - 0.99) / log(1 - pow((1 - e),s));
+    return max_iterations;
 }
 
 void RANSAC::setIterations(int optimal_iterations) {
@@ -25,11 +29,13 @@ void RANSAC::setIterations(int optimal_iterations) {
 }
 
 // Extract a line from a point cloud & removes the inliers from it 
-Vector2d RANSAC::extractLine(sensor_msgs::PointCloud &cloud) {
+my_robot_msgs::Landmark RANSAC::extractLine(sensor_msgs::PointCloud &cloud) {
     int max_inliers = 0;
     double best_m = 0;
     double best_c = 0;
-
+    int best_p1 = 0;
+    int best_p2 = 0;
+    
     for (int i = 0; i < max_iterations; i++) {
         // Randomly select 2 points
         int p1 = rand() % cloud.points.size();
@@ -53,6 +59,7 @@ Vector2d RANSAC::extractLine(sensor_msgs::PointCloud &cloud) {
             }
         }
         avg_delta /= inliers;
+        // IMPROVE THIS??
         double line_length = sqrt(pow(cloud.points[p1].x - cloud.points[p2].x, 2) + pow(cloud.points[p1].y - cloud.points[p2].y, 2));
 
         // Check if the line is valid & has more outliers than the previous best
@@ -60,13 +67,24 @@ Vector2d RANSAC::extractLine(sensor_msgs::PointCloud &cloud) {
             max_inliers = inliers;
             best_m = m;
             best_c = c;
+            
+            // ros info inliers, avg_delta, line_length, and delta
+            ROS_INFO("Inliers: %d, Avg Delta: %f, Line Length: %f", inliers, avg_delta, line_length);
         }
     }
 
-    // If no line was fitted, return a line with 0 slope
+    // If no line was fitted, return a line with 0 slope and 0 intercept
     if (max_inliers == 0) {
-        return Vector2d(0, 0);
+        my_robot_msgs::Landmark landmark;
+        landmark.m = 0;
+        landmark.c = 0;
+        return landmark;
     }
+    
+    
+
+    
+    
 
     sensor_msgs::PointCloud new_cloud;
     // Find all outliers and add them to new_cloud
@@ -80,31 +98,30 @@ Vector2d RANSAC::extractLine(sensor_msgs::PointCloud &cloud) {
     // Replace the old cloud with the new one
     cloud = new_cloud;
 
-    // Return the best fitted line
-    return Vector2d(best_m, best_c);
+    // Return the best fitted line as a landmark
+    my_robot_msgs::Landmark landmark;
+    landmark.m = best_m;
+    landmark.c = best_c;
+    return landmark;
 }
 
 // Extract all landmarks from a point cloud
-std::vector<Vector2d> RANSAC::extractLandmarks(sensor_msgs::PointCloud pointcloud) {
-    if (pointcloud.points.size() < 2) 
-        return std::vector<Vector2d>();
+my_robot_msgs::LandmarkList RANSAC::extractLandmarks(sensor_msgs::PointCloud pointcloud) {
+    my_robot_msgs::LandmarkList landmarks;
+    if (pointcloud.points.size() < 2) {
+        ROS_INFO("Point cloud too small");
+        return landmarks;
+    }
 
-    // Lines fitted is a vector of VectorXd elements
-    std::vector<Vector2d> lines_fitted;
     while (true) {
-        Vector2d extracted_line = extractLine(pointcloud);
-
+        my_robot_msgs::Landmark extracted_landmark = extractLine(pointcloud);
         // If no line was fitted, break
-        if (extracted_line[0] == 0 && extracted_line[1] == 0) {
+        if (extracted_landmark.m == 0 && extracted_landmark.c == 0) {
             break;
         }
 
-        lines_fitted.push_back(extracted_line);
+        landmarks.landmarks.push_back(extracted_landmark);
     }
-
-    // If lines_fitted is empty, return nothing
-    if (lines_fitted.size() == 0) 
-        return std::vector<Vector2d>();
     
-    return lines_fitted;
+    return landmarks;
 }

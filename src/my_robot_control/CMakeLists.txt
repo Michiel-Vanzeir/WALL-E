@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   tf2_ros
   laser_assembler
+  visualization_msgs
 )
 find_package(OpenCV 4.0.0 REQUIRED)
 find_package(Eigen3 REQUIRED)
@@ -44,8 +45,9 @@ include_directories(
 
 add_executable(input_processor src/input_processor.cpp)
 add_executable(pid_controller src/pid_controller.cpp)
-#add_executable(kalman_filter src/kalman_filter.cpp)
+add_executable(kalman_filter src/kalman_filter.cpp)
 add_executable(landmark_extractor src/landmark_extractor.cpp)
+add_executable(landmark_visualizer src/landmark_visualizer.cpp)
 target_link_libraries(
   input_processor
   ${catkin_LIBRARIES}
@@ -59,19 +61,27 @@ target_link_libraries(
 
 target_link_libraries(
   landmark_extractor
+  ransac_lib
   ${catkin_LIBRARIES}
 )
 
-# target_link_libraries(
-#   kalman_filter
-#   kalman_lib
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(
+  kalman_filter
+  kalman_lib
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(
+  landmark_visualizer
+  ${catkin_LIBRARIES}
+)
+
 
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
-#add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
+add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
 add_dependencies(landmark_extractor ${catkin_EXPORTED_TARGETS})
+add_dependencies(landmark_visualizer ${catkin_EXPORTED_TARGETS})
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/my_robot_control.cpp
 # )
