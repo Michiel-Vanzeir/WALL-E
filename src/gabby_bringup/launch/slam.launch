@@ -1,0 +1,7 @@
+<launch>
+    <!-- Start the sensors-->
+    <include file="$(find gabby_imu)/launch/imu.launch" />
+    <include file="$(find gabby_lidar)/launch/rplidar.launch" />
+
+    <node ns="slam" name="kalman_filter" pkg="gabby_control" type="kalman_filter" output="screen"/>
+</launch>

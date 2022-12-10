@@ -1,8 +1,0 @@
-<launch>
-    <include file="$(find imu_bno055)/launch/imu.launch" />
-    <include file="$(find rplidar_ros)/launch/rplidar.launch" />
-
-    <node ns="slam" name="landmark_extractor" pkg="my_robot_control" type="landmark_extractor" output="screen" />
-    <node ns="slam" name="kalman_filter" pkg="my_robot_control" type="kalman_filter" output="screen"/>
-    <node ns="slam" name="landmark_visualizer" pkg="my_robot_control" type="landmark_visualizer" output="screen"/>
-</launch>

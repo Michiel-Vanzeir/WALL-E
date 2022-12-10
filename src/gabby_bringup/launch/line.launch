@@ -1,0 +1,6 @@
+<launch>
+  <node name="video_streamer" pkg="gabby_driver" type="video_streamer" output="screen"/>
+  <node name="motor_operator" pkg="gabby_driver" type="motor_operator.py" output="screen"/>
+  <node name="input_processor" pkg="gabby_control" type="input_processor" output="screen"/>
+  <node name="pid_controller" pkg="gabby_control" type="pid_controller" output="screen" />
+</launch>
