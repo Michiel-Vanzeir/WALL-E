@@ -19,10 +19,32 @@ constexpr double ACCEL_STD_Y = 0.05;
 constexpr double ACCEL_STD_Z = 0.65;
 constexpr double LIDAR_STD = 0.2;
 
-void PredictionCallback(const sensor_msgs::Imu::ConstPtr& imu) {
+void publishBaseTransforms(VectorXd state) {
     static tf::TransformBroadcaster br;
-    tf::Transform transform;
-    
+    tf::Transform base_link_transform;
+    tf::Transform base_footprint_transform;
+    tf::Transform left_wheel;
+    tf::Transform right_wheel;
+
+    // Set the orientation
+    tf::Quaternion q;
+    q.setRPY(0, state(3), state(4));
+    base_link_transform.setRotation(q);
+    base_footprint_transform.setRotation(q);
+
+    // Set the position
+    base_link_transform.setOrigin(tf::Vector3(state(0), state(1), state(2)));
+    base_footprint_transform.setOrigin(tf::Vector3(state(0), state(1), 0));
+
+    // Publish the transforms
+    br.sendTransform(tf::StampedTransform(base_link_transform, ros::Time::now(), "/map", "/base_link"));
+    br.sendTransform(tf::StampedTransform(base_footprint_transform, ros::Time::now(), "/map", "/base_footprint"));
+}
+
+void publishOdometryTransforms(VectorXd state) {
+}
+
+void PredictionCallback(const sensor_msgs::Imu::ConstPtr& imu) {
     // Store all sensor info in a struct
     GyroMeasurement gyro;   
     gyro.psiX = imu->angular_velocity.x;
@@ -32,18 +54,14 @@ void PredictionCallback(const sensor_msgs::Imu::ConstPtr& imu) {
     // Run the prediction step
     kf.predictionStep(gyro, 0.25);
 
-    // Publish the state
-    VectorXd state = kf.getState();
-    transform.setOrigin(tf::Vector3(state(0), state(1), state(2)));
-    tf::Quaternion q;
-    q.setRPY(0, state(3), state(4));
-    transform.setRotation(q);
-    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/world", "/robot"));
+    // Publish the transforms
+    publishBaseTransforms(kf.getState());
 }
 
 void UpdateCallback(const gabby_msgs::LandmarkList::ConstPtr& landmarks) {
     static tf::TransformBroadcaster br;
-    tf::Transform transform;
+    tf::Transform base_link_transform;
+    tf::Transform base_footprint_transform;
 
     // Store all sensor info in a struct
     LidarMeasurement lidar;

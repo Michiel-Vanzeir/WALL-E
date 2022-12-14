@@ -14,8 +14,12 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   gabby_msgs
   std_msgs
+  nav_msgs
 )
+
 find_package(OpenCV 4.0.0 REQUIRED)
+find_package(WiringPi REQUIRED)
+find_package(Threads REQUIRED)
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -23,6 +27,8 @@ catkin_package(
   CATKIN_DEPENDS gabby_msgs roscpp rospy sensor_msgs std_msgs message_runtime
 #  DEPENDS system_lib
 )
+
+
 
 ###########
 ## Build ##
@@ -34,13 +40,22 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${WIRINGPI_INCLUDE_DIRS}
 )
 
-add_executable(video_streamer src/video_streamer.cpp)
+add_executable(video_advertiser src/video_advertiser.cpp)
 target_link_libraries(
-  video_streamer
+  video_advertiser
   ${catkin_LIBRARIES}
   ${OpenCV_LIBRARIES}
+)
+
+add_executable(odom_advertiser src/odom_advertiser.cpp)
+target_link_libraries(
+  odom_advertiser
+  ${WIRINGPI_LIBRARIES}
+  ${CMAKE_THREAD_LIBS_INIT}
+  ${catkin_LIBRARIES}
 )
 
 catkin_install_python(

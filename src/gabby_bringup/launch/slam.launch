@@ -2,6 +2,9 @@
     <!-- Start the sensors-->
     <include file="$(find gabby_imu)/launch/imu.launch" />
     <include file="$(find gabby_lidar)/launch/rplidar.launch" />
+    <include file="$(find slam_toolbox)/online_async.launch">
+        <param name="params_file" value="$(find gabby_bringup)/config/slam_toolbox_params.yaml" />
+    </include>  
 
     <node ns="slam" name="kalman_filter" pkg="gabby_control" type="kalman_filter" output="screen"/>
 </launch>
