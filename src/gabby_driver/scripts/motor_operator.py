@@ -1,33 +1,39 @@
 #!/usr/bin/env python3
 import rospy
-import time
-from adafruit_motorkit import MotorKit
+
+from gabby_driver.Motorshield import Motorshield
 from gabby_msgs.msg import Throttle
 
-kit = MotorKit()
+# Initialize the motor shield
+motorshield = Motorshield()
 
-def callback(msg):
-    # Make sure the throttle value is in the allowed range
-    if msg.right_throttle > 1:
-        kit.motor1.throttle = 1
-    elif msg.left_throttle > 1:
-        kit.motor2.throttle = 1
-    else:
-        kit.motor1.throttle = msg.right_throttle
-        kit.motor2.throttle = msg.left_throttle
+def limitThrottle(min_value, max_value, throttle):
+    return min(max_value, max(min_value, throttle))
 
+def throttleCallback(msg):
+    # Limit the throttle values to the range [-1, 1]
+    left_throttle = limitThrottle(-1, 1, msg.left_throttle)
+    right_throttle = limitThrottle(-1, 1, msg.right_throttle)
+
+    print(f"Left throttle: {left_throttle} || Right throttle: {right_throttle}")
+
+    # Set the throttle values
+    motorshield.setLeftThrottle(left_throttle)
+    motorshield.setRightThrottle(right_throttle)
+
+    # Log the throttle values
     rospy.loginfo(f"Left throttle: {msg.left_throttle} || Right throttle: {msg.right_throttle}")
-    
+
 def motor_operator():
-    rospy.init_node('motor_operator')
+    rospy.init_node("motor_operator")
   
-    rospy.Subscriber("throttlefeed", Throttle, callback)
-  
+    rospy.Subscriber("/throttlefeed", Throttle, throttleCallback)
+    
     rospy.spin()
   
 if __name__ == '__main__':
     try:
         motor_operator()
     except:
-        kit.motor1.throttle = 0
-        kit.motor2.throttle = 0
+        motorshield.shutdown()
+        rospy.error("Shutting down motor_operator node")
