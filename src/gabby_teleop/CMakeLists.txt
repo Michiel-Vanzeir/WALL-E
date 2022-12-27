@@ -110,7 +110,7 @@ catkin_package(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also ne
 catkin_install_python(
-  PROGRAMS src/controls.py
+  PROGRAMS scripts/teleoperator.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -15,11 +15,12 @@ find_package(catkin REQUIRED COMPONENTS
   gabby_msgs
   std_msgs
   nav_msgs
+  tf
 )
 
 find_package(OpenCV 4.0.0 REQUIRED)
-find_package(WiringPi REQUIRED)
-find_package(Threads REQUIRED)
+
+catkin_python_setup()
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -28,8 +29,6 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-
-
 ###########
 ## Build ##
 ###########
@@ -37,10 +36,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
-  ${WIRINGPI_INCLUDE_DIRS}
 )
 
 add_executable(video_advertiser src/video_advertiser.cpp)
@@ -51,15 +48,17 @@ target_link_libraries(
 )
 
 add_executable(odom_advertiser src/odom_advertiser.cpp)
+
+find_library(WIRINGPI_LIBRARIES NAMES wiringPi)
 target_link_libraries(
   odom_advertiser
+  ${catkin_LIBRARIES}
   ${WIRINGPI_LIBRARIES}
   ${CMAKE_THREAD_LIBS_INIT}
-  ${catkin_LIBRARIES}
 )
 
 catkin_install_python(
-  PROGRAMS scripts/motor_operator.py
+  PROGRAMS scripts/motor_operator.py 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 #add_dependencies(motor_operator.py ${catkin_EXPORTED_TARGETS})
