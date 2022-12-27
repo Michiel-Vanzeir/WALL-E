@@ -1,5 +1,0 @@
-<launch>
-    <node name="tele_operator" pkg="gabby_teleop" type="controls.py" output="screen"/>
-    <node name="motor_operator" pkg="gabby_driver" type="motor_operator.py" output="screen"/>
-</launch>
-  

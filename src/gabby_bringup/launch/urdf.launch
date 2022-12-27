@@ -1,6 +1,6 @@
 <launch>
     <arg name="model" default="$(find gabby_driver)/urdf/gabby.urdf.xacro"/>
-    <arg name="gui" default="true"/>
+    <arg name="gui" default="false"/>
     <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
   
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
