@@ -1,61 +1,119 @@
-#include <chrono>
 #include <ros/ros.h>
+#include <tf/transform_broadcaster.h>
 #include <wiringPi.h>
 
 #include <nav_msgs/Odometry.h>
 
-constexpr int LEFT_ENCODER = 11;
-constexpr int RIGHT_ENCODER = 13;
+#define RIGHT_ENCODER 7
+#define LEFT_ENCODER 1
+#define WHEEL_RADIUS 4.0 // cm
 
-long coder[2] = {0, 0};
-int lastSpeed[2] = {0, 0};
+double left_rotation = 0;
+double right_rotation = 0;
 
-uint32_t getMillis() {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-}   
-
-void leftWheelSpeed() {
-    coder[0]++;
+bool inForwardMode(int pin) {
+    if (pin == 7) {
+        return digitalRead(11);
+    } else if (pin == 1) {
+        return digitalRead(2);
+    }
 }
 
-void rightWheelSpeed() {
-    coder[1]++;
+void rightEncoderCallback() {
+    ROS_INFO("Right encoder callback");
+    if (inForwardMode(RIGHT_ENCODER)) {
+        right_rotation += 1/20.0 * (WHEEL_RADIUS*2*M_PI);
+    } else {
+        right_rotation -= 1/20.0 * (WHEEL_RADIUS*2*M_PI);
+    }
 }
 
-int main(int argc, char **argv) {
+void leftEncoderCallback() {
+    ROS_INFO("Left encoder callback");
+    if (inForwardMode(LEFT_ENCODER)) {
+        left_rotation += 1/20.0 * (WHEEL_RADIUS*2*M_PI);
+    } else {
+        left_rotation -= 1/20.0 * (WHEEL_RADIUS*2*M_PI);
+    }
+}
+
+int main(int argc, char** argv) {
     ros::init(argc, argv, "odom_advertiser");
     ros::NodeHandle nh;
-    
-    // Configure the encoder's GPIO pins
+
+    ros::Publisher odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 2);
+    tf::TransformBroadcaster odom_broadcaster;
+
+    // Setup wiringpi so that it uses the BOARD pin numbering scheme of a raspberry pi
     wiringPiSetup();
-    pinMode(LEFT_ENCODER, INPUT);
     pinMode(RIGHT_ENCODER, INPUT);
-    wiringPiISR(LEFT_ENCODER, INT_EDGE_RISING, &leftWheelSpeed);
-    wiringPiISR(RIGHT_ENCODER, INT_EDGE_RISING, &rightWheelSpeed);
+    pinMode(LEFT_ENCODER, INPUT);
 
-    ros::Publisher left_odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 2);
-    ros::Publisher right_odom_pub = nh.advertise<nav_msgs::Odometry>("/odom", 2);
+    wiringPiISR(RIGHT_ENCODER, INT_EDGE_BOTH, &rightEncoderCallback);
+    wiringPiISR(LEFT_ENCODER, INT_EDGE_BOTH, &leftEncoderCallback);
 
-    ros::Rate loop_rate(10);
-    while (ros::ok()) {
-        nav_msgs::Odometry left_odom;
-        nav_msgs::Odometry right_odom;
+    ros::Time current_time, last_time;
+    current_time = ros::Time::now();
+    last_time = ros::Time::now();
 
-        left_odom.header.stamp = ros::Time::now();
-        right_odom.header.stamp = ros::Time::now();
+    double prev_left_rotation = 0;
+    double prev_right_rotation = 0;
 
+    ros::Rate r(10.0);
+    while (nh.ok()) {
+        ros::spinOnce(); 
+        current_time = ros::Time::now();
+        ROS_INFO("Left rotation: %f", left_rotation);
+        // Calculate the velocity of the rotation
+        double dt = (current_time - last_time).toSec();
+        double left_velocity = (left_rotation - prev_left_rotation) / dt;
+        double right_velocity = (right_rotation - prev_right_rotation) / dt;
+
+        // Broadcast the tf transform
+        double left_roll = left_rotation / (WHEEL_RADIUS*2*M_PI);
+        double right_roll = right_rotation / (WHEEL_RADIUS*2*M_PI);
+        geometry_msgs::Quaternion odom_quat_left = tf::createQuaternionMsgFromRollPitchYaw(left_roll, 0, 0);
+        geometry_msgs::Quaternion odom_quat_right = tf::createQuaternionMsgFromRollPitchYaw(right_roll, 0, 0);
+
+        geometry_msgs::TransformStamped left_wheel_transform;
+        left_wheel_transform.header.stamp = current_time;
+        left_wheel_transform.header.frame_id = "odom";
+        left_wheel_transform.child_frame_id = "left_wheel";
+        left_wheel_transform.transform.translation.x = left_rotation;
+        left_wheel_transform.transform.rotation = odom_quat_left;
+
+        geometry_msgs::TransformStamped right_wheel_transform;
+        right_wheel_transform.header.stamp = current_time;
+        right_wheel_transform.header.frame_id = "odom";
+        right_wheel_transform.child_frame_id = "right_wheel";
+        right_wheel_transform.transform.translation.x = right_rotation;
+        right_wheel_transform.transform.rotation = odom_quat_right;
+
+        odom_broadcaster.sendTransform(left_wheel_transform);
+        odom_broadcaster.sendTransform(right_wheel_transform);
+
+        // Publish the odometry msg
+        nav_msgs::Odometry left_odom, right_odom;
+        left_odom.header.stamp = current_time;
+        left_odom.header.frame_id = "odom";
         left_odom.child_frame_id = "left_wheel";
+        left_odom.pose.pose.position.x = left_rotation;
+        left_odom.twist.twist.linear.x = left_velocity;
+
+        right_odom.header.stamp = current_time;
+        right_odom.header.frame_id = "odom";
         right_odom.child_frame_id = "right_wheel";
+        right_odom.pose.pose.position.x = right_rotation;
+        right_odom.twist.twist.linear.x = right_velocity;
 
-        left_odom.twist.twist.linear.x = coder[0] - lastSpeed[0];
-        right_odom.twist.twist.linear.x = coder[1] - lastSpeed[1];
+        odom_pub.publish(left_odom);
+        odom_pub.publish(right_odom);
 
-        lastSpeed[0] = coder[0];
-        lastSpeed[1] = coder[1];
-        coder[0] = 0;
-        coder[1] = 0;
+        // Update the values for the next iteration
+        prev_left_rotation = left_rotation;
+        prev_right_rotation = right_rotation;
+        last_time = current_time;
+
+        r.sleep();
     }
-
-    ros::spinOnce();
-    return 0;
 }
