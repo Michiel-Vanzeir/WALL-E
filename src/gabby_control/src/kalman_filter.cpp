@@ -1,91 +1,59 @@
 #include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
+#include <thread>
+#include <chrono>
 
+// Include message definitions
 #include <sensor_msgs/Imu.h>
-#include "gabby_msgs/LandmarkList.h"
-#include "gabby_msgs/Landmark.h"
+#include <gabby_msgs/EncoderData.h>
 
-#include "../lib/kalmanfilter.h"
-#include "../lib/measurements.h"
+#include "../lib/kalmanfilter.h" // Contains the KalmanFilter class
+#include "../lib/measurements.h" // Contains the structs for the measurements
 
 // Declare the needed global variables
 KalmanFilter kf;
 
-constexpr double GYRO_STD_X = 0.001243;
-constexpr double GYRO_STD_Y = 0.0055;
-constexpr double GYRO_STD_Z = 0.0045;
-constexpr double ACCEL_STD_X = 0.034;
-constexpr double ACCEL_STD_Y = 0.05;
-constexpr double ACCEL_STD_Z = 0.65;
-constexpr double LIDAR_STD = 0.2;
 
-void publishBaseTransforms(VectorXd state) {
-    static tf::TransformBroadcaster br;
-    tf::Transform base_link_transform;
-    tf::Transform base_footprint_transform;
-    tf::Transform left_wheel;
-    tf::Transform right_wheel;
+Vector3d GYRO_STD(0.001243, 0.0055, 0.0045);
+Vector3d ACCEL_STD(0.1, 0.05, 0.65); // 0.034
+double YAW_STD = 0.00112;
+double LIDAR_STD = 0.2; // range std
 
-    // Set the orientation
-    tf::Quaternion q;
-    q.setRPY(0, state(3), state(4));
-    base_link_transform.setRotation(q);
-    base_footprint_transform.setRotation(q);
-
-    // Set the position
-    base_link_transform.setOrigin(tf::Vector3(state(0), state(1), state(2)));
-    base_footprint_transform.setOrigin(tf::Vector3(state(0), state(1), 0));
-
-    // Publish the transforms
-    br.sendTransform(tf::StampedTransform(base_link_transform, ros::Time::now(), "/map", "/base_link"));
-    br.sendTransform(tf::StampedTransform(base_footprint_transform, ros::Time::now(), "/map", "/base_footprint"));
-}
-
-void publishOdometryTransforms(VectorXd state) {
-}
-
-void PredictionCallback(const sensor_msgs::Imu::ConstPtr& imu) {
-    // Store all sensor info in a struct
-    GyroMeasurement gyro;   
-    gyro.psiX = imu->angular_velocity.x;
-    gyro.psiZ = imu->angular_velocity.z;
-    gyro.psiY = imu->angular_velocity.y;
-
-    // Run the prediction step
-    kf.predictionStep(gyro, 0.25);
-
-    // Publish the transforms
-    publishBaseTransforms(kf.getState());
-}
-
-void UpdateCallback(const gabby_msgs::LandmarkList::ConstPtr& landmarks) {
-    static tf::TransformBroadcaster br;
-    tf::Transform base_link_transform;
-    tf::Transform base_footprint_transform;
-
-    // Store all sensor info in a struct
-    LidarMeasurement lidar;
-}
-
-
+using namespace std::this_thread; // sleep_for, sleep_until
+using namespace std::chrono; // nanoseconds, milliseconds, system_clock, seconds
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "kalman_filter");
+    ros::init(argc, argv, "extended_kalman_filter");
     ros::NodeHandle nh;
 
+    // Declare the sensor subscribers
+    //ros::Subscriber imu_sub = nh.subscribe("/imu/data", 1, &KalmanFilter::imuCallback, &kf);
+    //ros::Subscriber encoder_sub = nh.subscribe("/wheel_odom", 1, &KalmanFilter::encoderCallback, &kf);
+    //ros::Subscriber lidar_sub = nh.subscribe("/scan", 1, &KalmanFilter::lidarCallback, &kf);
 
-    // Initialise the Kalman filter
-    Eigen::VectorXd state = VectorXd::Zero(6);
-    Eigen::MatrixXd cov = MatrixXd::Identity(6,6);
-    Eigen::Vector3d gyro_noise_std(GYRO_STD_X, GYRO_STD_Y, GYRO_STD_Z);
-    Eigen::Vector3d accel_noise_std(ACCEL_STD_X, ACCEL_STD_Y, ACCEL_STD_Z);
-    
-    kf = KalmanFilter(state, cov, gyro_noise_std, accel_noise_std, LIDAR_STD);
+    // Initialise the filter
+    kf = KalmanFilter();
+    kf.setYawSTD(YAW_STD);
+    kf.setAccelSTD(ACCEL_STD(0));
+    kf.setLidarSTD(LIDAR_STD);
 
-    // Subscribe to the IMU and LIDAR topics
-    ros::Subscriber imu_sub = nh.subscribe("/imu/data", 1, PredictionCallback);
-    ros::Subscriber lidar_sub = nh.subscribe("/slam/landmarks", 1, UpdateCallback);
-    
+    Vector4d state = Vector4d::Zero();
+    state(0) = 0.0;
+    state(1) = 0.0;
+    // 45 degrees to the right of the x-axis in radians yaw
+    state(2) = 0.785398;
+    state(3) = 1.0;
+    kf.setState(state);
+    kf.setCovariance(MatrixXd::Identity(4, 4));
+
+    while (ros::ok()) {
+        ros::spinOnce();
+        // sleep for half a second
+        sleep_for(milliseconds(1000));
+
+        // run the prediction step
+        kf.predictionStep(1);
+        ROS_INFO("Predicted state: %f, %f, %f, %f", kf.getState()(0), kf.getState()(1), kf.getState()(2), kf.getState()(3));
+    }
 
     ros::spin();
  }

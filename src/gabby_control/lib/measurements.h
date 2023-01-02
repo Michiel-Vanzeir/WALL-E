@@ -5,26 +5,27 @@
 #include <eigen3/Eigen/Dense>
 
 struct GyroMeasurement{
-    float psiX;
-    float psiY;
-    float psiZ;
+    double yaw;
 };
 
-struct AccelerometerMeasurement{
-    float accelX;
-    float accelY;
-    float accelZ;
+struct AccelMeasurement{
+    double acceleration;
+};
+
+struct QuaternionMeasurement{
+    float w;
+    float x;
+    float y;
+    float z;
 };
 
 struct LidarMeasurement {
-    float angle_min;
-    float angle_max;
-    float angle_increment;
-    float range_min;
-    float range_max;
     std::vector<float> ranges;
 };
 
-
+struct EncoderMeasurement {
+    float left_distance;
+    float right_distance;
+};
 
 #endif // SENSORS_H
