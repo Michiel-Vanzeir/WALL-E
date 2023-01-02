@@ -1,0 +1,3 @@
+Header header
+float64 left_distance
+float64 right_distance

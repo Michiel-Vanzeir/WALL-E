@@ -2,9 +2,13 @@
     <!-- Start the sensors-->
     <include file="$(find gabby_imu)/launch/imu.launch" />
     <include file="$(find gabby_lidar)/launch/rplidar.launch" />
-    <include file="$(find slam_toolbox)/online_async.launch">
-        <param name="params_file" value="$(find gabby_bringup)/config/slam_toolbox_params.yaml" />
-    </include>  
 
+    <!-- <include file="$(find slam_toolbox)/online_async.launch">
+        <param name="params_file" value="$(find gabby_bringup)/config/slam_toolbox_params.yaml" />
+    </include>   -->
+    <node name="wheel_odom_advertiser" pkg="gabby_driver" type="odom_advertiser" output="screen"/>
     <node ns="slam" name="kalman_filter" pkg="gabby_control" type="kalman_filter" output="screen"/>
+    
+    <node name="tele_operator" pkg="gabby_teleop" type="teleoperator.py" output="screen"/>
+    <node name="motor_operator" pkg="gabby_driver" type="motor_operator.py" output="screen"/> 
 </launch>
