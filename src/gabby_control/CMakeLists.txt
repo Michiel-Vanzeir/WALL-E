@@ -46,8 +46,8 @@ include_directories(
 add_executable(input_processor src/input_processor.cpp)
 add_executable(pid_controller src/pid_controller.cpp)
 add_executable(kalman_filter src/kalman_filter.cpp)
-# add_executable(landmark_extractor src/landmark_extractor.cpp)
-# add_executable(landmark_visualizer src/landmark_visualizer.cpp)
+add_executable(pointcloud_pub src/pointcloud_pub.cpp)
+add_executable(feature_processor src/feature_processor.cpp)
 target_link_libraries(
   input_processor
   ${catkin_LIBRARIES}
@@ -56,6 +56,16 @@ target_link_libraries(
 
 target_link_libraries(
   pid_controller
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(
+  pointcloud_pub
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(
+  feature_processor
   ${catkin_LIBRARIES}
 )
 
@@ -80,6 +90,8 @@ target_link_libraries(
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
 add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
+add_dependencies(pointcloud_pub ${catkin_EXPORTED_TARGETS})
+add_dependencies(feature_processor ${catkin_EXPORTED_TARGETS})
 # add_dependencies(landmark_extractor ${catkin_EXPORTED_TARGETS})
 # add_dependencies(landmark_visualizer ${catkin_EXPORTED_TARGETS})
 # add_library(${PROJECT_NAME}

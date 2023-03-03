@@ -2,6 +2,12 @@
     <!-- Start the sensors-->
     <include file="$(find gabby_imu)/launch/imu.launch" />
     <include file="$(find gabby_lidar)/launch/rplidar.launch" />
-
+    <node name="pointcloud_pub" pkg="gabby_control" type="pointcloud_pub" output="screen"/>
+    <node pkg="pcl_ros" type="convert_pointcloud_to_image" name="pcl_to_image" output="screen">
+        <remap from="input" to="/pointCloud"/>
+        <remap from="output" to="/image"/>
+    </node>
+    
     <node ns="slam" name="kalman_filter" pkg="gabby_control" type="kalman_filter" output="screen"/>
+
 </launch>
