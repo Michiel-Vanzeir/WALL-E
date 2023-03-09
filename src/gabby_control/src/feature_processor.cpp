@@ -2,6 +2,7 @@
 #include <tf/transform_listener.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <cv_bridge/cv_bridge.h>
 
 
 
@@ -12,9 +13,10 @@ class FeatureProcessor {
         FeatureProcessor(ros::NodeHandle& nh) {
             nh_ = nh;
             image_sub_ = nh_.subscribe("/image", 1, &FeatureProcessor::imageCallback, this);
+            image_pub_ = nh_.advertise<sensor_msgs::Image>("/features", 1);
         }
-        imageCallback(const sensor_msgs::Image::ConstPtr& image) {
-            cv::Mat mat = cv::imdecode(image->data, IMREAD_GRAYSCALE);
+        void imageCallback(const sensor_msgs::Image::ConstPtr& image) {
+            cv::Mat mat = cv::imdecode(image->data, cv::IMREAD_GRAYSCALE);
 
             // Apply gaussian with sigma threshold of 0.2
             cv::GaussianBlur(mat, mat, cv::Size(5,5), 1);
@@ -28,11 +30,22 @@ class FeatureProcessor {
                 cv::circle(mat, corners[i], 5, cv::Scalar(0,0,255), 2);
             }
 
-            // Display the image
-            cv::imshow("Image", mat);
-            cv::waitKey(1);
+            // Convert cv::Mat to sensor_msgs::Image
+            sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", mat).toImageMsg();
+
+            // Publish the image
+            image_pub_.publish(msg);
         }
     private:
         ros::NodeHandle nh_;
         ros::Subscriber image_sub_;
+        ros::Publisher image_pub_;
+};
+
+int main(int argc, char** argv) {
+    ros::init(argc, argv, "feature_processor");
+    ros::NodeHandle nh;
+    FeatureProcessor fp(nh);
+    ros::spin();
+    return 0;
 }

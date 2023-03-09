@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   laser_assembler
   visualization_msgs
+  pcl_conversions
 )
 find_package(OpenCV 4.0.0 REQUIRED)
 find_package(Eigen3 REQUIRED)
@@ -46,7 +47,7 @@ include_directories(
 add_executable(input_processor src/input_processor.cpp)
 add_executable(pid_controller src/pid_controller.cpp)
 add_executable(kalman_filter src/kalman_filter.cpp)
-add_executable(pointcloud_pub src/pointcloud_pub.cpp)
+add_executable(laserscan_converter src/laserscan_converter.cpp)
 add_executable(feature_processor src/feature_processor.cpp)
 target_link_libraries(
   input_processor
@@ -60,7 +61,7 @@ target_link_libraries(
 )
 
 target_link_libraries(
-  pointcloud_pub
+  laserscan_converter
   ${catkin_LIBRARIES}
 )
 
@@ -90,7 +91,7 @@ target_link_libraries(
 add_dependencies(input_processor ${catkin_EXPORTED_TARGETS})
 add_dependencies(pid_controller ${catkin_EXPORTED_TARGETS})
 add_dependencies(kalman_filter ${catkin_EXPORTED_TARGETS})
-add_dependencies(pointcloud_pub ${catkin_EXPORTED_TARGETS})
+add_dependencies(laserscan_converter ${catkin_EXPORTED_TARGETS})
 add_dependencies(feature_processor ${catkin_EXPORTED_TARGETS})
 # add_dependencies(landmark_extractor ${catkin_EXPORTED_TARGETS})
 # add_dependencies(landmark_visualizer ${catkin_EXPORTED_TARGETS})
