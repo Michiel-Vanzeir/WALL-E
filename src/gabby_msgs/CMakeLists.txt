@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   message_generation
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -51,8 +52,8 @@ add_message_files(
   FILES
   Inputvars.msg
   Throttle.msg
-  Landmark.msg
-  LandmarkList.msg
+  Features.msg  
+  MatchList.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -74,6 +75,7 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   sensor_msgs
+  geometry_msgs
 )
 
 ################################################
