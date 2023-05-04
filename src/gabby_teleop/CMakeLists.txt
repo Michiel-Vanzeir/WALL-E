@@ -20,6 +20,11 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
+# Add Python file from scripts
+catkin_install_python(PROGRAMS scripts/controls.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
