@@ -9,7 +9,7 @@ class PIDFeedbackLoop: public rclcpp::Node
 {
 public:
   PIDFeedbackLoop()
-  : Node("pid_controller"), pid(1.0, 0.1, 0.0)
+  : Node("pid_controller"), pid(0.15625, 0.03, 0.0)
   {
     publisher_ = this->create_publisher<std_msgs::msg::Float64>("pid_output", 2);
     auto topic_callback =

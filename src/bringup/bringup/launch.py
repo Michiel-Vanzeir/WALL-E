@@ -14,5 +14,17 @@ def generate_launch_description():
             namespace='',
             executable='video_processor',
             name='video_processor'
+        ),
+        Node(
+            package='navigation',
+            namespace='',
+            executable='pid_controller',
+            name='pid_controller'
+        ),
+        Node(
+            package='actuator_output',
+            namespace='',
+            executable='motor_controller',
+            name='motor_controller'
         )
     ])
